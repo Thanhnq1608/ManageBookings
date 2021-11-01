@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Standard Single Room"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgImageRoom"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@drawable/sample_image" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:height="35dp"
+        android:drawableLeft="@drawable/ic_clock"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:text="22/11/1999"
+        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:height="35dp"
+        android:gravity="center"
+        android:text="9h00 AM"
+        app:layout_constraintStart_toEndOf="@+id/tvDate"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:height="35dp"
+        android:drawableLeft="@drawable/ic_user"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:text="Trần Văn A"
+        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:height="35dp"
+        android:drawableLeft="@drawable/email"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:text="abcdasdph01123@fpt.edu.vn"
+        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:height="35dp"
+        android:drawableLeft="@drawable/ic_phone1"
+        android:drawablePadding="20dp"
+        android:gravity="center"
+        android:text="0123456789"
+        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:height="35dp"
+        android:drawableLeft="@drawable/ic_group_person"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="2 Người"
+        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="15dp"
+        android:height="35dp"
+        android:drawableLeft="@drawable/ic_double_checked"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="2 Người/Phòng"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:height="35dp"
+        android:drawableLeft="@drawable/ic_bed"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:text="1 giường cỡ vừa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="260dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="14dp"
+        android:background="@color/white"
+        android:text="Chờ Xác Nhận"
+        android:textColor="#F5F500"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
