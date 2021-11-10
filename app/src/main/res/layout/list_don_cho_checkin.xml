@@ -96,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/tvSoNguoi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -109,7 +109,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/tvSoLuongNguoi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -123,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/tvGiuong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -131,21 +131,21 @@
         android:drawableLeft="@drawable/ic_bed"
         android:drawablePadding="5dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
         android:text="@string/tvGiuong"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSoLuongNguoi" />
 
     <Button
-        android:id="@+id/btnChoXacNhan"
+        android:id="@+id/btnChoCheckIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="260dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="14dp"
         android:backgroundTint="@color/white"
-        android:text="@string/btnChoXacNhan"
-        android:textColor="#F5F500"
-        android:textSize="16dp"
+        android:text="@string/btnChoCheckIn"
+        android:textColor="#0921FB"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
