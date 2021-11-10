@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/btnDonChoXacNhan"
+        android:layout_width="407dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_chung"
+        android:backgroundTint="#FFDC21"
+        android:fontFamily="@font/poppins"
+        android:text="@string/btnDonChoXacNhan"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="105dp"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnDonChoCheckIn"
+        android:layout_width="407dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/custom_button_chung"
+        android:text="@string/btnDonChoCheckIn"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:backgroundTint="#444C6C"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/btnDonChoXacNhan"
+        app:layout_constraintTop_toBottomOf="@+id/btnDonChoXacNhan" />
+
+    <Button
+        android:id="@+id/btnDonDatTruoc"
+        android:layout_width="407dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_chung"
+        android:text="@string/btnDonDatTruoc"
+        android:backgroundTint="#09FB09"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#1E45DF"
+        app:layout_constraintBottom_toTopOf="@+id/btnDonCheckOut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDonChoCheckIn"
+        app:layout_constraintVertical_bias="0.484" />
+
+    <Button
+        android:id="@+id/btnDonCheckOut"
+        android:layout_width="407dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button"
+        android:text="@string/btnDonCheckOut"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDonDatTruoc"
+        app:layout_constraintVertical_bias="0.484" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
