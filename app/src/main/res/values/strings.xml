@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Manage Bookings</string>
+    <string name="btnPhongTrong">Phòng Trống</string>
+    <string name="btnDatTruoc">Phòng Đã Đặt Trước (Check In)</string>
+    <string name="btnDangThue">Phòng Đang Thuê</string>
+    <string name="tvSoPhong">Phòng 101</string>
+    <string name="tvTrangThaiCheckIn">Đang Check In</string>
+    <string name="btnChoXacNhan">Chờ Xác Nhận</string>
+    <string name="tvTrangThaiEmpty">Đang Trống</string>
+    <string name="tvTrangThaiFull">Đang Thuê</string>
+    <string name="tvSonguoi">2 Người</string>
+    <string name="tvGiuong">1 giường King</string>
+    <string name="tvSoLuongNguoi">2 người/phòng</string>
+    <string name="tvDate">1 đêm</string>
+    <string name="tvNote">Không có ghi chú</string>
+    <string name="tvPayment">Thanh Toán</string>
+    <string name="tvRoomMoney">Tiền Phòng</string>
+    <string name="tvTax">Thuế (10%)</string>
+    <string name="tvRoomType2">3 ngày 2 đêm</string>
+    <string name="btnCheckIn">Check In</string>
+    <string name="btnCheckOut">Check Out</string>
+    <string name="btnChoCheckIn">Đã Xác Nhận (Chờ Check In)</string>
+    <string name="btnDonChoXacNhan">Đơn CHờ Xác Nhận</string>
+    <string name="btnDonChoCheckIn">Đơn CHờ Check In</string>
+    <string name="btnDonDatTruoc">Đơn Đã Đặt Trước (Check In)</string>
+    <string name="btnDonCheckOut">ĐƠn Đã Check Out</string>
+
+
 </resources>
