@@ -96,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
-        android:id="@+id/tvSoNguoi"
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -109,7 +109,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
-        android:id="@+id/tvSoLuongNguoi"
+        android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -123,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
 
     <TextView
-        android:id="@+id/tvGiuong"
+        android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -131,9 +131,9 @@
         android:drawableLeft="@drawable/ic_bed"
         android:drawablePadding="5dp"
         android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
         android:text="@string/tvGiuong"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSoLuongNguoi" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnChoXacNhan"
