@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/phong_cho_xac_nhan_layout_bg">
 
     <TextView
         android:id="@+id/textView5"
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:text="Standard Single Room"
+        android:textColor="@color/black"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -38,6 +40,7 @@
         android:drawablePadding="10dp"
         android:gravity="center"
         android:text="22/11/1999"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -50,6 +53,7 @@
         android:height="35dp"
         android:gravity="center"
         android:text="9h00 AM"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/tvDate"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -64,6 +68,7 @@
         android:drawablePadding="10dp"
         android:gravity="center"
         android:text="Trần Văn A"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
@@ -78,6 +83,7 @@
         android:drawablePadding="10dp"
         android:gravity="center"
         android:text="abcdasdph01123@fpt.edu.vn"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -92,6 +98,7 @@
         android:drawablePadding="20dp"
         android:gravity="center"
         android:text="0123456789"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -105,6 +112,7 @@
         android:drawablePadding="5dp"
         android:gravity="center"
         android:text="2 Người"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -119,6 +127,7 @@
         android:drawablePadding="5dp"
         android:gravity="center"
         android:text="2 Người/Phòng"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
 
@@ -132,6 +141,7 @@
         android:drawablePadding="5dp"
         android:gravity="center"
         android:text="1 giường cỡ vừa"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -144,7 +154,7 @@
         android:layout_marginBottom="14dp"
         android:background="@color/white"
         android:text="Chờ Xác Nhận"
-        android:textColor="#F5F500"
+        android:textColor="#ECFD02"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

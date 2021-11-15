@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <TextView
         android:id="@+id/textView18"
@@ -12,10 +13,12 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
+        android:background="#FFFFFF"
         android:drawableLeft="@drawable/email"
         android:drawablePadding="30dp"
         android:gravity="center"
         android:text="abcdasdph01123@fpt.edu.vn"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -26,10 +29,12 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
+        android:background="#FFFFFF"
         android:drawableLeft="@drawable/ic_clock"
         android:drawablePadding="30dp"
         android:gravity="center"
         android:text="22/11/1999"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -40,8 +45,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
+        android:background="#FFFFFF"
         android:gravity="center"
         android:text="9h00 AM"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/tvDate2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -52,10 +59,12 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
+        android:background="#FFFFFF"
         android:drawableLeft="@drawable/ic_user"
         android:drawablePadding="30dp"
         android:gravity="center"
         android:text="Trần Văn A"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate2" />
 
@@ -66,10 +75,12 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
+        android:background="#FFFFFF"
         android:drawableLeft="@drawable/ic_group_person"
         android:drawablePadding="25dp"
         android:gravity="center"
         android:text="2 Người"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
@@ -80,21 +91,24 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
+        android:background="#FFFFFF"
         android:drawableLeft="@drawable/ic_phone1"
         android:drawablePadding="40dp"
         android:gravity="center"
         android:text="0123456789"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,9 +118,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
         android:text="Thông tin người đặt"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/button"
@@ -135,6 +151,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="5dp"
         android:text="Arrival"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -145,6 +162,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="50dp"
         android:text="Departure"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -186,7 +204,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
         android:text="Thanh Toán"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -196,7 +216,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
         android:text="Tổng Cộng"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
@@ -204,17 +226,20 @@
         android:id="@+id/textView29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="8dp"
+        android:background="#FFFFFF"
         android:text="20.000.000 VND"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+        app:layout_constraintTop_toTopOf="@+id/textView27" />
 
     <TextView
         android:id="@+id/textView31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/white"
         android:text="20.200.000 VND"
         android:textColor="#FD9B02"
         app:layout_constraintEnd_toEndOf="parent"
@@ -224,11 +249,12 @@
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="8dp"
+        android:background="#FFFFFF"
         android:text="200.000 VND"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+        app:layout_constraintTop_toTopOf="@+id/textView28" />
 
     <TextView
         android:id="@+id/textView28"
@@ -236,7 +262,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
         android:text="Thuế (10%)"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
@@ -255,7 +283,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:background="#FFFFFF"
         android:text="Total"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/textView31"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

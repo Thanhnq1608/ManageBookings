@@ -8,19 +8,37 @@
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/drawable/ic_menu_camera.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/drawable/item_danh_sach_phong.xml" value="0.23541666666666666" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/drawable/item_danh_sach_phong_bg.xml" value="0.23541666666666666" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/drawable/item_phong_cho_xac_nhan.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/drawable/phong_cho_xac_nhan_layout_bg.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/drawable/side_nav_bar.xml" value="0.4036458333333333" />
-        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_chi_tiet_dat_phong.xml" value="0.33" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_chi_tiet_dat_phong.xml" value="0.25" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_forget_password.xml" value="0.36594202898550726" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_home.xml" value="0.36277173913043476" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_login.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_main2.xml" value="0.36594202898550726" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_phong_cho_xac_nhan.xml" value="0.34646739130434784" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/activity_splash.xml" value="0.3704710144927536" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/app_bar_activity_home.xml" value="0.36277173913043476" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/app_bar_main.xml" value="0.36594202898550726" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/chi_tiet_dat_phong_layout_bg.xml" value="0.36730072463768115" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/content_activity_home.xml" value="0.36277173913043476" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/content_main.xml" value="0.36594202898550726" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/fragment_danh_sach_phong.xml" value="0.35778985507246375" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/fragment_gallery.xml" value="0.36277173913043476" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/fragment_home.xml" value="0.36277173913043476" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/fragment_phong_cho_xac_nhan.xml" value="0.36277173913043476" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/fragment_slideshow.xml" value="0.36277173913043476" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/home_nav_view_header.xml" value="0.36277173913043476" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/item_danh_sach_phong.xml" value="0.33" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/item_phong_cho_xac_nhan.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/item_room_chi_tiet_dat_phong.xml" value="0.36141304347826086" />
-        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/menu/activity_main_drawer.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/layout/nav_header_activity_home.xml" value="0.36277173913043476" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/menu/activity_home.xml" value="0.3875" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
+        <entry key="..\:/Users/buith/Documents/GitHub/ManageBookings/app/src/main/res/menu/home_menu_nav.xml" value="0.3875" />
       </map>
     </option>
   </component>
