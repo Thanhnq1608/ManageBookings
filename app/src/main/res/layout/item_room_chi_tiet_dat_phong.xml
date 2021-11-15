@@ -36,7 +36,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
         android:gravity="center|center_horizontal|center_vertical"
-        android:text="3 Ngày 2 Đêm"
+        android:text="@string/tvRoomType2"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

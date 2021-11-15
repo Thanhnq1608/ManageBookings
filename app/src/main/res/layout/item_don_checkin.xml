@@ -49,7 +49,7 @@
         android:layout_marginTop="10dp"
         android:height="35dp"
         android:gravity="center"
-        android:text="9h00 AM"
+        android:text="9H00 AM"
         app:layout_constraintStart_toEndOf="@+id/tvDate"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -96,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/tvSoNguoi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -104,12 +104,12 @@
         android:drawableLeft="@drawable/ic_group_person"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="2 Người"
+        android:text="@string/tvSonguoi"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/tvSoLuongNguoi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -118,12 +118,12 @@
         android:drawableLeft="@drawable/ic_double_checked"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="2 Người/Phòng"
+        android:text="@string/tvSoLuongNguoi"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/tvGiuong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -131,21 +131,21 @@
         android:drawableLeft="@drawable/ic_bed"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="1 giường cỡ vừa"
+        android:text="@string/tvGiuong"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSoLuongNguoi" />
 
-    <TextView
-        android:id="@+id/textView16"
+    <Button
+        android:id="@+id/btnCheckIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="260dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="14dp"
-        android:background="@color/white"
-        android:text="Chờ Xác Nhận"
-        android:textColor="#F5F500"
-        android:textSize="20dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/btnCheckIn"
+        android:textColor="#09FB09"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

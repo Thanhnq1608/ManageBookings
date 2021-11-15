@@ -10,20 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManageBookings" >
         <activity
-            android:name=".activity_home"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
-        <activity
-            android:name=".activity_chi_tiet_dat_phong"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
+            </intent-filter>
+        </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 </manifest>

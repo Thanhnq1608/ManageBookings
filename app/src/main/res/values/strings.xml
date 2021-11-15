@@ -11,11 +11,4 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="title_activity_home">activity_home</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="nav_phong_cho_xac_nhan">Phong cho xac nhan</string>
-    <string name="nav_danh_sach_phong">Danh sach phong</string>
-    <string name="nav_drawer_open">nav open</string>
-    <string name="nav_drawer_close">nav close</string>
 </resources>
