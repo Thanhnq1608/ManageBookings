@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="299dp"
+        android:layout_height="55dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -16,13 +16,14 @@
         android:drawablePadding="30dp"
         android:gravity="center"
         android:text="abcdasdph01123@fpt.edu.vn"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <TextView
         android:id="@+id/tvDate2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="154dp"
+        android:layout_height="52dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -30,25 +31,27 @@
         android:drawablePadding="30dp"
         android:gravity="center"
         android:text="22/11/1999"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvThongtin" />
 
     <TextView
         android:id="@+id/tvTime2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="53dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
         android:gravity="center"
         android:text="9h00 AM"
+        android:textSize="14dp"
         app:layout_constraintStart_toEndOf="@+id/tvDate2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvThongtin" />
 
     <TextView
         android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="179dp"
+        android:layout_height="54dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -56,13 +59,14 @@
         android:drawablePadding="30dp"
         android:gravity="center"
         android:text="Trần Văn A"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDate2" />
 
     <TextView
         android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="192dp"
+        android:layout_height="58dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -70,13 +74,14 @@
         android:drawablePadding="25dp"
         android:gravity="center"
         android:text="2 Người"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="191dp"
+        android:layout_height="54dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -84,13 +89,14 @@
         android:drawablePadding="40dp"
         android:gravity="center"
         android:text="0123456789"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_width="407dp"
+        android:layout_height="167dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -99,19 +105,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tvThongtin"
+        android:layout_width="168dp"
+        android:layout_height="21dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:text="@string/tvThongtin"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:text="Thông tin người đặt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnXacNhan"
         android:layout_width="185dp"
         android:layout_height="45dp"
         android:layout_marginEnd="4dp"
@@ -120,12 +126,12 @@
         android:backgroundTint="#F6C455"
         android:fontFamily="@font/poppins"
         android:textStyle="bold"
-        android:text="XÁC NHẬN"
+        android:text="@string/btnXacNhan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnHuy"
         android:layout_width="187dp"
         android:layout_height="45dp"
         android:layout_marginStart="10dp"
@@ -133,18 +139,19 @@
         android:background="@drawable/custom_button_chung"
         android:backgroundTint="#FF0000"
         android:fontFamily="@font/poppins"
-        android:text="HỦY"
+        android:text="@string/btnHuy"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="19dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="12dp"
         android:text="Arrival"
+        android:textSize="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -154,16 +161,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="52dp"
+        android:textSize="12dp"
         android:text="Departure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <TextView
         android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="131dp"
+        android:layout_height="18dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:width="120dp"
         android:background="#6BFAB64B"
         android:drawableLeft="@drawable/ic_calendar"
@@ -171,14 +179,15 @@
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingLeft="10dp"
         android:text="25-Nov-2021"
+        android:textSize="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <TextView
         android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="128dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:width="120dp"
         android:background="#6BFAB64B"
@@ -187,6 +196,7 @@
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingLeft="10dp"
         android:text="25-Dec-2021"
+        android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
