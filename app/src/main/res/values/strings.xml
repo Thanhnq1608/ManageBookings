@@ -35,6 +35,32 @@
     <string name="btnDonChoCheckIn">Đơn CHờ Check In</string>
     <string name="btnDonDatTruoc">Đơn Đã Đặt Trước (Check In)</string>
     <string name="btnDonCheckOut">ĐƠn Đã Check Out</string>
+<<<<<<< HEAD
     <string name="standard_single_room">Standard Single Room x100</string>
     <string name="price">20.000.000 VND</string>
+=======
+    <string name="btnXemChiTiet">Xem Chi Tiết</string>
+    <string name="title_activity_drawer_menu">drawer_menu</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="tvThongtin">Thông Tin Người Đặt</string>
+    <string name="btnHuy">HỦY</string>
+    <string name="btnXacNhan">Xác Nhận</string>
+    <string name="tvForget">Quên mật khẩu</string>
+    <string name="tvLogin">Đăng Nhập</string>
+    <string name="tv1231">Đăng nhập để tiếp tục</string>
+    <string name="tvForget123">Nhập mật khẩu mới bên dưới</string>
+    <string name="tvBack">Quay Lại</string>
+    <string name="btnSave">Lưu</string>
+    <string name="tvDem">500000VND/đêm</string>
+    <string name="btnDaXacNhan">Đã Xác Nhận</string>
+    <string name="btnHuyPhong">Đã Hủy</string>
+
+
+
+>>>>>>> android/hoang
 </resources>

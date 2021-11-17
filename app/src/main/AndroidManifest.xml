@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ManageBookings">
+        <activity android:name=".Activity_dangnhap"></activity>
         <activity
             android:name=".viêws.listOrderWaiting.ListOrderWaitingActivity"
             android:exported="true" />

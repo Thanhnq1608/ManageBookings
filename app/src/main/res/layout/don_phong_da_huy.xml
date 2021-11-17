@@ -101,8 +101,8 @@
 
     <TextView
         android:id="@+id/tvThongtin"
-        android:layout_width="164dp"
-        android:layout_height="22dp"
+        android:layout_width="161dp"
+        android:layout_height="25dp"
         android:text="@string/tvThongtin"
         android:textSize="16dp"
         android:textStyle="bold"
@@ -110,18 +110,18 @@
 
 
     <Button
-        android:id="@+id/btnDaXacNhan"
+        android:id="@+id/btnHuyPhong"
         android:layout_width="185dp"
         android:layout_height="45dp"
         android:layout_marginEnd="108dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_button_chung"
-        android:backgroundTint="#00FF33"
+        android:backgroundTint="#FF0000"
         android:textColor="#818181"
         android:textSize="15dp"
         android:textStyle="bold"
         android:fontFamily="@font/poppins"
-        android:text="@string/btnDaXacNhan"
+        android:text="@string/btnHuyPhong"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
