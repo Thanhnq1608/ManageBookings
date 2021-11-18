@@ -2,34 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_shadow_layout_item"
-    android:layout_marginHorizontal="10dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-<<<<<<< HEAD
-    <ImageView
-        android:id="@+id/imgImageRoom"
-        android:layout_width="150dp"
-        android:layout_height="125dp"
-=======
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="Standard Single Room"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:background="@drawable/background_shadow_layout_item">
 
     <ImageView
         android:id="@+id/imgImageRoom"
         android:layout_width="420dp"
         android:layout_height="205dp"
->>>>>>> android/hoang
         android:layout_marginStart="14dp"
         android:layout_marginTop="40dp"
         android:scaleType="centerCrop"
@@ -43,13 +24,14 @@
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
         android:height="35dp"
         android:drawableLeft="@drawable/ic_clock"
         android:drawablePadding="10dp"
         android:gravity="center"
-        android:textSize="20dp"
         android:text="22/11/1999"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toTopOf="@+id/imgImageRoom" />
 
@@ -59,143 +41,56 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:height="35dp"
-        android:textSize="20dp"
         android:gravity="center"
         android:text="9H00 AM"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/tvDate"
         app:layout_constraintTop_toTopOf="@+id/tvDate" />
 
     <TextView
-<<<<<<< HEAD
         android:id="@+id/tvFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-=======
-        android:id="@+id/textView9"
         android:layout_width="154dp"
         android:layout_height="37dp"
->>>>>>> android/hoang
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
         android:height="35dp"
         android:drawableLeft="@drawable/ic_user"
         android:drawablePadding="10dp"
-        android:gravity="center"
+        android:gravity="center|start"
         android:text="Trần Văn A"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <TextView
-<<<<<<< HEAD
         android:id="@+id/tvPhone"
-=======
-        android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/email"
-        android:drawablePadding="10dp"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:text="abcdasdph01123@fpt.edu.vn"
-        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/textView12"
->>>>>>> android/hoang
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:height="35dp"
         android:drawableLeft="@drawable/ic_phone1"
         android:drawablePadding="20dp"
         android:gravity="center"
         android:text="0123456789"
-<<<<<<< HEAD
-        app:layout_constraintBottom_toTopOf="@+id/tvStatusOrder"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvStatus"
         app:layout_constraintStart_toStartOf="@+id/tvFullName"
-        app:layout_constraintTop_toBottomOf="@+id/tvFullName" />
-=======
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
->>>>>>> android/hoang
+        app:layout_constraintTop_toBottomOf="@+id/tvFullName"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tvStatusOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_marginTop="180dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="14dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/tvChoXacNhan"
-        android:textColor="#E86D6D"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
-        app:layout_constraintStart_toStartOf="parent"
-=======
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/ic_group_person"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:text="@string/tvSonguoi"
-        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/tvSoLuongNguoi"
-        android:layout_width="164dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="15dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/ic_double_checked"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:text="@string/tvSoLuongNguoi"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
-
-    <TextView
-        android:id="@+id/tvGiuong"
-        android:layout_width="153dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="252dp"
-        android:layout_marginTop="12dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/ic_bed"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:text="@string/tvGiuong"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
-
-    <Button
-        android:id="@+id/btnChoXacNhan"
+        android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="260dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="14dp"
         android:backgroundTint="@color/white"
-        android:text="@string/btnChoXacNhan"
-        android:textColor="#F5F500"
+        android:text="@string/tvChoXacNhan"
+        android:textColor="#EA2A2A"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
->>>>>>> android/hoang
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

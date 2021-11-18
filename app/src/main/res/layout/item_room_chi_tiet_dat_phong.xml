@@ -12,35 +12,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:gravity="center|center_horizontal|center_vertical"
-<<<<<<< HEAD
-        android:text="@string/standard_single_room"
-        android:textSize="15sp"
-=======
         android:text="Standard Single Room x1"
         android:textSize="30dp"
->>>>>>> android/hoang
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvGiaTienPhong"
-        android:layout_width="200dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="44dp"
-        android:gravity="center|center_horizontal|center_vertical"
-<<<<<<< HEAD
-        android:text="@string/price"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-=======
-        android:text="2.000.000 VND"
-        android:textSize="25dp"
-        app:layout_constraintStart_toEndOf="@+id/tvLoaiPhong"
->>>>>>> android/hoang
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvGiaTienPhong"
+            android:layout_width="200dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="236dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="2.000.000 VND"
+            android:textSize="25dp"
+            app:layout_constraintStart_toEndOf="@+id/tvLoaiPhong"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+        <TextView
         android:id="@+id/tvRoomType2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,11 +37,7 @@
         android:layout_marginBottom="16dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="@string/tvRoomType2"
-<<<<<<< HEAD
-        android:textSize="12sp"
-=======
         android:textSize="25dp"
->>>>>>> android/hoang
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLoaiPhong"

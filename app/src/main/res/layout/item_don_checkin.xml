@@ -50,21 +50,15 @@
         android:layout_marginTop="10dp"
         android:height="35dp"
         android:gravity="center"
-        android:textSize="20dp"
         android:text="9H00 AM"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/tvDate"
         app:layout_constraintTop_toBottomOf="@+id/tvNameRoom" />
 
     <TextView
-<<<<<<< HEAD
         android:id="@+id/tvFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-=======
-        android:id="@+id/textView9"
         android:layout_width="159dp"
         android:layout_height="38dp"
->>>>>>> android/hoang
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -83,24 +77,18 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
-        android:textSize="20dp"
         android:drawableLeft="@drawable/email"
         android:drawablePadding="10dp"
         android:gravity="center"
         android:text="abcdasdph01123@fpt.edu.vn"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/tvFullName" />
 
     <TextView
-<<<<<<< HEAD
         android:id="@+id/tvPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-=======
-        android:id="@+id/textView12"
         android:layout_width="161dp"
         android:layout_height="34dp"
->>>>>>> android/hoang
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -109,6 +97,7 @@
         android:gravity="center"
         android:text="0123456789"
         android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvSoNguoi"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/tvMail" />
 
@@ -120,9 +109,9 @@
         android:height="35dp"
         android:drawableLeft="@drawable/ic_group_person"
         android:drawablePadding="10dp"
-        android:textSize="20dp"
         android:gravity="center"
         android:text="@string/tvSonguoi"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
 
@@ -151,8 +140,8 @@
         android:drawableLeft="@drawable/ic_bed"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:textSize="20dp"
         android:text="@string/tvGiuong"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
 

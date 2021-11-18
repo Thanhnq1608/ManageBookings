@@ -56,15 +56,9 @@
         app:layout_constraintTop_toBottomOf="@+id/tvNameRoom" />
 
     <TextView
-<<<<<<< HEAD
         android:id="@+id/tvFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-=======
-        android:id="@+id/textView9"
         android:layout_width="142dp"
         android:layout_height="35dp"
->>>>>>> android/hoang
         android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:height="35dp"
@@ -77,15 +71,9 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <TextView
-<<<<<<< HEAD
         android:id="@+id/tvMail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-=======
-        android:id="@+id/textView11"
         android:layout_width="308dp"
         android:layout_height="35dp"
->>>>>>> android/hoang
         android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:height="35dp"
@@ -98,19 +86,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tvFullName" />
 
     <TextView
-<<<<<<< HEAD
         android:id="@+id/tvPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-=======
-        android:id="@+id/textView12"
         android:layout_width="158dp"
         android:layout_height="37dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
->>>>>>> android/hoang
         android:height="35dp"
         android:drawableLeft="@drawable/ic_phone1"
         android:drawablePadding="20dp"

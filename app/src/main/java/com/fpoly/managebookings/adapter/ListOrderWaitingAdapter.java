@@ -82,7 +82,7 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
             tvFullName = itemView.findViewById(R.id.tvFullName);
             tvPhone = itemView.findViewById(R.id.tvPhone);
 //            textView14 = (TextView) findViewById(R.id.textView14);
-            tvStatusOrder = itemView.findViewById(R.id.tvStatusOrder);
+            tvStatusOrder = itemView.findViewById(R.id.tvStatus);
 
         }
     }
