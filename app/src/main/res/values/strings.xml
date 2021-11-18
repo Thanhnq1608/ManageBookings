@@ -44,7 +44,10 @@
     <string name="tvDem">500000VND/đêm</string>
     <string name="btnDaXacNhan">Đã Xác Nhận</string>
     <string name="btnHuyPhong">Đã Hủy</string>
-
+    <string name="btnChooseRoom">Chọn Phòng</string>
+    <string name="tvChitietPhong">Một thực tế đã có từ lâu rằng người đọc sẽ bị phân tâm bởi nội dung có thể đọc được của một trang khi nhìn vào bố cục của nó. Điểm đáng chú ý của việc sử dụng Lorem of a Ipsum là nó có phân phối chuẩn thường xuyên hơn hoặc ít hơn của các chữ cái.</string>
+    <string name="edtNewPassword">Nhập Mật Khẩu Mới</string>
+    <string name="edtNewPasswordConfirm">Nhập Lại Mật Khẩu</string>
 
 
 </resources>

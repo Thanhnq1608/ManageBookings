@@ -11,7 +11,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="30dp"
             >
 
             <TextView
@@ -23,7 +23,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="@string/tvSoPhong"
                 android:textColor="#000000"
-                android:textSize="16dp" />
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/tvTrangThaiCheckIn"
@@ -37,7 +37,7 @@
                 android:gravity="bottom"
                 android:text="@string/tvTrangThaiCheckIn"
                 android:textColor="#EEFD20"
-                android:textSize="16dp" />
+                android:textSize="30dp" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

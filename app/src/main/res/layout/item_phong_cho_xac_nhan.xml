@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:text="Standard Single Room"
-        android:textSize="18dp"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/imgImageRoom"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="420dp"
+        android:layout_height="205dp"
         android:layout_marginStart="14dp"
         android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +37,7 @@
         android:drawableLeft="@drawable/ic_clock"
         android:drawablePadding="10dp"
         android:gravity="center"
+        android:textSize="20dp"
         android:text="22/11/1999"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -48,6 +49,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
+        android:textSize="20dp"
         android:gravity="center"
         android:text="9H00 AM"
         app:layout_constraintStart_toEndOf="@+id/tvDate"
@@ -55,8 +57,8 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="154dp"
+        android:layout_height="37dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -64,6 +66,7 @@
         android:drawablePadding="10dp"
         android:gravity="center"
         android:text="Trần Văn A"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
@@ -77,6 +80,7 @@
         android:drawableLeft="@drawable/email"
         android:drawablePadding="10dp"
         android:gravity="center"
+        android:textSize="20dp"
         android:text="abcdasdph01123@fpt.edu.vn"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -92,6 +96,7 @@
         android:drawablePadding="20dp"
         android:gravity="center"
         android:text="0123456789"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -100,18 +105,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:height="35dp"
         android:drawableLeft="@drawable/ic_group_person"
         android:drawablePadding="5dp"
         android:gravity="center"
+        android:textSize="20dp"
         android:text="@string/tvSonguoi"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
         android:id="@+id/tvSoLuongNguoi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="164dp"
+        android:layout_height="33dp"
         android:layout_marginStart="14dp"
         android:layout_marginTop="15dp"
         android:height="35dp"
@@ -119,34 +126,38 @@
         android:drawablePadding="5dp"
         android:gravity="center"
         android:text="@string/tvSoLuongNguoi"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
 
     <TextView
         android:id="@+id/tvGiuong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:layout_width="153dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="12dp"
         android:height="35dp"
         android:drawableLeft="@drawable/ic_bed"
         android:drawablePadding="5dp"
         android:gravity="center"
         android:text="@string/tvGiuong"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSoLuongNguoi" />
+        app:layout_constraintTop_toBottomOf="@+id/imgImageRoom" />
 
     <Button
         android:id="@+id/btnChoXacNhan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="260dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="14dp"
         android:backgroundTint="@color/white"
         android:text="@string/btnChoXacNhan"
         android:textColor="#F5F500"
-        android:textSize="16dp"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
