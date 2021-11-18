@@ -22,7 +22,7 @@ public class Activity_dangnhap extends AppCompatActivity {
         Login();
     }
 
-    void Login(){
+    private void Login(){
         et_username = (EditText)findViewById(R.id.edtUsername);
         et_password = (EditText)findViewById(R.id.edtPassword);
 //        btn_login = (Button)findViewById(R.id.btnLogin);
