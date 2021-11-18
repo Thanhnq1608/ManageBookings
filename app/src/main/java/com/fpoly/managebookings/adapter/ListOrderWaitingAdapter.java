@@ -1,6 +1,8 @@
 package com.fpoly.managebookings.adapter;
 
 import android.content.Context;
+import android.os.Build;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,18 +10,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.models.OrderRoomBooked;
+import com.fpoly.managebookings.tool.FormatFromDateToString;
+import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface;
+import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingPresenter;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaitingAdapter.ViewHolder> {
+public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaitingAdapter.ViewHolder> implements ListOrderWaitingInterface {
     private Context context;
     private ArrayList<OrderRoomBooked> orderRoomBookeds;
+    private FormatFromDateToString format =new FormatFromDateToString();
+    private ListOrderWaitingPresenter mListOrderWaitingPresenter = new ListOrderWaitingPresenter(this);
 
     public ListOrderWaitingAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds) {
         this.context = context;
@@ -48,10 +58,11 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
             return;
         }
 
-        holder.tvDate.setText(orderRoomBooked.get);
-
-
-
+        holder.tvDate.setText(format.formatToDate(orderRoomBooked.getTimeBooking()));
+        holder.tvTime.setText(format.formatToHour(orderRoomBooked.getTimeBooking()));
+        holder.tvFullName.setText(orderRoomBooked.getFullName());
+        holder.tvPhone.setText(String.valueOf(orderRoomBooked.getPhone()));
+        holder.imgRoom.setImageResource(R.drawable.sample_image);
     }
 
     @Override
@@ -60,7 +71,7 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
     }
 
     public static class ViewHolder extends  RecyclerView.ViewHolder{
-        TextView tvDate,tvTime,tvFullName,tvPhone,tvMail,tvNumberOfPerson,tvStatusOrder;
+        TextView tvDate,tvTime,tvFullName,tvPhone,tvStatusOrder;
         ImageView imgRoom;
 
         public ViewHolder(@NonNull View itemView) {
@@ -69,9 +80,7 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
             tvDate = itemView.findViewById(R.id.tvDate);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvFullName = itemView.findViewById(R.id.tvFullName);
-            tvMail = itemView.findViewById(R.id.tvMail);
             tvPhone = itemView.findViewById(R.id.tvPhone);
-            tvNumberOfPerson = itemView.findViewById(R.id.tvNumberOfPerson);
 //            textView14 = (TextView) findViewById(R.id.textView14);
             tvStatusOrder = itemView.findViewById(R.id.tvStatusOrder);
 

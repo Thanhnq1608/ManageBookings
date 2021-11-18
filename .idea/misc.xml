@@ -3,14 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/background_shadow_layout_item.xml" value="0.2" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button2.xml" value="0.2869791666666667" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button_choose_room.xml" value="0.2869791666666667" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button_chung.xml" value="0.2869791666666667" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button_login.xml" value="0.2869791666666667" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_chi_tiet_dat_phong.xml" value="0.1099899091826438" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_list_order_waiting.xml" value="0.17798913043478262" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_login.xml" value="0.36041666666666666" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_main.xml" value="0.19895833333333332" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/chi_tiet_phong.xml" value="0.14356884057971014" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/don_cho_checkin.xml" value="0.2890625" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/item_don_checkin.xml" value="0.2890625" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/item_list_room_full.xml" value="0.2890625" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/item_phong_cho_xac_nhan.xml" value="0.25" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/item_room_chi_tiet_dat_phong.xml" value="0.36041666666666666" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/xac_nhan_dat_phong.xml" value="0.25" />
       </map>
     </option>
   </component>
