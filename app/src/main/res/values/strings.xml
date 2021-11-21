@@ -15,7 +15,10 @@
     <string name="btnDangThue">Phòng Đang Thuê</string>
     <string name="tvSoPhong">Phòng 101</string>
     <string name="tvTrangThaiCheckIn">Đang Check In</string>
-    <string name="tvChoXacNhan">Chờ Xác Nhận ...</string>
+    <string name="choXacNhan">Not Confirmed Yet ...</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="occupied">Occupied ...</string>
+    <string name="checkOut">Check-out ...</string>
     <string name="btnChoXacNhan">Chờ Xác Nhận</string>
     <string name="tvTrangThaiEmpty">Đang Trống</string>
     <string name="tvTrangThaiFull">Đang Thuê</string>
@@ -24,9 +27,10 @@
     <string name="tvSoLuongNguoi">2 người/phòng</string>
     <string name="tvDate">1 đêm</string>
     <string name="tvNote">Không có ghi chú</string>
-    <string name="tvPayment">Thanh Toán</string>
-    <string name="tvRoomMoney">Tiền Phòng</string>
-    <string name="tvTax">Thuế (10%)</string>
+    <string name="tvPayment">Payment</string>
+    <string name="tvRoomMoney">Room Charge</string>
+    <string name="tvAdvanceDeposit">Advance Deposit</string>
+    <string name="tvTax">VAT (5%)</string>
     <string name="tvRoomType2">3 ngày 2 đêm</string>
     <string name="btnCheckIn">Check In</string>
     <string name="btnCheckOut">Check Out</string>
@@ -39,13 +43,14 @@
     <string name="price">20.000.000 VND</string>
     <string name="btnXemChiTiet">Xem Chi Tiết</string>
     <string name="title_activity_drawer_menu">drawer_menu</string>
-<!--    <string name="navigation_drawer_open">Open navigation drawer</string>-->
-<!--    <string name="navigation_drawer_close">Close navigation drawer</string>-->
-<!--    <string name="nav_header_title">Android Studio</string>-->
-<!--    <string name="nav_header_subtitle">android.studio@android.com</string>-->
-<!--    <string name="nav_header_desc">Navigation header</string>-->
-<!--    <string name="action_settings">Settings</string>-->
-    <string name="tvThongtin">Thông Tin Người Đặt</string>
+    <!--    <string name="navigation_drawer_open">Open navigation drawer</string>-->
+    <!--    <string name="navigation_drawer_close">Close navigation drawer</string>-->
+    <!--    <string name="nav_header_title">Android Studio</string>-->
+    <!--    <string name="nav_header_subtitle">android.studio@android.com</string>-->
+    <!--    <string name="nav_header_desc">Navigation header</string>-->
+    <!--    <string name="action_settings">Settings</string>-->
+    <string name="tvThongtin">Guest</string>
+    <string name="titleListRoomDetail">Rooming List</string>
     <string name="btnHuy">HỦY</string>
     <string name="btnXacNhan">Xác Nhận</string>
     <string name="tvForget">Quên mật khẩu</string>
@@ -55,13 +60,15 @@
     <string name="tvBack">Quay Lại</string>
     <string name="btnSave">Lưu</string>
     <string name="tvDem">500000VND/đêm</string>
-    <string name="btnDaXacNhan">Đã Xác Nhận</string>
-    <string name="btnHuyPhong">Đã Hủy</string>
+    <string name="btnDaXacNhan">Confirm</string>
+    <string name="btnHuyPhong">Cancel</string>
     <string name="btnChooseRoom">Chọn Phòng</string>
     <string name="tvChitietPhong">Một thực tế đã có từ lâu rằng người đọc sẽ bị phân tâm bởi nội dung có thể đọc được của một trang khi nhìn vào bố cục của nó. Điểm đáng chú ý của việc sử dụng Lorem of a Ipsum là nó có phân phối chuẩn thường xuyên hơn hoặc ít hơn của các chữ cái.</string>
     <string name="edtNewPassword">Nhập Mật Khẩu Mới</string>
     <string name="edtNewPasswordConfirm">Nhập Lại Mật Khẩu</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 
->>>>>>> android/hoang
+    >>>>>>> android/hoang
 </resources>

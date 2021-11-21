@@ -1,8 +1,7 @@
 package com.fpoly.managebookings.adapter;
 
 import android.content.Context;
-import android.os.Build;
-import android.text.format.DateFormat;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.models.OrderRoomBooked;
-import com.fpoly.managebookings.tool.FormatFromDateToString;
+import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingPresenter;
+import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActivity;
 
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,7 +26,6 @@ import java.util.Comparator;
 public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaitingAdapter.ViewHolder> implements ListOrderWaitingInterface {
     private Context context;
     private ArrayList<OrderRoomBooked> orderRoomBookeds;
-    private FormatFromDateToString format =new FormatFromDateToString();
     private ListOrderWaitingPresenter mListOrderWaitingPresenter = new ListOrderWaitingPresenter(this);
 
     public ListOrderWaitingAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds) {
@@ -39,7 +36,7 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_phong_cho_xac_nhan, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order, parent, false);
         return new ViewHolder(view);
     }
 
@@ -48,7 +45,7 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
         Collections.sort(orderRoomBookeds, new Comparator<OrderRoomBooked>() {
             @Override
             public int compare(OrderRoomBooked o1, OrderRoomBooked o2) {
-                return o1.getTimeBooking().compareTo(o2.getTimeBooking());
+                return o1.getTimeBookingStart().compareTo(o2.getTimeBookingStart());
             }
         });
 
@@ -58,11 +55,20 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
             return;
         }
 
-        holder.tvDate.setText(format.formatToDate(orderRoomBooked.getTimeBooking()));
-        holder.tvTime.setText(format.formatToHour(orderRoomBooked.getTimeBooking()));
+        holder.tvDate.setText(Formater.formatToDate(orderRoomBooked.getTimeBookingStart()));
+        holder.tvTime.setText(Formater.formatToHour(orderRoomBooked.getTimeBookingStart()));
         holder.tvFullName.setText(orderRoomBooked.getFullName());
         holder.tvPhone.setText(String.valueOf(orderRoomBooked.getPhone()));
+        holder.tvStatusOrder.setText(Formater.getBookingStatus(orderRoomBooked.getBookingStatus()));
         holder.imgRoom.setImageResource(R.drawable.sample_image);
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OrderBookingDetailActivity.class);
+                intent.putExtra("ORDERROOMBOOKED",orderRoomBooked);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -73,9 +79,11 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
     public static class ViewHolder extends  RecyclerView.ViewHolder{
         TextView tvDate,tvTime,tvFullName,tvPhone,tvStatusOrder;
         ImageView imgRoom;
+        ConstraintLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            layout = itemView.findViewById(R.id.itemOrderWaiting);
             imgRoom = itemView.findViewById(R.id.imgImageRoom);
             tvDate = itemView.findViewById(R.id.tvDate);
             tvTime = itemView.findViewById(R.id.tvTime);

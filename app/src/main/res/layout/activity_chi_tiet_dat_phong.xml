@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/tvEmailUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -17,10 +17,10 @@
         android:gravity="center"
         android:text="abcdasdph01123@fpt.edu.vn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFullnameUser" />
 
     <TextView
-        android:id="@+id/tvDate2"
+        android:id="@+id/tvDateStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/tvTime2"
+        android:id="@+id/tvDateEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -42,11 +42,11 @@
         android:height="35dp"
         android:gravity="center"
         android:text="9h00 AM"
-        app:layout_constraintStart_toEndOf="@+id/tvDate2"
+        app:layout_constraintStart_toEndOf="@+id/tvDateStart"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/tvFullnameUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -57,7 +57,7 @@
         android:gravity="center"
         android:text="Trần Văn A"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDateStart" />
 
     <TextView
         android:id="@+id/textView20"
@@ -71,10 +71,10 @@
         android:gravity="center"
         android:text="2 Người"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPhoneUser" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/tvPhoneUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -85,7 +85,7 @@
         android:gravity="center"
         android:text="0123456789"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEmailUser" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -201,7 +201,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
     <TextView
-        android:id="@+id/textView29"
+        android:id="@+id/tvRoomCharge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
@@ -210,7 +210,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/tvTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -221,14 +221,14 @@
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/tvVAT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:text="200.000 VND"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+        app:layout_constraintTop_toBottomOf="@+id/tvRoomCharge" />
 
     <TextView
         android:id="@+id/textView28"
@@ -247,7 +247,7 @@
         android:layout_marginTop="20dp"
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/tvVAT" />
 
     <TextView
         android:id="@+id/textView32"
@@ -256,6 +256,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:text="Total"
-        app:layout_constraintEnd_toStartOf="@+id/textView31"
+        app:layout_constraintEnd_toStartOf="@+id/tvTotal"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
