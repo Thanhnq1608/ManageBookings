@@ -14,26 +14,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ApiOrderRoomBookedWaiting {
+public class ApiOrderRoomBooked {
     private ApiOrderBookedInterface apiOrderBookedInterface;
     private ApiOrderBookingDetailInterface mApiOrderBookingDetailInterface;
 
-    public ApiOrderRoomBookedWaiting(ApiOrderBookingDetailInterface mApiOrderBookingDetailInterface) {
+    public ApiOrderRoomBooked(ApiOrderBookingDetailInterface mApiOrderBookingDetailInterface) {
         this.mApiOrderBookingDetailInterface = mApiOrderBookingDetailInterface;
     }
 
-    public ApiOrderRoomBookedWaiting(ApiOrderBookedInterface getOrderBookedInterface) {
+    public ApiOrderRoomBooked(ApiOrderBookedInterface getOrderBookedInterface) {
         this.apiOrderBookedInterface = getOrderBookedInterface;
     }
 
-    public void getListAllOrder(int bookingStatus) {
+    public void getOrderByBookingStatus(int bookingStatus) {
         ArrayList<OrderRoomBooked> list = new ArrayList<>();
         ApiService.apiService.getOrderRoom(bookingStatus).enqueue(new Callback<List<OrderRoomBooked>>() {
             @Override
             public void onResponse(Call<List<OrderRoomBooked>> call, Response<List<OrderRoomBooked>> response) {
                 if (response.isSuccessful()) {
                     list.addAll(response.body()) ;
-                    apiOrderBookedInterface.getOrderWaiting(list);
+                    switch (bookingStatus){
+                        case 0:
+                            apiOrderBookedInterface.getOrderWaiting(list);
+                            break;
+                        case 1:
+                            apiOrderBookedInterface.getOrderConfirmed(list);
+                            break;
+                        case 2:
+                            apiOrderBookedInterface.getOrderOccupied(list);
+                            break;
+                        case 3:
+                            apiOrderBookedInterface.getOrderCompleted(list);
+                            break;
+                    }
                 } else {
                     Log.e("Loi", "" + response.code());
                 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="preloaded_fonts" translatable="false">
-        <item>@font/poppins_light</item>
+    <array name="unicode_optima" translatable="false">
+        <item>@font/unicode_optima</item>
     </array>
 </resources>

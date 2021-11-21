@@ -1,12 +1,10 @@
 package com.fpoly.managebookings.views.orderBookingDetail;
 
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookingDetailInterface;
-import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBookedWaiting;
-
-import java.util.ArrayList;
+import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 
 public class OrderBookingDetailPresenter implements ApiOrderBookingDetailInterface {
-    private ApiOrderRoomBookedWaiting mApiOrderRoomBookedWaiting = new ApiOrderRoomBookedWaiting(this);
+    private ApiOrderRoomBooked mApiOrderRoomBooked = new ApiOrderRoomBooked(this);
     private OrderBookingDetailInterface mOrderBookingDetailInterface;
 
     public OrderBookingDetailPresenter(OrderBookingDetailInterface mOrderBookingDetailInterface) {
@@ -19,11 +17,11 @@ public class OrderBookingDetailPresenter implements ApiOrderBookingDetailInterfa
     }
 
     void onClickCancel(String id){
-        mApiOrderRoomBookedWaiting.deleteOrder(id);
+        mApiOrderRoomBooked.deleteOrder(id);
     }
 
     void onClickCofirm(String id,int bookingStatus){
-        mApiOrderRoomBookedWaiting.changeBookingStatus(id,bookingStatus);
+        mApiOrderRoomBooked.changeBookingStatus(id,bookingStatus);
     }
 
     @Override

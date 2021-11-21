@@ -45,9 +45,10 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-//    // RxJava
-//    implementation "io.reactivex.rxjava3:rxjava:3.x.y"
-//
-//    // RxAndroid
-//    implementation 'io.reactivex.rxjava2:rxandroid:2.z.t'
+
+// https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+// https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxandroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
 }

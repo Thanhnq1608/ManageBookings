@@ -11,35 +11,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity
-            android:name=".views.orderBookingDetail.OrderBookingDetailActivity"
-            android:theme="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:exported="true" />
-        <activity
-            android:name=".views.listRoomEmpty.ListRoomEmptyActivity"
-            android:exported="true"
-            android:theme="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:label="List Room Empty">
 
-        </activity>
-        <activity android:name=".Activity_dangnhap" />
         <activity
-            android:name=".views.listOrderWaiting.ListOrderWaitingActivity"
+            android:name=".views.listOrdersCompleted.ListOrdersCompletedActivity"
             android:exported="true"
-            android:label="Waiting List">
+            android:label="@string/title_activity_list_order_completed" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".views.orderBookingDetail.OrderBookingDetailActivity"
+            android:exported="true"
+            android:theme="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+
+        <activity
+            android:name=".views.listRoomEmpty.ListRoomEmptyActivity"
+            android:exported="true"
+            android:label="List Room Empty"
+            android:theme="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"></activity>
+
+        <activity android:name=".Activity_dangnhap" />
+
+        <activity
+            android:name=".views.listOrderWaiting.ListOrderWaitingActivity"
+            android:exported="true"
+            android:label="Waiting List">
+
+        </activity>
+
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+            android:name="optima_fonts"
+            android:resource="@array/unicode_optima" />
     </application>
 
 </manifest>
