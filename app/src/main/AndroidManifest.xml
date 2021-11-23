@@ -10,39 +10,32 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light">
-
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".views.roomDetail.RoomDetailActivity"
+            android:exported="true" />
         <activity
             android:name=".views.listOrdersCompleted.ListOrdersCompletedActivity"
             android:exported="true"
-            android:label="@string/title_activity_list_order_completed" >
+            android:label="@string/title_activity_list_order_completed"></activity>
+        <activity
+            android:name=".views.orderBookingDetail.OrderBookingDetailActivity"
+            android:exported="true"
+            android:label="@string/order_Detail" />
+        <activity
+            android:name=".views.listRoomEmpty.ListRoomEmptyActivity"
+            android:exported="true"
+            android:label="List Room Empty" />
+        <activity android:name=".Activity_dangnhap" />
+        <activity
+            android:name=".views.listOrderWaiting.ListOrderWaitingActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".views.orderBookingDetail.OrderBookingDetailActivity"
-            android:exported="true"
-            android:theme="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
-
-        <activity
-            android:name=".views.listRoomEmpty.ListRoomEmptyActivity"
-            android:exported="true"
-            android:label="List Room Empty"
-            android:theme="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"></activity>
-
-        <activity android:name=".Activity_dangnhap" />
-
-        <activity
-            android:name=".views.listOrderWaiting.ListOrderWaitingActivity"
-            android:exported="true"
-            android:label="Waiting List">
-
-        </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true" />

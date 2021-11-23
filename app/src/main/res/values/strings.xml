@@ -68,7 +68,18 @@
     <string name="edtNewPasswordConfirm">Nhập Lại Mật Khẩu</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="title_activity_list_order_completed">ListOrderCompletedActivity</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="title_activity_list_order_completed">Orders Completed</string>
+    <string name="orders_waiting">Orders Unfinished</string>
+    <string name="orders_comleted">Orders Comleted</string>
+    <string name="list_rooms">List Rooms</string>
+    <string name="logout">Logout</string>
+    <string name="exit">Exit</string>
+    <string name="other">Other</string>
+    <string name="service">Service</string>
+    <string name="order_Detail">Order Detail</string>
+    <string name="room_detail_lower">RoomDetail</string>
 
 
     >>>>>>> android/hoang

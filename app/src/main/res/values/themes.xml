@@ -21,8 +21,7 @@
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.ManageBookings.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@android:style/TextAppearance">
-        <item name="android:textSize">30dp</item>
-        <item name="height">100dp</item>
+    <style name="ThemeOverlay.AppCompat.ActionBar.Title">
+        <item name="android:textSize">50dp</item>
     </style>
 </resources>

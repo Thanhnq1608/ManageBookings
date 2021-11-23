@@ -1,6 +1,7 @@
 package com.fpoly.managebookings.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface;
+import com.fpoly.managebookings.views.roomDetail.RoomDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +58,14 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
         holder.tvNumberOfPerson.setText(roomDetail.getMaximumNumberOfPeople() + " people");
         holder.tvPrice.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
         holder.imgRoom.setImageResource(R.drawable.sample_image);
+        holder.imgRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RoomDetailActivity.class);
+                intent.putExtra("ROOMDETAIL",roomDetail);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

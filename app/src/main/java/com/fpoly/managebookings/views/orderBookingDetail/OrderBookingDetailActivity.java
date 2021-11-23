@@ -41,6 +41,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private TextView tvTotal;
     private TextView tvVAT;
     private TextView tvAdvanceDeposit;
+    private Toolbar toolbar;
     private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this);
     private OrderBookingDetailPresenter mOrderBookingDetailPresenter = new OrderBookingDetailPresenter(this);
     private ListOrderDetailAdapter adapter;
@@ -54,13 +55,11 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         mApiRoomDetail.getAllRoomByIdBooking(itemOrderRoomBooked.get_id());
 
         anhXa();
+        setToolbar();
+
         //Create layout for RecycleView
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
         recyclerView.setLayoutManager(gridLayoutManager);
-
-        //Create Button back on ActionBar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Fill data from API to TextView
         tvFullnameUser.setText(itemOrderRoomBooked.getFullName());
@@ -124,6 +123,16 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         tvVAT = findViewById(R.id.tvVAT);
         tvAdvanceDeposit = findViewById(R.id.tvAdvanceDeposit);
         btnCancel = findViewById(R.id.btnCancelRoom);
+        toolbar = findViewById(R.id.toolbar);
+
+    }
+
+    private void setToolbar(){
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.order_Detail));
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
     @Override

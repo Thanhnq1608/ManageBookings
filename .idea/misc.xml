@@ -8,18 +8,24 @@
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button_choose_room.xml" value="0.2869791666666667" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button_chung.xml" value="0.2869791666666667" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button_login.xml" value="0.2869791666666667" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/ic_completed.xml" value="0.123046875" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/ic_room_list.xml" value="0.123046875" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_chi_tiet_dat_phong.xml" value="0.1099899091826438" />
-        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_list_order_waiting.xml" value="0.17798913043478262" />
-        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_list_orders_completed.xml" value="0.22383004926108374" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_list_order_waiting.xml" value="0.13" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_list_orders_completed.xml" value="0.12" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_list_room_empty.xml" value="0.229064039408867" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_login.xml" value="0.36041666666666666" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_main.xml" value="0.19895833333333332" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_order_booking_detail.xml" value="0.237109375" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_room_detail.xml" value="0.20874384236453203" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/activity_splash.xml" value="0.120703125" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/chi_tiet_dat_phong.xml" value="0.128515625" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/chi_tiet_phong.xml" value="0.2" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/content_main.xml" value="0.10390625" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/dialog_loading.xml" value="0.20474137931034483" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/don_cho_checkin.xml" value="0.2890625" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/don_phong_da_huy.xml" value="0.229064039408867" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/drawer_header.xml" value="0.33" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/forget_password.xml" value="0.229064039408867" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/item_don_checkin.xml" value="0.2890625" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/item_list_room_checkin.xml" value="0.229064039408867" />
@@ -37,11 +43,13 @@
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/list_phong_dang_thue.xml" value="0.120703125" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/list_room_checkin.xml" value="0.120703125" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/list_room_empty.xml" value="0.229064039408867" />
-        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/order_book_room_detail.xml" value="0.14" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/order_book_room_detail.xml" value="0.21" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/quan_li_don.xml" value="0.120703125" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/splash.xml" value="0.120703125" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/toolbar.xml" value="0.10390625" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/trang_chu.xml" value="0.120703125" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/layout/xac_nhan_dat_phong.xml" value="0.25" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/menu/menu_drawer.xml" value="0.67" />
       </map>
     </option>
   </component>

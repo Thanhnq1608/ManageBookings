@@ -1,8 +1,9 @@
 package com.fpoly.managebookings.models;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
-public class RoomDetail {
+public class RoomDetail implements Serializable {
     private String id;
     private String idRoom;
     private String roomName;

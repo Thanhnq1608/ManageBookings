@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:id="@+id/layoutListCompleted"
     tools:context=".views.listOrdersCompleted.ListOrdersCompletedActivity">
+    <include
+        layout="@layout/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recListOrderCompleted"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout_complete"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/refresh">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recListOrderCompleted"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="10dp" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view_complete"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/drawer_header"
+            app:itemIconSize="30dp"
+            app:menu="@menu/menu_drawer"
+            android:theme="@style/NavigationDrawerStyle"/>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</LinearLayout>
