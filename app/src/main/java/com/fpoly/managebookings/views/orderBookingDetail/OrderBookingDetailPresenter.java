@@ -36,11 +36,11 @@ public class OrderBookingDetailPresenter implements ApiOrderBookingDetailInterfa
         }
     }
 
-    void updateRoomDetail(ArrayList<RoomDetail> list){
-        for (int i=0;i<list.size();i++){
-            mApiRoomDetail.updateWhileRemoveOrder(list.get(i).getId());
-        }
-    }
+//    void updateRoomDetail(ArrayList<RoomDetail> list){
+//        for (int i=0;i<list.size();i++){
+//            mApiRoomDetail.updateWhileRemoveOrder(list.get(i).getId());
+//        }
+//    }
 
     @Override
     public void deleteOrder(String statusDelete) {
