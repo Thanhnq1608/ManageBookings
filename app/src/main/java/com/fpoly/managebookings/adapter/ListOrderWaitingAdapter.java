@@ -2,6 +2,7 @@ package com.fpoly.managebookings.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,10 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
         Collections.sort(orderRoomBookeds, new Comparator<OrderRoomBooked>() {
             @Override
             public int compare(OrderRoomBooked o1, OrderRoomBooked o2) {
-                return o1.getTimeBookingStart().compareTo(o2.getTimeBookingStart());
+                return o2.getCreatedAt().compareTo(o1.getCreatedAt());
             }
         });
+        Log.e("=====",""+orderRoomBookeds.get(position).getCreatedAt());
 
         OrderRoomBooked orderRoomBooked = orderRoomBookeds.get(position);
 
@@ -55,11 +57,11 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
             return;
         }
 
-        holder.tvDate.setText(Formater.formatToDate(orderRoomBooked.getTimeBookingStart()));
-        holder.tvTime.setText(Formater.formatToHour(orderRoomBooked.getTimeBookingStart()));
+        holder.tvDate.setText(Formater.formatToDate(orderRoomBooked.getCreatedAt()));
+        holder.tvTime.setText(Formater.formatToHour(orderRoomBooked.getCreatedAt()));
         holder.tvFullName.setText(orderRoomBooked.getFullName());
         holder.tvPhone.setText(String.valueOf(orderRoomBooked.getPhone()));
-        holder.tvStatusOrder.setText(Formater.getBookingStatus(orderRoomBooked.getBookingStatus()));
+        Formater.setStatusForOrder(orderRoomBooked.getBookingStatus(), holder.tvStatusOrder);
         holder.imgRoom.setImageResource(R.drawable.sample_image);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -33,20 +33,7 @@ public class ApiOrderRoomBooked {
             public void onResponse(Call<List<OrderRoomBooked>> call, Response<List<OrderRoomBooked>> response) {
                 if (response.isSuccessful()) {
                     list.addAll(response.body()) ;
-                    switch (bookingStatus){
-                        case 0:
                             apiOrderBookedInterface.getOrderWaiting(list);
-                            break;
-                        case 1:
-                            apiOrderBookedInterface.getOrderConfirmed(list);
-                            break;
-                        case 2:
-                            apiOrderBookedInterface.getOrderOccupied(list);
-                            break;
-                        case 3:
-                            apiOrderBookedInterface.getOrderCompleted(list);
-                            break;
-                    }
                 } else {
                     Log.e("Loi", "" + response.code());
                 }

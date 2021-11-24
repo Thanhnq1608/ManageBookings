@@ -16,6 +16,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -48,11 +51,14 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     private Observable<ArrayList<OrderRoomBooked>> observable;
     private LoadingDialog loadingDialog;
     private NavigationView navigationView;
+    private int bookingStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_order_waiting);
+        bookingStatus = 0;
+        getOrderWaiting.getOrderByBookingStatus(bookingStatus);
 
         recView = findViewById(R.id.recyclerHero);
         layout = findViewById(R.id.layoutListWaiting);
@@ -69,15 +75,20 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
             public void run() {
                 loadingDialog.dismissDialog();
             }
-        },2000);
+        }, 2000);
 
         initializeNavigationView();
         setPullRefresh();
 
         //Get all room empty with bookingStatus = 0
-        getOrderWaiting.getOrderByBookingStatus(0);
         recView.setLayoutManager(new GridLayoutManager(this, 1));
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getOrderWaiting.getOrderByBookingStatus(bookingStatus);
     }
 
     private void initializeNavigationView() {
@@ -86,7 +97,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.open, R.string.close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
@@ -111,28 +122,50 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
         });
     }
 
-    void setPullRefresh(){
+    void setPullRefresh() {
         final SwipeRefreshLayout pullRefresh = findViewById(R.id.refresh);
         pullRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recreate();
+                finish();
+                startActivity(getIntent());
                 pullRefresh.setRefreshing(false);
             }
         });
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_status_order, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.waiting:
+                this.bookingStatus = 0;
+                onResume();
+                break;
+            case R.id.check_in:
+                this.bookingStatus = 1;
+                onResume();
+                break;
+            case R.id.occupied:
+                this.bookingStatus = 2;
+                onResume();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void getOrderWaiting(ArrayList<OrderRoomBooked> list) {
         if (!list.isEmpty()) {
-            observable = Observable.just(list);
-            observable.subscribe(new Consumer<ArrayList<OrderRoomBooked>>() {
-                @Override
-                public void accept(ArrayList<OrderRoomBooked> orderRoomBookeds) throws Exception {
-                    adapter = new ListOrderWaitingAdapter(ListOrderWaitingActivity.this, orderRoomBookeds);
-                    recView.setAdapter(adapter);
-                }
-            });
+            recView.setVisibility(View.VISIBLE);
+            adapter = new ListOrderWaitingAdapter(ListOrderWaitingActivity.this, list);
+            recView.setAdapter(adapter);
         } else {
             recView.setVisibility(View.GONE);
             layout.setBackgroundResource(R.drawable.background_empty);

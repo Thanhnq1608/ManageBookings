@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,13 +46,15 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this);
     private OrderBookingDetailPresenter mOrderBookingDetailPresenter = new OrderBookingDetailPresenter(this);
     private ListOrderDetailAdapter adapter;
+    private ArrayList<RoomDetail> listRoomDetails = new ArrayList<>();
+    private OrderRoomBooked itemOrderRoomBooked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_book_room_detail);
         Intent intent = getIntent();
-        OrderRoomBooked itemOrderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
+        itemOrderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
         mApiRoomDetail.getAllRoomByIdBooking(itemOrderRoomBooked.get_id());
 
         anhXa();
@@ -71,6 +74,8 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         tvVAT.setText(Formater.getFormatMoney((int) (itemOrderRoomBooked.getTotalRoomRate() * 0.05)));
         mOrderBookingDetailPresenter.getTotal(itemOrderRoomBooked.getTotalRoomRate(), itemOrderRoomBooked.getAdvanceDeposit());
 
+        Formater.setButtonWithBookingStatus(itemOrderRoomBooked.getBookingStatus(),btnConfirm,btnCancel);
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +90,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
                         .setCancelable(false)
                         .setPositiveButton(R.string.yes,new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
+
                                 mOrderBookingDetailPresenter.onClickCancel(itemOrderRoomBooked.get_id());
                             }
                         })
@@ -105,7 +111,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked.get_id(),1);
+                mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked.get_id(),itemOrderRoomBooked.getBookingStatus());
             }
         });
     }
@@ -170,7 +176,13 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
     @Override
     public void getAllRoomByIdBooking(ArrayList<RoomDetail> roomDetails) {
+        listRoomDetails.addAll(roomDetails);
         adapter = new ListOrderDetailAdapter(this,roomDetails);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void updateWhileRemoveOrder(String message) {
+
     }
 }

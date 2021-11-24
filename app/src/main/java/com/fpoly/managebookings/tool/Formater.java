@@ -3,10 +3,18 @@ package com.fpoly.managebookings.tool;
 
 import static android.provider.Settings.Secure.getString;
 
+import static androidx.core.content.res.TypedArrayUtils.getNamedColor;
 import static androidx.core.content.res.TypedArrayUtils.getText;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
 
 import com.fpoly.managebookings.R;
 
@@ -71,28 +79,50 @@ public interface Formater {
         }
         return temp;
     }
+
+    static void setButtonWithBookingStatus(int bookingStatus, Button btn,Button btnRemove){
+        switch (bookingStatus){
+            case 0:
+                btn.setText(R.string.confirm);
+                break;
+            case 1:
+                btn.setText(R.string.check_in);
+                break;
+            case 2:
+                btn.setText(R.string.check_out);
+                break;
+            case 3:
+                btn.setVisibility(View.INVISIBLE);
+                btnRemove.setVisibility(View.INVISIBLE);
+                break;
+        }
+    }
+
     static String getFormatMoney(int price){
         DecimalFormat dFormat = new DecimalFormat();
         String formattedString = dFormat.format(price);
         return formattedString + " VND";
     }
 
-    static String getBookingStatus(int bookingStatus){
-        String temp = "";
+    @SuppressLint("ResourceAsColor")
+    static void setStatusForOrder(int bookingStatus, TextView status){
         switch (bookingStatus){
             case 0:
-                temp = "Not Confirmed Yet";
+                status.setText(R.string.choXacNhan);
+                status.setTextColor(0xFFF10A0A);
                 break;
             case 1:
-                temp = "Confirmed";
+                status.setText(R.string.confirmed);
+                status.setTextColor(0xFF28B237);
                 break;
             case 2:
-                temp = "Occupied";
+                status.setText(R.string.occupied);
+                status.setTextColor(0xFFF10A0A);
                 break;
             case 3:
-                temp = "Check-out";
+                status.setText(R.string.confirmed);
+                status.setTextColor(0XFF28B237);
                 break;
         }
-        return temp;
     }
 }

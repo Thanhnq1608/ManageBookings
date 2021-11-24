@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.RecoverySystem;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListRoomEmptyAdapter;
@@ -61,13 +62,13 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
             public void run() {
                 loadingDialog.dismissDialog();
             }
-        },3000);
+        },1000);
 
         initializeNavigationView();
         setPullRefresh();
 
 
-        mApiRoomDetail.getAllRoom(1);
+        mApiRoomDetail.getAllRoom(0);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
         recListRoomEmpty.setLayoutManager(gridLayoutManager);
 
@@ -119,10 +120,16 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     public void getAllRoomEmpty(ArrayList<RoomDetail> roomDetails) {
         mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this,roomDetails);
         recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
+
     }
 
     @Override
     public void getAllRoomByIdBooking(ArrayList<RoomDetail> roomDetails) {
 
+    }
+
+    @Override
+    public void updateWhileRemoveOrder(String message) {
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 
 public class RoomDetail implements Serializable {
-    private String id;
+    private String _id;
     private String idRoom;
     private String roomName;
     private int maximumNumberOfPeople;
@@ -21,7 +21,7 @@ public class RoomDetail implements Serializable {
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public String getRoomName() {
