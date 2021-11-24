@@ -7,12 +7,12 @@
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="496dp"
-        android:layout_height="49dp"
+        android:layout_width="499dp"
+        android:layout_height="52dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
-        android:drawableLeft="@drawable/email"
+        android:drawableLeft="@drawable/ic_email"
         android:drawablePadding="30dp"
         android:gravity="center"
         android:text="abcdasdph01123@fpt.edu.vn"
@@ -22,8 +22,8 @@
 
     <TextView
         android:id="@+id/tvDate2"
-        android:layout_width="237dp"
-        android:layout_height="42dp"
+        android:layout_width="274dp"
+        android:layout_height="52dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -37,8 +37,8 @@
 
     <TextView
         android:id="@+id/tvTime2"
-        android:layout_width="142dp"
-        android:layout_height="40dp"
+        android:layout_width="157dp"
+        android:layout_height="45dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -50,8 +50,8 @@
 
     <TextView
         android:id="@+id/textView17"
-        android:layout_width="225dp"
-        android:layout_height="45dp"
+        android:layout_width="261dp"
+        android:layout_height="56dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
@@ -65,13 +65,13 @@
 
     <TextView
         android:id="@+id/textView20"
-        android:layout_width="187dp"
-        android:layout_height="50dp"
+        android:layout_width="271dp"
+        android:layout_height="59dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
-        android:drawableLeft="@drawable/ic_group_person"
-        android:drawablePadding="25dp"
+        android:drawableLeft="@drawable/ic_group"
+        android:drawablePadding="20dp"
         android:gravity="center"
         android:text="2 Người"
         android:textSize="33dp"
@@ -80,12 +80,12 @@
 
     <TextView
         android:id="@+id/textView19"
-        android:layout_width="249dp"
-        android:layout_height="42dp"
+        android:layout_width="275dp"
+        android:layout_height="60dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:height="35dp"
-        android:drawableLeft="@drawable/ic_phone1"
+        android:drawableLeft="@drawable/ic_smartphone"
         android:drawablePadding="40dp"
         android:gravity="center"
         android:text="0123456789"
@@ -98,36 +98,37 @@
         android:layout_width="786dp"
         android:layout_height="322dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView23" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvThongtin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/tvThongtin"
         android:textSize="37dp"
         android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
     <Button
-        android:id="@+id/btnHuyPhong"
-        android:layout_width="252dp"
-        android:layout_height="90dp"
-        android:layout_marginEnd="272dp"
-        android:layout_marginBottom="16dp"
+        android:id="@+id/btnXacNhan"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="224dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/custom_button_chung"
-        android:backgroundTint="#FF0000"
+        android:backgroundTint="#F44040"
         android:fontFamily="@font/poppins"
-        android:text="@string/btnHuyPhong"
-        android:textColor="#818181"
+        android:text="@string/btnXacNhan"
         android:textSize="27dp"
-        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -135,7 +136,7 @@
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="88dp"
         android:layout_marginTop="12dp"
         android:text="Arrival"
         android:textSize="25dp"
@@ -158,14 +159,14 @@
         android:layout_width="235dp"
         android:layout_height="51dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:width="120dp"
         android:background="#6BFAB64B"
-        android:drawableLeft="@drawable/ic_calendar"
+        android:drawableLeft="@drawable/ic_shape"
         android:drawablePadding="10dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingLeft="10dp"
-        android:text="25-Nov-2021"
+        android:text="25-11-2021"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
@@ -174,16 +175,16 @@
         android:id="@+id/textView24"
         android:layout_width="235dp"
         android:layout_height="51dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:width="120dp"
-        android:textSize="30dp"
         android:background="#6BFAB64B"
-        android:drawableLeft="@drawable/ic_calendar"
+        android:drawableLeft="@drawable/ic_shape"
         android:drawablePadding="10dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingLeft="10dp"
-        android:text="25-Dec-2021"
+        android:text="25-12-2021"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
@@ -198,7 +199,7 @@
         android:text="@string/tvPayment"
         android:textSize="37dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <TextView
         android:id="@+id/tvRoomMoney"
@@ -206,8 +207,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:textSize="30dp"
         android:text="@string/tvRoomMoney"
+        android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPayment" />
 
@@ -216,8 +217,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:text="2.000.000 VND"
         android:textSize="30dp"
+        android:text="2.000.000 VND"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPayment" />
 
@@ -227,9 +228,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:textSize="30dp"
         android:text="2.200.000 VND"
         android:textColor="#FD9B02"
-        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 

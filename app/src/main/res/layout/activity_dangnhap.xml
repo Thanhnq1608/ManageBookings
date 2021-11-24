@@ -12,61 +12,58 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="392dp"
+        android:layout_marginTop="372dp"
         android:layout_marginEnd="40dp"
         android:text="@string/tvLogin"
-        android:textSize="50dp"
+        android:textSize="80dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.419"
+        app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edtPassword"
-        android:layout_width="500dp"
-        android:layout_height="48dp"
+    <TextView
+        android:id="@+id/tv1231"
+        android:layout_width="303dp"
+        android:layout_height="46dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="44dp"
-        android:drawableLeft="@drawable/ic_password_1"
+        android:layout_marginTop="12dp"
+        android:text="@string/tv1231"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.424"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+    <EditText
+        android:id="@+id/edtUsername"
+        android:layout_width="540dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:drawableLeft="@drawable/envelope"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="Email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.342"
+        app:layout_constraintHorizontal_bias="0.369"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/tv1231" />
 
     <TextView
         android:id="@+id/tvForget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="32dp"
         android:background="#FFFFFF"
         android:text="@string/tvForget"
         android:textColor="#F4AE3A"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
-
-    <EditText
-        android:id="@+id/edtUsername"
-        android:layout_width="500dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:drawableLeft="@drawable/email"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.342"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv1231" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -76,22 +73,24 @@
         android:textSize="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toEndOf="@+id/tvForget"
         app:layout_constraintTop_toBottomOf="@+id/edtPassword"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.052" />
 
-    <TextView
-        android:id="@+id/tv1231"
-        android:layout_width="212dp"
-        android:layout_height="27dp"
+    <EditText
+        android:id="@+id/edtPassword"
+        android:layout_width="540dp"
+        android:layout_height="68dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/tv1231"
-        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/login"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.409"
+        app:layout_constraintHorizontal_bias="0.369"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/edtUsername" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

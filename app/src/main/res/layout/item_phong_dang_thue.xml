@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="320dp">
+    android:layout_height="360dp">
 
     <TextView
         android:id="@+id/textView5"
@@ -23,7 +23,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:height="35dp"
-        android:drawableLeft="@drawable/stopwatch"
+        android:drawableLeft="@drawable/ic_stopwatch"
         android:drawablePadding="10dp"
         android:gravity="center"
         android:text="@string/tvDate"
@@ -34,11 +34,11 @@
 
     <TextView
         android:id="@+id/tvTime"
-        android:layout_width="273dp"
-        android:layout_height="47dp"
+        android:layout_width="277dp"
+        android:layout_height="57dp"
         android:layout_marginTop="20dp"
         android:height="35dp"
-        android:drawableLeft="@drawable/table"
+        android:drawableLeft="@drawable/ic_table"
         android:gravity="center"
         android:text="0 VND"
         android:textSize="25dp"
@@ -52,7 +52,7 @@
         android:layout_height="47dp"
         android:layout_marginTop="22dp"
         android:height="35dp"
-        android:drawableLeft="@drawable/credit_card"
+        android:drawableLeft="@drawable/ic_credit_card"
         android:drawablePadding="10dp"
         android:textSize="25dp"
         android:gravity="center"
@@ -67,22 +67,22 @@
         android:layout_height="47dp"
         android:layout_marginTop="20dp"
         android:height="35dp"
-        android:textSize="25dp"
-        android:drawableLeft="@drawable/resting_icon"
+        android:drawableLeft="@drawable/ic_resting"
         android:drawablePadding="10dp"
         android:gravity="center"
         android:text="2.000.000 VND"
+        android:textSize="25dp"
         app:layout_constraintTop_toBottomOf="@+id/tvDate"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="511dp" />
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="273dp"
-        android:layout_height="47dp"
+        android:layout_width="274dp"
+        android:layout_height="53dp"
         android:layout_marginTop="88dp"
         android:height="35dp"
-        android:drawableLeft="@drawable/money_icon"
+        android:drawableLeft="@drawable/ic_money"
         android:drawablePadding="10dp"
         android:gravity="center"
         android:text="1.500.000 VND"
@@ -93,11 +93,11 @@
 
     <TextView
         android:id="@+id/tvNote"
-        android:layout_width="273dp"
-        android:layout_height="47dp"
+        android:layout_width="365dp"
+        android:layout_height="60dp"
         android:layout_marginTop="22dp"
         android:height="35dp"
-        android:drawableLeft="@drawable/writing"
+        android:drawableLeft="@drawable/ic_writting"
         android:drawablePadding="5dp"
         android:gravity="center"
         android:text="@string/tvNote"
