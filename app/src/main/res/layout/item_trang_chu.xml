@@ -24,10 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="260dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="14dp"
         android:backgroundTint="@color/white"
-        android:drawableRight="@drawable/ic_arrowright"
+        android:drawableRight="@drawable/ico"
         android:drawablePadding="6dp"
         android:text="@string/btnXemChiTiet"
         android:textColor="#FD9B02"
@@ -39,15 +39,14 @@
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="764dp"
-        android:layout_height="288dp"
-        android:scaleType="centerCrop"
+        android:layout_width="622dp"
+        android:layout_height="282dp"
         app:layout_constraintBottom_toTopOf="@+id/btnXemChiTiet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/anhTrangChu" />
+        app:srcCompat="@drawable/Anhtrangchu" />
 
     <TextView
         android:id="@+id/tvDem"
@@ -59,9 +58,9 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnXemChiTiet"
-        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintHorizontal_bias="0.213"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8"
-        app:layout_constraintVertical_bias="0.529" />
+        app:layout_constraintVertical_bias="0.59" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

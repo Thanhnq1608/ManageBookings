@@ -18,16 +18,16 @@
         android:textAllCaps="true"
         android:textColor="#000000"
         android:textSize="25dp"
-        android:textStyle="normal"
+        android:textStyle="bold"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="290dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="132dp" />
 
     <Button
         android:id="@+id/btnDonChoCheckIn"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="200dp"
         android:background="@drawable/custom_button_chung"
         android:backgroundTint="#444C6C"
         android:text="@string/btnDonChoCheckIn"
@@ -44,7 +44,7 @@
         android:id="@+id/btnDonDatTruoc"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="200dp"
         android:textSize="25dp"
         android:background="@drawable/custom_button_chung"
         android:backgroundTint="#09FB09"
@@ -65,7 +65,7 @@
         android:background="@drawable/custom_button"
         android:text="@string/btnDonCheckOut"
         android:textAlignment="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="200dp"
         android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="@id/btnDonDatTruoc"
         app:layout_constraintStart_toStartOf="@id/btnDonDatTruoc"
