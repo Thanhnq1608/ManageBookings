@@ -3,9 +3,11 @@ package com.fpoly.managebookings.api.roomDetail;
 import android.util.Log;
 
 import com.fpoly.managebookings.api.ApiService;
+import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,9 @@ import retrofit2.Response;
 
 public class ApiRoomDetail {
     private ApiRoomDetailInterface mApiRoomDetailInterface;
+
+    public ApiRoomDetail() {
+    }
 
     public ApiRoomDetail(ApiRoomDetailInterface mApiRoomDetailInterface) {
         this.mApiRoomDetailInterface = mApiRoomDetailInterface;
@@ -62,22 +67,49 @@ public class ApiRoomDetail {
         });
     }
 
-    public void updateWhileRemoveOrder(String id){
-        ApiService.apiService.updateWhileRemoveOrder(id,"",0).enqueue(new Callback<ResponseMessage>() {
+    public void updateWhileRemoveOrCheck(String idBooking,int roomStatus,String updateIdBooking){
+        ApiService.apiService.updateWhileRemoveOrder(idBooking,roomStatus,updateIdBooking).enqueue(new Callback<UpdateAnyRoomDetail>() {
             @Override
-            public void onResponse(Call<ResponseMessage> call, Response<ResponseMessage> response) {
+            public void onResponse(Call<UpdateAnyRoomDetail> call, Response<UpdateAnyRoomDetail> response) {
                 if (response.isSuccessful()) {
-                    mApiRoomDetailInterface.updateWhileRemoveOrder(response.body().toString());
-                    Log.e("Status",""+response.body().toString());
+                    Log.e("Status",""+response.body().getMessage());
+                    mApiRoomDetailInterface.updateWhileRemoveOrder("Update Success");
                 } else {
                     Log.e("Loi", "" + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseMessage> call, Throwable t) {
+            public void onFailure(Call<UpdateAnyRoomDetail> call, Throwable t) {
                 Log.e("ErrorRoom", "" + t.getMessage());
             }
         });
+    }
+
+    public void getRoomById(ArrayList<OrderDetail> listId){
+        ArrayList<RoomDetail> roomDetails = new ArrayList<>();
+        int i =0;
+        for (i = 0; i < listId.size(); i++){
+            int temp = i;
+            ApiService.apiService.getRoomById(listId.get(i).getIdRoom()).enqueue(new Callback<RoomDetail>() {
+                @Override
+                public void onResponse(Call<RoomDetail> call, Response<RoomDetail> response) {
+                    if (response.isSuccessful()) {
+                        roomDetails.add(response.body());
+                        Log.e("SizeId",""+roomDetails.size());
+                        if (temp == (listId.size()-1)){
+                            mApiRoomDetailInterface.getRoomById(roomDetails);
+                        }
+                    } else {
+                        Log.e("Loi", "" + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RoomDetail> call, Throwable t) {
+                    Log.e("ErrorRoom", "" + t.getMessage());
+                }
+            });
+        }
     }
 }

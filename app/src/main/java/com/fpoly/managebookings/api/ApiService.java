@@ -1,8 +1,10 @@
 package com.fpoly.managebookings.api;
 
+import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
 import com.fpoly.managebookings.models.updateOrder.UpdateBookingStatus;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -24,6 +27,7 @@ public interface ApiService {
             .build()
             .create(ApiService.class);
 
+    // OrderRoomBorder
     @GET("orderRoomBooked/{bookingStatus}")
     Call<List<OrderRoomBooked>> getOrderRoom(@Path("bookingStatus") int bookingStatus);
 
@@ -34,15 +38,29 @@ public interface ApiService {
     @POST("orderRoomBooked/update/{id}")
     Call<UpdateBookingStatus> changeBookingStatus(@Path("id") String id, @Field("bookingStatus") int bookingStatus);
 
+    //OrderDetail
+    @GET("orderRoomBookingDetail/{idBooking}")
+    Call<List<OrderDetail>> getOrderDetail(@Path("idBooking") String idBooking);
+
+    @POST("orderRoomBookingDetail/create")
+    Call<OrderDetail> createOrderDetail(@Body OrderDetail orderDetail);
+
+    @POST("orderRoomBookingDetail/delete/{id}")
+    Call<ResponseMessage> deleteOrderDetail(@Path("id") String id);
+
+    // RoomDetail
     @GET("roomDetail/getAllByStatus/{roomStatus}")
     Call<List<RoomDetail>> getAllRoom(@Path("roomStatus") int roomStatus);
 
     @GET("roomDetail/idBooking/{idBooking}")
     Call<List<RoomDetail>> getAllRoomByIdBooking(@Path("idBooking") String idBooking);
 
+    @GET("roomDetail/{id}")
+    Call<RoomDetail> getRoomById(@Path("id") String id);
+
     @FormUrlEncoded
-    @PUT("roomDetail/update/{id}")
-    Call<ResponseMessage> updateWhileRemoveOrder(@Path("id") String id,@Field("idBooking") String idBooking,@Field("roomStatus") int roomStatus);
+    @POST("roomDetail/updateAny/{idBooking}")
+    Call<UpdateAnyRoomDetail> updateWhileRemoveOrder(@Path("idBooking") String idBooking, @Field("roomStatus") int roomStatus,@Field("idBooking") String updateIdBooking);
 
 
 }

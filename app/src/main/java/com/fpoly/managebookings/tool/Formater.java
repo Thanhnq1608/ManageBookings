@@ -120,7 +120,7 @@ public interface Formater {
                 status.setTextColor(0xFFF10A0A);
                 break;
             case 3:
-                status.setText(R.string.confirmed);
+                status.setText(R.string.completed);
                 status.setTextColor(0XFF28B237);
                 break;
         }

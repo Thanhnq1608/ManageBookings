@@ -19,6 +19,14 @@
             android:exported="true"
             android:label="@string/title_activity_list_order_completed"></activity>
         <activity
+            android:name=".views.listOrderWaiting.ListOrderOccupiedActivity"
+            android:exported="true"
+            android:label="@string/title_activity_list_order_completed"></activity>
+        <activity
+            android:name=".views.listOrderWaiting.ListOrderConfirmedActivity"
+            android:exported="true"
+            android:label="@string/title_activity_list_order_completed"></activity>
+        <activity
             android:name=".views.orderBookingDetail.OrderBookingDetailActivity"
             android:exported="true"
             android:label="@string/order_Detail" />

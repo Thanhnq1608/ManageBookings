@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public interface ApiRoomDetailInterface {
     void getAllRoomEmpty(ArrayList<RoomDetail> roomDetails);
+    void getRoomById(ArrayList<RoomDetail> roomDetails);
     void getAllRoomByIdBooking(ArrayList<RoomDetail> roomDetails);
     void updateWhileRemoveOrder(String message);
 }
