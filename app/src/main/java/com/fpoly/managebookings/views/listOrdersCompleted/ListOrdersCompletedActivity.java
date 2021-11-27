@@ -15,15 +15,20 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListOrderWaitingAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.models.OrderRoomBooked;
+import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
@@ -41,20 +46,15 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private LoadingDialog loadingDialog;
+    private TextView tvTotalPayment,tvTotalOrders;
+    private EditText edt_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_orders_completed);
 
-        //get All Order Completed with boookingStatus = 3
-        mApiOrderRoomBooked.getOrderByBookingStatus(3);
-
-        recyclerView= findViewById(R.id.recListOrderCompleted);
-        layout = findViewById(R.id.layoutListCompleted);
-        toolbar = findViewById(R.id.toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout_complete);
-        navigationView = findViewById(R.id.nav_view_complete);
+        anhXa();
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListOrdersCompletedActivity.this);
@@ -68,10 +68,32 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         },1000);
 
         initializeNavigationView();
-        setPullRefresh();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
         recyclerView.setLayoutManager(gridLayoutManager);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //get All Order Completed with boookingStatus = 3
+        mApiOrderRoomBooked.getOrderByBookingStatus(3);
+
+        //Search by phone
+        searchOrderByPhone();
+
+        //pull refresh
+        setPullRefresh();
+    }
+
+    void anhXa(){recyclerView= findViewById(R.id.recListOrderCompleted);
+        layout = findViewById(R.id.layoutListCompleted);
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout_complete);
+        navigationView = findViewById(R.id.nav_view_complete);
+        tvTotalOrders = findViewById(R.id.tv_total_orders);
+        tvTotalPayment = findViewById(R.id.tv_total_payment);
+        edt_search = findViewById(R.id.edt_search);
     }
 
     void setPullRefresh(){
@@ -79,8 +101,27 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         pullRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recreate();
+                onStart();
                 pullRefresh.setRefreshing(false);
+            }
+        });
+    }
+
+    void searchOrderByPhone(){
+        edt_search.setText("");
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s);
             }
         });
     }
@@ -118,27 +159,18 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
 
     @Override
     public void getOrderWaiting(ArrayList<OrderRoomBooked> list) {
-
-    }
-
-    @Override
-    public void getOrderCompleted(ArrayList<OrderRoomBooked> list) {
         if (!list.isEmpty()){
             adapter = new ListOrderWaitingAdapter(this,list);
             recyclerView.setAdapter(adapter);
+            tvTotalOrders.setText(String.valueOf(list.size()));
+            int totalPayment = 0;
+            for (int i = 0; i < list.size(); i++){
+                totalPayment += list.get(i).getTotalRoomRate();
+            }
+            tvTotalPayment.setText(Formater.getFormatMoney(totalPayment));
         }else {
             recyclerView.setVisibility(View.GONE);
             layout.setBackgroundResource(R.drawable.background_empty);
         }
-    }
-
-    @Override
-    public void getOrderConfirmed(ArrayList<OrderRoomBooked> list) {
-
-    }
-
-    @Override
-    public void getOrderOccupied(ArrayList<OrderRoomBooked> list) {
-
     }
 }

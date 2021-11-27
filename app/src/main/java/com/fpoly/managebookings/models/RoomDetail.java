@@ -20,6 +20,15 @@ public class RoomDetail implements Serializable {
     public RoomDetail() {
     }
 
+    public RoomDetail(int roomStatus,String idBooking) {
+        this.roomStatus = roomStatus;
+        this.idBooking = idBooking;
+    }
+
+    public RoomDetail(int roomStatus) {
+        this.roomStatus = roomStatus;
+    }
+
     public String getId() {
         return _id;
     }

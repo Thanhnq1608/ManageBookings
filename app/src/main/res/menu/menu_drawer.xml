@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:title="@string/service">
-    <menu android:checkableBehavior="single">
-        <item
-            android:id="@+id/orders_waiting"
-            android:title="@string/orders_waiting"
-            android:icon="@drawable/ic_menu_slideshow"/>
-        <item
-            android:id="@+id/orders_completed"
-            android:title="@string/orders_comleted"
-            android:icon="@drawable/ic_completed"/>
-        <item
-            android:id="@+id/list_rooms"
-            android:title="@string/list_rooms"
-            android:icon="@drawable/ic_room_list"/>
-    </menu>
-</item>
+    <item android:title="@string/service">
+        <menu android:checkableBehavior="single">
+            <item
+                android:id="@+id/orders_waiting"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/orders_waiting" />
+            <item
+                android:id="@+id/confirm_order"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/confirmed_orders" />
+            <item
+                android:id="@+id/occupied_order"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/occupied_orders" />
+            <item
+                android:id="@+id/orders_completed"
+                android:icon="@drawable/ic_completed"
+                android:title="@string/orders_comleted" />
+
+        </menu>
+    </item>
+    <item android:title="@string/service_room">
+        <menu>
+            <item
+                android:id="@+id/list_rooms"
+                android:icon="@drawable/ic_room_list"
+                android:title="@string/list_rooms" />
+        </menu>
+    </item>
     <item android:title="@string/other">
-        <menu >
-            <item android:title="@string/logout"
+        <menu>
+            <item
                 android:id="@+id/menu_logout"
-                android:icon="@drawable/ic_logout"/>
-            <item android:title="@string/exit"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout" />
+            <item
                 android:id="@+id/menu_exit"
-                android:icon="@drawable/ic_exit"/>
+                android:icon="@drawable/ic_exit"
+                android:title="@string/exit" />
         </menu>
     </item>
 </menu>

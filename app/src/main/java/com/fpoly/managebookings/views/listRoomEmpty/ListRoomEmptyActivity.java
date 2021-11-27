@@ -25,6 +25,8 @@ import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
+import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -67,11 +69,15 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
         initializeNavigationView();
         setPullRefresh();
 
-
-        mApiRoomDetail.getAllRoom(0);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
         recListRoomEmpty.setLayoutManager(gridLayoutManager);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mApiRoomDetail.getAllRoom(0);
     }
 
     void setPullRefresh(){
@@ -79,7 +85,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
         pullRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recreate();
+                onStart();
                 pullRefresh.setRefreshing(false);
             }
         });
@@ -102,6 +108,12 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                     case R.id.orders_waiting:
                         startActivity(new Intent(ListRoomEmptyActivity.this, ListOrderWaitingActivity.class));
                         break;
+                    case R.id.confirm_order:
+                        startActivity(new Intent(ListRoomEmptyActivity.this, ListOrderConfirmedActivity.class));
+                        break;
+                    case R.id.occupied_order:
+                        startActivity(new Intent(ListRoomEmptyActivity.this, ListOrderOccupiedActivity.class));
+                        break;
                     case R.id.orders_completed:
                         startActivity(new Intent(ListRoomEmptyActivity.this, ListOrdersCompletedActivity.class));
                         break;
@@ -120,6 +132,11 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     public void getAllRoomEmpty(ArrayList<RoomDetail> roomDetails) {
         mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this,roomDetails);
         recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
+
+    }
+
+    @Override
+    public void getRoomById(ArrayList<RoomDetail> roomDetails) {
 
     }
 

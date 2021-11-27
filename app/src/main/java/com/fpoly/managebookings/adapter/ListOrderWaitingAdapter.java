@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,15 +25,19 @@ import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActiv
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaitingAdapter.ViewHolder> implements ListOrderWaitingInterface {
+public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaitingAdapter.ViewHolder> implements ListOrderWaitingInterface, Filterable {
     private Context context;
+    private ArrayList<OrderRoomBooked> orderRoomBookedFilter;
     private ArrayList<OrderRoomBooked> orderRoomBookeds;
     private ListOrderWaitingPresenter mListOrderWaitingPresenter = new ListOrderWaitingPresenter(this);
 
     public ListOrderWaitingAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds) {
         this.context = context;
         this.orderRoomBookeds = orderRoomBookeds;
+        orderRoomBookedFilter = new ArrayList<>(orderRoomBookeds);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -49,7 +55,7 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
                 return o2.getCreatedAt().compareTo(o1.getCreatedAt());
             }
         });
-        Log.e("=====",""+orderRoomBookeds.get(position).getCreatedAt());
+        Log.e("=====", "" + orderRoomBookeds.get(position).getCreatedAt());
 
         OrderRoomBooked orderRoomBooked = orderRoomBookeds.get(position);
 
@@ -67,7 +73,7 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, OrderBookingDetailActivity.class);
-                intent.putExtra("ORDERROOMBOOKED",orderRoomBooked);
+                intent.putExtra("ORDERROOMBOOKED", orderRoomBooked);
                 context.startActivity(intent);
             }
         });
@@ -78,8 +84,43 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
         return orderRoomBookeds.size();
     }
 
-    public static class ViewHolder extends  RecyclerView.ViewHolder{
-        TextView tvDate,tvTime,tvFullName,tvPhone,tvStatusOrder;
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private Filter mFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<OrderRoomBooked> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(orderRoomBookedFilter);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (OrderRoomBooked item : orderRoomBookedFilter) {
+                    if (item.getPhone().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            orderRoomBookeds.clear();
+            orderRoomBookeds.addAll((ArrayList) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvDate, tvTime, tvFullName, tvPhone, tvStatusOrder;
         ImageView imgRoom;
         ConstraintLayout layout;
 

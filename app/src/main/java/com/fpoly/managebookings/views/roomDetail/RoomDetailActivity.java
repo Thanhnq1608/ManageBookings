@@ -14,11 +14,14 @@ import android.widget.TextView;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.tool.Formater;
 
 public class RoomDetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView imageRoom;
-    private TextView tvNumberOfPerson;
+    private TextView tvRoomNameDetail;
+    private TextView tvRoomPositionDetail;
+    private TextView tvRoomPriceDetail;
     private ImageView imgWifi;
     private ImageView imgPool;
     private ImageView imgGym;
@@ -40,6 +43,12 @@ public class RoomDetailActivity extends AppCompatActivity {
         RoomDetail roomDetail =(RoomDetail) intent.getSerializableExtra("ROOMDETAIL");
 
         if (roomDetail != null){
+            tvRoomNameDetail.setText(roomDetail.getRoomName());
+            tvRoomPositionDetail.setText(roomDetail.getIdRoom());
+            tvRoomPriceDetail.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
+        }
+
+        if (roomDetail != null){
             setToolbar(roomDetail.getRoomName());
         }else {
             setToolbar(getString(R.string.room_detail_lower));
@@ -56,9 +65,12 @@ public class RoomDetailActivity extends AppCompatActivity {
     }
 
     void anhXa(){
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         imageRoom = (ImageView) findViewById(R.id.image_room);
-        tvNumberOfPerson = (TextView) findViewById(R.id.tvNumberOfPerson);
+        tvRoomNameDetail = (TextView) findViewById(R.id.tv_room_name_detail);
+        tvRoomPositionDetail = (TextView) findViewById(R.id.tv_room_position_detail);
+        tvRoomPriceDetail = (TextView) findViewById(R.id.tv_room_price_detail);
         imgWifi = (ImageView) findViewById(R.id.img_wifi);
         imgPool = (ImageView) findViewById(R.id.img_pool);
         imgGym = (ImageView) findViewById(R.id.img_gym);

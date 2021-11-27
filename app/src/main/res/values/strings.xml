@@ -19,6 +19,7 @@
     <string name="confirmed">Confirmed</string>
     <string name="occupied">Occupied ...</string>
     <string name="checkOut">Check-out ...</string>
+    <string name="completed">Completed</string>
     <string name="btnChoXacNhan">Chờ Xác Nhận</string>
     <string name="tvTrangThaiEmpty">Đang Trống</string>
     <string name="tvTrangThaiFull">Đang Thuê</string>
@@ -71,20 +72,28 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="title_activity_list_order_completed">Orders Completed</string>
-    <string name="orders_waiting">Orders Unfinished</string>
-    <string name="orders_comleted">Orders Comleted</string>
-    <string name="list_rooms">List Rooms</string>
+    <string name="orders_waiting">Unconfirmed Orders</string>
+    <string name="orders_comleted">Orders Completed</string>
+    <string name="list_rooms">Vacant Rooms</string>
     <string name="logout">Logout</string>
     <string name="exit">Exit</string>
     <string name="other">Other</string>
-    <string name="service">Service</string>
+    <string name="service">Service Orders</string>
     <string name="order_Detail">Order Detail</string>
     <string name="room_detail_lower">RoomDetail</string>
     <string name="confirm">Confirm</string>
     <string name="check_in">Check-in</string>
     <string name="check_out">Check-out</string>
     <string name="orders_check_in">Orders Check-in</string>
-
-
-    >>>>>>> android/hoang
+    <string name="orders_confirmed">Orders Confirmed</string>
+    <string name="orders_occupied">Orders Occupied</string>
+    <string name="service_room">Service Room</string>
+    <string name="occupied_orders">Occupied Orders</string>
+    <string name="confirmed_orders">Confirmed Orders</string>
+    <string name="total_payment">Total Payment:</string>
+    <string name="total_orders">Total Orders:</string>
+    <string name="position">Position:</string>
+    <string name="price_room">Price: </string>
+    <string name="phone_number">Phone number</string>
+    <string name="orders">Orders</string>
 </resources>

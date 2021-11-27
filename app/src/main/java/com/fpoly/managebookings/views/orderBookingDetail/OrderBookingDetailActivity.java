@@ -21,16 +21,22 @@ import android.widget.Toast;
 import com.fpoly.managebookings.MainActivity;
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListOrderDetailAdapter;
+import com.fpoly.managebookings.api.orderDetail.ApiOrderDetail;
+import com.fpoly.managebookings.api.orderDetail.ApiOrderDetailInterface;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
+import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.Formater;
+import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
+import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
+import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 
 import java.util.ArrayList;
 
-public class OrderBookingDetailActivity extends AppCompatActivity implements OrderBookingDetailInterface, ApiRoomDetailInterface {
+public class OrderBookingDetailActivity extends AppCompatActivity implements OrderBookingDetailInterface, ApiRoomDetailInterface, ApiOrderDetailInterface {
     private TextView tvEmailUser;
     private TextView tvDateStart;
     private TextView tvDateEnd;
@@ -48,6 +54,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private ListOrderDetailAdapter adapter;
     private ArrayList<RoomDetail> listRoomDetails = new ArrayList<>();
     private OrderRoomBooked itemOrderRoomBooked;
+    private ApiOrderDetail mApiOrderDetail = new ApiOrderDetail(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +68,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         setToolbar();
 
         //Create layout for RecycleView
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         //Fill data from API to TextView
@@ -74,7 +81,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         tvVAT.setText(Formater.getFormatMoney((int) (itemOrderRoomBooked.getTotalRoomRate() * 0.05)));
         mOrderBookingDetailPresenter.getTotal(itemOrderRoomBooked.getTotalRoomRate(), itemOrderRoomBooked.getAdvanceDeposit());
 
-        Formater.setButtonWithBookingStatus(itemOrderRoomBooked.getBookingStatus(),btnConfirm,btnCancel);
+        Formater.setButtonWithBookingStatus(itemOrderRoomBooked.getBookingStatus(), btnConfirm, btnCancel);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,14 +95,14 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
                 alertDialogBuilder
                         .setMessage("Are you sure you want to delete this order?")
                         .setCancelable(false)
-                        .setPositiveButton(R.string.yes,new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                mApiRoomDetail.updateWhileRemoveOrCheck(itemOrderRoomBooked.get_id(), 0,null);
                                 mOrderBookingDetailPresenter.onClickCancel(itemOrderRoomBooked.get_id());
                             }
                         })
-                        .setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
                                 // if this button is clicked, just close
                                 // the dialog box and do nothing
                                 dialog.cancel();
@@ -111,7 +118,18 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked.get_id(),itemOrderRoomBooked.getBookingStatus());
+                mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked, listRoomDetails);
+                switch (itemOrderRoomBooked.getBookingStatus()) {
+                    case 0:
+                        startActivity(new Intent(OrderBookingDetailActivity.this, ListOrderConfirmedActivity.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(OrderBookingDetailActivity.this, ListOrderOccupiedActivity.class));
+                        break;
+                    case 2:
+                        startActivity(new Intent(OrderBookingDetailActivity.this, ListOrdersCompletedActivity.class));
+                        break;
+                }
             }
         });
     }
@@ -133,7 +151,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getString(R.string.order_Detail));
         ActionBar actionBar = getSupportActionBar();
@@ -143,7 +161,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
@@ -156,7 +174,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
     @Override
     public void onConfirmSuccess(String updateStatus) {
-        Toast.makeText(this, ""+updateStatus, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + updateStatus, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, ListOrderWaitingActivity.class);
         startActivity(intent);
     }
@@ -175,14 +193,32 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     }
 
     @Override
-    public void getAllRoomByIdBooking(ArrayList<RoomDetail> roomDetails) {
-        listRoomDetails.addAll(roomDetails);
-        adapter = new ListOrderDetailAdapter(this,roomDetails);
+    public void getRoomById(ArrayList<RoomDetail> roomDetails) {
+        this.listRoomDetails.addAll(roomDetails);
+        adapter = new ListOrderDetailAdapter(this, listRoomDetails);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
+    public void getAllRoomByIdBooking(ArrayList<RoomDetail> roomDetails) {
+        if (itemOrderRoomBooked.getBookingStatus() != 3) {
+            this.listRoomDetails.addAll(roomDetails);
+            adapter = new ListOrderDetailAdapter(this, roomDetails);
+            recyclerView.setAdapter(adapter);
+        } else {
+            mApiOrderDetail.getAllOrderDetail(itemOrderRoomBooked.get_id());
+
+        }
+    }
+
+    @Override
     public void updateWhileRemoveOrder(String message) {
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getAllOrderDetail(ArrayList<OrderDetail> orderDetails) {
+        mApiRoomDetail.getRoomById(orderDetails);
 
     }
 }

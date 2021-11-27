@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutListCompleted"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/layoutListCompleted"
     tools:context=".views.listOrdersCompleted.ListOrdersCompletedActivity">
+
     <include
         layout="@layout/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout_complete"
@@ -18,14 +19,102 @@
         android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/refresh">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recListOrderCompleted"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="10dp" />
+                android:orientation="vertical">
+                <EditText
+                    android:layout_width="700dp"
+                    android:layout_height="70dp"
+                    android:layout_marginVertical="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/ic_search"
+                    android:drawablePadding="20dp"
+                    android:id="@+id/edt_search"
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:fontFamily="@font/optima_b"
+                    android:hint="@string/phone_number"
+                    android:textSize="30dp"
+                    android:background="@drawable/custom_border"
+                    android:paddingHorizontal="10dp"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recListOrderCompleted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#E3E1E1"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="#FFFFFF"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_payment"
+                            android:fontFamily="@font/optima_b"
+                            android:textSize="35dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_total_payment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="300,000 VND"
+                            android:fontFamily="@font/optima_b"
+                            android:textSize="35dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_orders"
+                            android:fontFamily="@font/optima_b"
+                            android:textSize="35dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_total_orders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20"
+                            android:fontFamily="@font/optima_b"
+                            android:textSize="35dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/orders"
+                            android:fontFamily="@font/optima_b"
+                            android:textSize="35dp"
+                            android:layout_marginLeft="20dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -33,10 +122,10 @@
             android:layout_width="400dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:theme="@style/NavigationDrawerStyle"
             app:headerLayout="@layout/drawer_header"
             app:itemIconSize="30dp"
-            app:menu="@menu/menu_drawer"
-            android:theme="@style/NavigationDrawerStyle"/>
+            app:menu="@menu/menu_drawer" />
     </androidx.drawerlayout.widget.DrawerLayout>
 
 </LinearLayout>

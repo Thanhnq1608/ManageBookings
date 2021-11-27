@@ -1,24 +1,10 @@
 package com.fpoly.managebookings.views.listOrderWaiting;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,11 +12,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListOrderWaitingAdapter;
-import com.fpoly.managebookings.adapter.ListRoomEmptyAdapter;
-import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
+import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
@@ -40,9 +36,8 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 
-public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOrderBookedInterface {
+public class ListOrderConfirmedActivity extends AppCompatActivity implements ApiOrderBookedInterface {
     private RecyclerView recView;
     private ListOrderWaitingAdapter adapter;
     private ApiOrderRoomBooked getOrderWaiting = new ApiOrderRoomBooked(this);
@@ -68,9 +63,8 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
         navigationView = findViewById(R.id.nav_view);
         edt_search = findViewById(R.id.edt_search);
 
-
         //Loading Data
-        loadingDialog = new LoadingDialog(ListOrderWaitingActivity.this);
+        loadingDialog = new LoadingDialog(ListOrderConfirmedActivity.this);
         loadingDialog.startLoadingDialog();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -90,10 +84,9 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     @Override
     protected void onStart() {
         super.onStart();
-        getOrderWaiting.getOrderByBookingStatus(0);
+        getOrderWaiting.getOrderByBookingStatus(1);
         searchOrderByPhone();
         setPullRefresh();
-
     }
 
     void searchOrderByPhone(){
@@ -116,7 +109,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     }
 
     private void initializeNavigationView() {
-        toolbar.setTitle(getString(R.string.orders_waiting));
+        toolbar.setTitle(R.string.orders_confirmed);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -130,19 +123,19 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.orders_waiting:
-                        startActivity(new Intent(ListOrderWaitingActivity.this, ListOrderWaitingActivity.class));
+                        startActivity(new Intent(ListOrderConfirmedActivity.this, ListOrderWaitingActivity.class));
                         break;
                     case R.id.confirm_order:
-                        startActivity(new Intent(ListOrderWaitingActivity.this, ListOrderConfirmedActivity.class));
+                        startActivity(new Intent(ListOrderConfirmedActivity.this, ListOrderConfirmedActivity.class));
                         break;
                     case R.id.occupied_order:
-                        startActivity(new Intent(ListOrderWaitingActivity.this, ListOrderOccupiedActivity.class));
+                        startActivity(new Intent(ListOrderConfirmedActivity.this, ListOrderOccupiedActivity.class));
                         break;
                     case R.id.orders_completed:
-                        startActivity(new Intent(ListOrderWaitingActivity.this, ListOrdersCompletedActivity.class));
+                        startActivity(new Intent(ListOrderConfirmedActivity.this, ListOrdersCompletedActivity.class));
                         break;
                     case R.id.list_rooms:
-                        startActivity(new Intent(ListOrderWaitingActivity.this, ListRoomEmptyActivity.class));
+                        startActivity(new Intent(ListOrderConfirmedActivity.this, ListRoomEmptyActivity.class));
                         break;
                 }
 
@@ -164,33 +157,10 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_status_order, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.waiting:
-                startActivity(new Intent(ListOrderWaitingActivity.this,ListOrderWaitingActivity.class));
-                break;
-            case R.id.check_in:
-                startActivity(new Intent(ListOrderWaitingActivity.this,ListOrderConfirmedActivity.class));
-                break;
-            case R.id.occupied:
-                startActivity(new Intent(ListOrderWaitingActivity.this,ListOrderOccupiedActivity.class));
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void getOrderWaiting(ArrayList<OrderRoomBooked> list) {
         if (!list.isEmpty()) {
             recView.setVisibility(View.VISIBLE);
-            adapter = new ListOrderWaitingAdapter(ListOrderWaitingActivity.this, list);
+            adapter = new ListOrderWaitingAdapter(ListOrderConfirmedActivity.this, list);
             recView.setAdapter(adapter);
         } else {
             recView.setVisibility(View.GONE);
