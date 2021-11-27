@@ -23,15 +23,84 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:srcCompat="@drawable/room_chi_tiet_phong" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="20dp">
+                    <TextView
+                        android:id="@+id/tv_room_name_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/optima_b"
+                        android:text="VIP Room"
+                        android:textSize="50dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/black"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/optima_b"
+                            android:text="@string/position"
+                            android:textSize="35dp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_room_position_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/optima_b"
+                            android:text="502"
+                            android:textSize="35dp"
+                            android:layout_marginLeft="10dp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/optima_b"
+                            android:text="@string/price_room"
+                            android:textSize="35dp"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_room_price_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/optima_b"
+                            android:text="100,000 VND"
+                            android:textSize="35dp"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tvNumberOfPerson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/optima_b"
                     android:text="Tiện Nghi"
                     android:textSize="50dp"
                     android:textStyle="bold"
+                    android:textColor="@color/black"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"/>
 
@@ -92,6 +161,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_bed"
                         android:drawablePadding="10dp"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/optima_b"
                         android:gravity="center|start"
                         android:text="1 giường King"
@@ -107,6 +177,7 @@
                         android:drawablePadding="10dp"
                         android:fontFamily="@font/optima_b"
                         android:text="2 người"
+                        android:textColor="@color/black"
                         android:textSize="35dp" />
                 </LinearLayout>
 
@@ -118,6 +189,7 @@
                     android:textSize="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <TextView
@@ -127,6 +199,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
                     android:gravity="clip_horizontal"
                     android:text="@string/tvChitietPhong"
                     android:textSize="24dp" />

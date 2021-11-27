@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/background_shadow_layout_item.xml" value="0.2" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_border.xml" value="0.25234375" />
+        <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button.xml" value="0.25234375" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button2.xml" value="0.2869791666666667" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button_choose_room.xml" value="0.2869791666666667" />
         <entry key="..\:/FPT_POLY/CNTT/DuAnTotNghiep/ManageBookings/app/src/main/res/drawable/custom_button_chung.xml" value="0.2869791666666667" />

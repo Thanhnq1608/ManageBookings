@@ -92,4 +92,8 @@
     <string name="confirmed_orders">Confirmed Orders</string>
     <string name="total_payment">Total Payment:</string>
     <string name="total_orders">Total Orders:</string>
+    <string name="position">Position:</string>
+    <string name="price_room">Price: </string>
+    <string name="phone_number">Phone number</string>
+    <string name="orders">Orders</string>
 </resources>

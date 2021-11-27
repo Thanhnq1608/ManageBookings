@@ -27,6 +27,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <EditText
+                    android:layout_width="700dp"
+                    android:layout_height="70dp"
+                    android:layout_marginVertical="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/ic_search"
+                    android:drawablePadding="20dp"
+                    android:id="@+id/edt_search"
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:fontFamily="@font/optima_b"
+                    android:hint="@string/phone_number"
+                    android:textSize="30dp"
+                    android:background="@drawable/custom_border"
+                    android:paddingHorizontal="10dp"
+                    />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recListOrderCompleted"
@@ -91,9 +107,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Order"
+                            android:text="@string/orders"
                             android:fontFamily="@font/optima_b"
                             android:textSize="35dp"
+                            android:layout_marginLeft="20dp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
                 </LinearLayout>

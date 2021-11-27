@@ -39,13 +39,13 @@ public interface ApiService {
     Call<UpdateBookingStatus> changeBookingStatus(@Path("id") String id, @Field("bookingStatus") int bookingStatus);
 
     //OrderDetail
-    @GET("orderRoomBookingDetail/{idBooking}")
+    @GET("oderRoomBookingDetail/{idBooking}")
     Call<List<OrderDetail>> getOrderDetail(@Path("idBooking") String idBooking);
 
-    @POST("orderRoomBookingDetail/create")
+    @POST("oderRoomBookingDetail/create")
     Call<OrderDetail> createOrderDetail(@Body OrderDetail orderDetail);
 
-    @POST("orderRoomBookingDetail/delete/{id}")
+    @POST("oderRoomBookingDetail/delete/{id}")
     Call<ResponseMessage> deleteOrderDetail(@Path("id") String id);
 
     // RoomDetail

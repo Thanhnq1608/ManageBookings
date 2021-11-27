@@ -3,10 +3,13 @@ package com.fpoly.managebookings.views.listOrderWaiting;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -46,6 +49,7 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
     private Observable<ArrayList<OrderRoomBooked>> observable;
     private LoadingDialog loadingDialog;
     private NavigationView navigationView;
+    private EditText edt_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,7 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
         drawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
+        edt_search = findViewById(R.id.edt_search);
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListOrderConfirmedActivity.this);
@@ -80,7 +85,27 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
     protected void onStart() {
         super.onStart();
         getOrderWaiting.getOrderByBookingStatus(1);
+        searchOrderByPhone();
         setPullRefresh();
+    }
+
+    void searchOrderByPhone(){
+        edt_search.setText("");
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s);
+            }
+        });
     }
 
     private void initializeNavigationView() {

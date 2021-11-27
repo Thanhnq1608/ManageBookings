@@ -15,8 +15,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,19 +47,14 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
     private NavigationView navigationView;
     private LoadingDialog loadingDialog;
     private TextView tvTotalPayment,tvTotalOrders;
+    private EditText edt_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_orders_completed);
 
-        recyclerView= findViewById(R.id.recListOrderCompleted);
-        layout = findViewById(R.id.layoutListCompleted);
-        toolbar = findViewById(R.id.toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout_complete);
-        navigationView = findViewById(R.id.nav_view_complete);
-        tvTotalOrders = findViewById(R.id.tv_total_orders);
-        tvTotalPayment = findViewById(R.id.tv_total_payment);
+        anhXa();
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListOrdersCompletedActivity.this);
@@ -80,7 +78,22 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         super.onStart();
         //get All Order Completed with boookingStatus = 3
         mApiOrderRoomBooked.getOrderByBookingStatus(3);
+
+        //Search by phone
+        searchOrderByPhone();
+
+        //pull refresh
         setPullRefresh();
+    }
+
+    void anhXa(){recyclerView= findViewById(R.id.recListOrderCompleted);
+        layout = findViewById(R.id.layoutListCompleted);
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout_complete);
+        navigationView = findViewById(R.id.nav_view_complete);
+        tvTotalOrders = findViewById(R.id.tv_total_orders);
+        tvTotalPayment = findViewById(R.id.tv_total_payment);
+        edt_search = findViewById(R.id.edt_search);
     }
 
     void setPullRefresh(){
@@ -90,6 +103,25 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
             public void onRefresh() {
                 onStart();
                 pullRefresh.setRefreshing(false);
+            }
+        });
+    }
+
+    void searchOrderByPhone(){
+        edt_search.setText("");
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s);
             }
         });
     }
