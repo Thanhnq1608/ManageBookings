@@ -3,62 +3,68 @@ package com.fpoly.managebookings.tool;
 
 import static android.provider.Settings.Secure.getString;
 
-import static androidx.core.content.res.TypedArrayUtils.getNamedColor;
-import static androidx.core.content.res.TypedArrayUtils.getText;
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
-import android.graphics.Color;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import androidx.annotation.ColorInt;
+import androidx.annotation.RequiresApi;
 
 import com.fpoly.managebookings.R;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public interface Formater {
 
-    static String formatToDateTime(String date){
-        Date temp = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm dd/MM/yyyy");
-        format.setTimeZone(TimeZone.getTimeZone("GMT"));
-        try {
-            temp = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return format.format(temp);
-    }
-    static String formatToDate(String date){
-        Date temp = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        format.setTimeZone(TimeZone.getTimeZone("GMT"));
-        try {
-            temp = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return format.format(temp);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    static String formatDateTimeToString(String date) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
+        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+        format.setTimeZone(TimeZone.getTimeZone(zoneId));
+        String temp = format.format(format.parse(date));
+        return temp;
     }
 
-    static String formatToHour(String time){
-        Date temp = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
-        format.setTimeZone(TimeZone.getTimeZone("GMT"));
-        try {
-            temp = format.parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return format.format(temp);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    static String formatDateToStringForCreateAt(String date) throws ParseException {
+        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.forLanguageTag("vi"));
+        SimpleDateFormat output = new SimpleDateFormat("hh:mm dd/MM/yyyy",Locale.forLanguageTag("vi"));
+        input.setTimeZone(TimeZone.getTimeZone("UTC"));
+        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+        output.setTimeZone(TimeZone.getTimeZone(zoneId));
+        Date temp = input.parse(date);
+        String dateTime = output.format(temp);
+        Log.e("date",""+dateTime);
+        return dateTime;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    static Date formatToDateTime(String date) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
+        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+        format.setTimeZone(TimeZone.getTimeZone(zoneId));
+        Date temp = format.parse(date);
+        return temp;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    static Date formatDateTimeToStringGMT(String date) throws ParseException {
+        SimpleDateFormat input = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy");
+        SimpleDateFormat output = new SimpleDateFormat("hh:mm dd/MM/yyyy",Locale.forLanguageTag("vi"));
+//        input.setTimeZone(TimeZone.getTimeZone("UTC"));
+        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+        output.setTimeZone(TimeZone.getTimeZone(zoneId));
+        Date temp = input.parse(date);
+        return output.parse(temp.toString());
     }
 
     static String getKindOfRoom(int id){

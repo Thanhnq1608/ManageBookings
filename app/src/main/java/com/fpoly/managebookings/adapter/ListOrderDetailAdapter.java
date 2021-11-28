@@ -72,6 +72,7 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
             public void onClick(View v) {
                 Intent intent = new Intent(context, RoomDetailActivity.class);
                 intent.putExtra("ROOMDETAIL",roomDetail);
+                intent.putExtra("HIDEBUTTON",true);
                 context.startActivity(intent);
             }
         });

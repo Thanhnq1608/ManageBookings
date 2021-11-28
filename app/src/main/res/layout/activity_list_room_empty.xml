@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:id="@+id/layoutListRoomEmpty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".views.listRoomEmpty.ListRoomEmptyActivity">
 
     <include
@@ -19,14 +19,35 @@
         android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/refresh">
-            <androidx.recyclerview.widget.RecyclerView
+            android:layout_height="match_parent">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recListRoomEmpty"
-                android:background="#F6E7F8"/>
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recListRoomEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F6E7F8">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/float_button_add_booking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginStart="650dp"
+                    android:layout_marginTop="1030dp"
+                    android:src="@drawable/ic_baseline_add_24"
+                    app:fabCustomSize="100dp"
+                    app:maxImageSize="50dp" />
+            </RelativeLayout>
+
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -34,9 +55,9 @@
             android:layout_width="400dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:theme="@style/NavigationDrawerStyle"
             app:headerLayout="@layout/drawer_header"
             app:itemIconSize="30dp"
-            app:menu="@menu/menu_drawer"
-            android:theme="@style/NavigationDrawerStyle"/>
+            app:menu="@menu/menu_drawer" />
     </androidx.drawerlayout.widget.DrawerLayout>
 </LinearLayout>

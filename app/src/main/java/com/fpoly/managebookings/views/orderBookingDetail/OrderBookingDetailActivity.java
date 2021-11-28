@@ -1,6 +1,7 @@
 package com.fpoly.managebookings.views.orderBookingDetail;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,12 +30,14 @@ import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
 import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class OrderBookingDetailActivity extends AppCompatActivity implements OrderBookingDetailInterface, ApiRoomDetailInterface, ApiOrderDetailInterface {
@@ -55,7 +59,9 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private ArrayList<RoomDetail> listRoomDetails = new ArrayList<>();
     private OrderRoomBooked itemOrderRoomBooked;
     private ApiOrderDetail mApiOrderDetail = new ApiOrderDetail(this);
+    private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +80,15 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         //Fill data from API to TextView
         tvFullnameUser.setText(itemOrderRoomBooked.getFullName());
         tvPhoneUser.setText(itemOrderRoomBooked.getPhone());
-        tvDateStart.setText(Formater.formatToDateTime(itemOrderRoomBooked.getTimeBookingStart()));
-        tvDateEnd.setText(Formater.formatToDateTime(itemOrderRoomBooked.getTimeBookingEnd()));
+        if (itemOrderRoomBooked.getEmail() != null){
+            tvEmailUser.setText(itemOrderRoomBooked.getEmail());
+        }
+        try {
+            tvDateStart.setText(Formater.formatDateTimeToString(itemOrderRoomBooked.getTimeBookingStart()));
+            tvDateEnd.setText(Formater.formatDateTimeToString(itemOrderRoomBooked.getTimeBookingEnd()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         tvRoomCharge.setText(Formater.getFormatMoney(itemOrderRoomBooked.getTotalRoomRate()));
         tvAdvanceDeposit.setText(Formater.getFormatMoney(itemOrderRoomBooked.getAdvanceDeposit()));
         tvVAT.setText(Formater.getFormatMoney((int) (itemOrderRoomBooked.getTotalRoomRate() * 0.05)));
@@ -118,18 +131,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked, listRoomDetails);
-                switch (itemOrderRoomBooked.getBookingStatus()) {
-                    case 0:
-                        startActivity(new Intent(OrderBookingDetailActivity.this, ListOrderConfirmedActivity.class));
-                        break;
-                    case 1:
-                        startActivity(new Intent(OrderBookingDetailActivity.this, ListOrderOccupiedActivity.class));
-                        break;
-                    case 2:
-                        startActivity(new Intent(OrderBookingDetailActivity.this, ListOrdersCompletedActivity.class));
-                        break;
-                }
+                mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked, listRoomDetails,OrderBookingDetailActivity.this);
             }
         });
     }
@@ -174,16 +176,13 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
     @Override
     public void onConfirmSuccess(String updateStatus) {
-        Toast.makeText(this, "" + updateStatus, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, ListOrderWaitingActivity.class);
-        startActivity(intent);
+        fixSizeForToast.fixSizeToast(updateStatus);
     }
 
     @Override
     public void onCancelRoom(String cancelStatus) {
-        Toast.makeText(this, "" + cancelStatus, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, ListOrderWaitingActivity.class);
-        startActivity(intent);
+        fixSizeForToast.fixSizeToast(cancelStatus);
+        onBackPressed();
     }
 
 
@@ -213,7 +212,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
     @Override
     public void updateWhileRemoveOrder(String message) {
-        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+        fixSizeForToast.fixSizeToast(message);
     }
 
     @Override

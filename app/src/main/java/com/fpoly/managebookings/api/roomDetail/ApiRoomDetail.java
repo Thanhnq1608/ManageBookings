@@ -19,9 +19,6 @@ import retrofit2.Response;
 public class ApiRoomDetail {
     private ApiRoomDetailInterface mApiRoomDetailInterface;
 
-    public ApiRoomDetail() {
-    }
-
     public ApiRoomDetail(ApiRoomDetailInterface mApiRoomDetailInterface) {
         this.mApiRoomDetailInterface = mApiRoomDetailInterface;
     }
@@ -73,7 +70,7 @@ public class ApiRoomDetail {
             public void onResponse(Call<UpdateAnyRoomDetail> call, Response<UpdateAnyRoomDetail> response) {
                 if (response.isSuccessful()) {
                     Log.e("Status",""+response.body().getMessage());
-                    mApiRoomDetailInterface.updateWhileRemoveOrder("Update Success");
+                    mApiRoomDetailInterface.updateWhileRemoveOrder(response.body().getMessage());
                 } else {
                     Log.e("Loi", "" + response.code());
                 }

@@ -8,6 +8,7 @@ public class OrderRoomBooked implements Serializable {
     private String _id;
     private String fullName;
     private String phone;
+    private String email;
     private String timeBookingStart;
     private String timeBookingEnd;
     private int advanceDeposit;
@@ -20,18 +21,15 @@ public class OrderRoomBooked implements Serializable {
     public OrderRoomBooked() {
     }
 
-    public OrderRoomBooked(String _id, String fullName, String phone, String timeBookingStart, String timeBookingEnd, int advanceDeposit, int bookingStatus, int totalRoomRate, String createdAt, String updatedAt, long __v) {
-        this._id = _id;
+    public OrderRoomBooked(String fullName, String phone, String email, String timeBookingStart, String timeBookingEnd, int advanceDeposit, int bookingStatus, int totalRoomRate) {
         this.fullName = fullName;
         this.phone = phone;
+        this.email = email;
         this.timeBookingStart = timeBookingStart;
         this.timeBookingEnd = timeBookingEnd;
         this.advanceDeposit = advanceDeposit;
         this.bookingStatus = bookingStatus;
         this.totalRoomRate = totalRoomRate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.__v = __v;
     }
 
     public String getTimeBookingStart() {
@@ -40,6 +38,14 @@ public class OrderRoomBooked implements Serializable {
 
     public void setTimeBookingStart(String timeBookingStart) {
         this.timeBookingStart = timeBookingStart;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getAdvanceDeposit() {
@@ -104,5 +110,23 @@ public class OrderRoomBooked implements Serializable {
 
     public String getUpdatedAt() {
         return updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderRoomBooked{" +
+                "_id='" + _id + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", timeBookingStart='" + timeBookingStart + '\'' +
+                ", timeBookingEnd='" + timeBookingEnd + '\'' +
+                ", advanceDeposit=" + advanceDeposit +
+                ", bookingStatus=" + bookingStatus +
+                ", totalRoomRate=" + totalRoomRate +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", __v=" + __v +
+                '}';
     }
 }

@@ -26,6 +26,23 @@ public class ApiOrderRoomBooked {
         this.apiOrderBookedInterface = getOrderBookedInterface;
     }
 
+    public void createOrder(OrderRoomBooked orderRoomBooked) {
+        ApiService.apiService.createOrder(orderRoomBooked).enqueue(new Callback<OrderRoomBooked>() {
+            @Override
+            public void onResponse(Call<OrderRoomBooked> call, Response<OrderRoomBooked> response) {
+                if (response.isSuccessful()) {
+                    apiOrderBookedInterface.responseCreateOrder(response.body());
+                } else {
+                    Log.e("Loi", "" + response.code()+response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<OrderRoomBooked> call, Throwable t) {
+                Log.e("Error:", "" + t.getMessage());
+            }
+        });
+    }
+
     public void getOrderByBookingStatus(int bookingStatus) {
         ArrayList<OrderRoomBooked> list = new ArrayList<>();
         ApiService.apiService.getOrderRoom(bookingStatus).enqueue(new Callback<List<OrderRoomBooked>>() {

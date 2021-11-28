@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,12 +23,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fpoly.managebookings.R;
-import com.fpoly.managebookings.adapter.ListOrderWaitingAdapter;
+import com.fpoly.managebookings.adapter.ListOrdersAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.models.OrderRoomBooked;
+import com.fpoly.managebookings.tool.DialogExit;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
+import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 
 public class ListOrdersCompletedActivity extends AppCompatActivity implements ApiOrderBookedInterface {
     private ApiOrderRoomBooked mApiOrderRoomBooked = new ApiOrderRoomBooked(this);
-    private ListOrderWaitingAdapter adapter;
+    private ListOrdersAdapter adapter;
     private RecyclerView recyclerView;
     private LinearLayout layout;
     private Toolbar toolbar;
@@ -79,9 +81,6 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         //get All Order Completed with boookingStatus = 3
         mApiOrderRoomBooked.getOrderByBookingStatus(3);
 
-        //Search by phone
-        searchOrderByPhone();
-
         //pull refresh
         setPullRefresh();
     }
@@ -109,21 +108,23 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
 
     void searchOrderByPhone(){
         edt_search.setText("");
-        edt_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        if (edt_search != null){
+            edt_search.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
+                }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(s);
-            }
-        });
+                @Override
+                public void afterTextChanged(Editable s) {
+                    adapter.getFilter().filter(s);
+                }
+            });
+        }
     }
 
     private void initializeNavigationView() {
@@ -143,12 +144,21 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
                     case R.id.orders_waiting:
                         startActivity(new Intent(ListOrdersCompletedActivity.this, ListOrderWaitingActivity.class));
                         break;
+                    case R.id.confirm_order:
+                        startActivity(new Intent(ListOrdersCompletedActivity.this, ListOrderConfirmedActivity.class));
+                        break;
+                    case R.id.occupied_order:
+                        startActivity(new Intent(ListOrdersCompletedActivity.this, ListOrderOccupiedActivity.class));
+                        break;
                     case R.id.orders_completed:
                         startActivity(new Intent(ListOrdersCompletedActivity.this, ListOrdersCompletedActivity.class));
                         break;
                     case R.id.list_rooms:
                         startActivity(new Intent(ListOrdersCompletedActivity.this, ListRoomEmptyActivity.class));
                         break;
+                    case R.id.menu_exit:
+                        DialogExit dialogExit = new DialogExit();
+                        dialogExit.exit(ListOrdersCompletedActivity.this);
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -157,11 +167,15 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         });
     }
 
+
     @Override
     public void getOrderWaiting(ArrayList<OrderRoomBooked> list) {
         if (!list.isEmpty()){
-            adapter = new ListOrderWaitingAdapter(this,list);
+            edt_search.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+            adapter = new ListOrdersAdapter(this,list);
             recyclerView.setAdapter(adapter);
+            searchOrderByPhone();
             tvTotalOrders.setText(String.valueOf(list.size()));
             int totalPayment = 0;
             for (int i = 0; i < list.size(); i++){
@@ -169,8 +183,14 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
             }
             tvTotalPayment.setText(Formater.getFormatMoney(totalPayment));
         }else {
+            edt_search.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.GONE);
             layout.setBackgroundResource(R.drawable.background_empty);
         }
+    }
+
+    @Override
+    public void responseCreateOrder(OrderRoomBooked orderRoomBooked) {
+
     }
 }

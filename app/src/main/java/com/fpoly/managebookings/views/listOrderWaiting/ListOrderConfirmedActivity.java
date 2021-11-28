@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -24,10 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fpoly.managebookings.R;
-import com.fpoly.managebookings.adapter.ListOrderWaitingAdapter;
+import com.fpoly.managebookings.adapter.ListOrdersAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.models.OrderRoomBooked;
+import com.fpoly.managebookings.tool.DialogExit;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
@@ -39,7 +38,7 @@ import io.reactivex.Observable;
 
 public class ListOrderConfirmedActivity extends AppCompatActivity implements ApiOrderBookedInterface {
     private RecyclerView recView;
-    private ListOrderWaitingAdapter adapter;
+    private ListOrdersAdapter adapter;
     private ApiOrderRoomBooked getOrderWaiting = new ApiOrderRoomBooked(this);
     private ArrayList<OrderRoomBooked> orderRoomBookeds = new ArrayList<>();
     private Toolbar toolbar;
@@ -85,27 +84,28 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
     protected void onStart() {
         super.onStart();
         getOrderWaiting.getOrderByBookingStatus(1);
-        searchOrderByPhone();
         setPullRefresh();
     }
 
     void searchOrderByPhone(){
         edt_search.setText("");
-        edt_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        if (edt_search != null){
+            edt_search.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
+                }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(s);
-            }
-        });
+                @Override
+                public void afterTextChanged(Editable s) {
+                    adapter.getFilter().filter(s);
+                }
+            });
+        }
     }
 
     private void initializeNavigationView() {
@@ -137,6 +137,9 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
                     case R.id.list_rooms:
                         startActivity(new Intent(ListOrderConfirmedActivity.this, ListRoomEmptyActivity.class));
                         break;
+                    case R.id.menu_exit:
+                        DialogExit dialogExit = new DialogExit();
+                        dialogExit.exit(ListOrderConfirmedActivity.this);
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -159,12 +162,20 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
     @Override
     public void getOrderWaiting(ArrayList<OrderRoomBooked> list) {
         if (!list.isEmpty()) {
+            edt_search.setVisibility(View.VISIBLE);
             recView.setVisibility(View.VISIBLE);
-            adapter = new ListOrderWaitingAdapter(ListOrderConfirmedActivity.this, list);
+            adapter = new ListOrdersAdapter(ListOrderConfirmedActivity.this, list);
             recView.setAdapter(adapter);
+            searchOrderByPhone();
         } else {
+            edt_search.setVisibility(View.INVISIBLE);
             recView.setVisibility(View.GONE);
             layout.setBackgroundResource(R.drawable.background_empty);
         }
+    }
+
+    @Override
+    public void responseCreateOrder(OrderRoomBooked orderRoomBooked) {
+
     }
 }

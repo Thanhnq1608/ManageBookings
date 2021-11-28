@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Manage Bookings</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -73,13 +73,14 @@
     <string name="close">Close</string>
     <string name="title_activity_list_order_completed">Orders Completed</string>
     <string name="orders_waiting">Unconfirmed Orders</string>
-    <string name="orders_comleted">Orders Completed</string>
+    <string name="orders_comleted">Completed Orders</string>
     <string name="list_rooms">Vacant Rooms</string>
     <string name="logout">Logout</string>
     <string name="exit">Exit</string>
     <string name="other">Other</string>
     <string name="service">Service Orders</string>
     <string name="order_Detail">Order Detail</string>
+    <string name="order_create">Create Order</string>
     <string name="room_detail_lower">RoomDetail</string>
     <string name="confirm">Confirm</string>
     <string name="check_in">Check-in</string>
@@ -96,4 +97,12 @@
     <string name="price_room">Price: </string>
     <string name="phone_number">Phone number</string>
     <string name="orders">Orders</string>
+    <string name="question_exit">Are you sure you want to exit</string>
+    <string name="customer_information">Customer Information</string>
+    <string name="customer_fullname">Customer Fullname</string>
+    <string name="customer_phone_number">Customer Phone Number</string>
+    <string name="customer_email">Customer Email</string>
+    <string name="booking_time">Booking Time</string>
+    <string name="create">Create</string>
+    <string name="cancel">cancel</string>
 </resources>

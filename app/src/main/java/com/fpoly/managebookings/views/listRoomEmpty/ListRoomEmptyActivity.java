@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RecoverySystem;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,11 +25,14 @@ import com.fpoly.managebookings.adapter.ListRoomEmptyAdapter;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -43,6 +47,8 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     private NavigationView navView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private LoadingDialog loadingDialog;
+    private FloatingActionButton actionButton;
+    private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,14 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_room_empty);
         recListRoomEmpty = (RecyclerView) findViewById(R.id.recListRoomEmpty);
         navView = (NavigationView) findViewById(R.id.nav_view_room_empty);
+        actionButton = findViewById(R.id.float_button_add_booking);
+
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListRoomEmptyActivity.this, CreateOrderActivity.class));
+            }
+        });
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListRoomEmptyActivity.this);
@@ -147,6 +161,6 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
 
     @Override
     public void updateWhileRemoveOrder(String message) {
-        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+        fixSizeForToast.fixSizeToast(message);
     }
 }

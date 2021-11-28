@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +42,11 @@ public class RoomDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         RoomDetail roomDetail =(RoomDetail) intent.getSerializableExtra("ROOMDETAIL");
+        boolean isHideButton = intent.getBooleanExtra("HIDEBUTTON",false);
+
+        if (isHideButton){
+            btnSelectRoom.setVisibility(View.INVISIBLE);
+        }
 
         if (roomDetail != null){
             tvRoomNameDetail.setText(roomDetail.getRoomName());

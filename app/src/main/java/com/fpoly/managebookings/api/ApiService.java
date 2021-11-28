@@ -31,6 +31,9 @@ public interface ApiService {
     @GET("orderRoomBooked/{bookingStatus}")
     Call<List<OrderRoomBooked>> getOrderRoom(@Path("bookingStatus") int bookingStatus);
 
+    @POST("orderRoomBooked/create")
+    Call<OrderRoomBooked> createOrder(@Body OrderRoomBooked orderRoomBooked);
+
     @POST("orderRoomBooked/delete/{id}")
     Call<ResponseMessage> deleteOrder(@Path("id") String id);
 

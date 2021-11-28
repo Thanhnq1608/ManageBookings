@@ -1,7 +1,9 @@
 package com.fpoly.managebookings.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,18 +25,19 @@ import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingPresenter;
 import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActivity;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaitingAdapter.ViewHolder> implements ListOrderWaitingInterface, Filterable {
+public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.ViewHolder> implements ListOrderWaitingInterface, Filterable {
     private Context context;
     private ArrayList<OrderRoomBooked> orderRoomBookedFilter;
     private ArrayList<OrderRoomBooked> orderRoomBookeds;
     private ListOrderWaitingPresenter mListOrderWaitingPresenter = new ListOrderWaitingPresenter(this);
 
-    public ListOrderWaitingAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds) {
+    public ListOrdersAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds) {
         this.context = context;
         this.orderRoomBookeds = orderRoomBookeds;
         orderRoomBookedFilter = new ArrayList<>(orderRoomBookeds);
@@ -47,6 +51,7 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Collections.sort(orderRoomBookeds, new Comparator<OrderRoomBooked>() {
@@ -55,16 +60,22 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
                 return o2.getCreatedAt().compareTo(o1.getCreatedAt());
             }
         });
-        Log.e("=====", "" + orderRoomBookeds.get(position).getCreatedAt());
+        Log.e("=====", "" + orderRoomBookeds.get(position).getTimeBookingStart());
 
         OrderRoomBooked orderRoomBooked = orderRoomBookeds.get(position);
 
         if (orderRoomBookeds.isEmpty()) {
             return;
         }
-
-        holder.tvDate.setText(Formater.formatToDate(orderRoomBooked.getCreatedAt()));
-        holder.tvTime.setText(Formater.formatToHour(orderRoomBooked.getCreatedAt()));
+        try {
+            if (orderRoomBooked.getBookingStatus() != 3) {
+                holder.tvDate.setText(Formater.formatDateToStringForCreateAt(orderRoomBooked.getCreatedAt()));
+            } else {
+                holder.tvDate.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingEnd()));
+            }
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.tvFullName.setText(orderRoomBooked.getFullName());
         holder.tvPhone.setText(String.valueOf(orderRoomBooked.getPhone()));
         Formater.setStatusForOrder(orderRoomBooked.getBookingStatus(), holder.tvStatusOrder);
@@ -86,6 +97,9 @@ public class ListOrderWaitingAdapter extends RecyclerView.Adapter<ListOrderWaiti
 
     @Override
     public Filter getFilter() {
+        if (mFilter == null) {
+            return null;
+        }
         return mFilter;
     }
 

@@ -12,20 +12,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".views.createOrder.CreateOrderActivity"
+            android:exported="true" />
+        <activity
             android:name=".views.roomDetail.RoomDetailActivity"
             android:exported="true" />
         <activity
             android:name=".views.listOrdersCompleted.ListOrdersCompletedActivity"
             android:exported="true"
-            android:label="@string/title_activity_list_order_completed"></activity>
+            android:label="@string/title_activity_list_order_completed" />
         <activity
             android:name=".views.listOrderWaiting.ListOrderOccupiedActivity"
             android:exported="true"
-            android:label="@string/title_activity_list_order_completed"></activity>
+            android:label="@string/title_activity_list_order_completed" />
         <activity
             android:name=".views.listOrderWaiting.ListOrderConfirmedActivity"
             android:exported="true"
-            android:label="@string/title_activity_list_order_completed"></activity>
+            android:label="@string/title_activity_list_order_completed" />
         <activity
             android:name=".views.orderBookingDetail.OrderBookingDetailActivity"
             android:exported="true"

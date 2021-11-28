@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface ApiOrderBookedInterface {
     void getOrderWaiting(ArrayList<OrderRoomBooked> list);
+    void responseCreateOrder(OrderRoomBooked orderRoomBooked);
 }
