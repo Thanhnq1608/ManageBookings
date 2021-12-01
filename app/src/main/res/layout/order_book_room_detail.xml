@@ -2,303 +2,344 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
         layout="@layout/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
-    <TextView
-        android:id="@+id/tvTtile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/unicode_optima"
-        android:text="@string/tvThongtin"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        android:layout_marginStart="10dp"
-        android:textStyle="bold" />
-
-
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/tvDateStart"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_marginStart="10dp"
-            android:height="35dp"
-            android:drawableLeft="@drawable/ic_clock"
-            android:drawablePadding="30dp"
-            android:fontFamily="@font/unicode_optima"
-            android:gravity="center"
-            android:text="22/11/1999"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/unicode_optima"
-            android:layout_marginLeft="20dp"
-            android:text="to"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/tvDateEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:height="35dp"
-            android:fontFamily="@font/unicode_optima"
-            android:gravity="center"
-            android:text="23/11/2021"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvFullnameUser"
-        android:layout_width="wrap_content"
-        android:layout_height="39dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/ic_user"
-        android:drawablePadding="30dp"
-        android:fontFamily="@font/unicode_optima"
-        android:gravity="center|start"
-        android:text="Trần Văn A"
-        android:textColor="@color/black"
-        android:textSize="30dp" />
-    <TextView
-        android:id="@+id/tvEmailUser"
-        android:layout_width="wrap_content"
-        android:layout_height="47dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/email"
-        android:drawablePadding="30dp"
-        android:fontFamily="@font/unicode_optima"
-        android:gravity="center|start"
-        android:text="abcdasdph01123@fpt.edu.vn"
-        android:textColor="@color/black"
-        android:textSize="30dp"/>
-
-    <TextView
-
-        android:id="@+id/tvPhoneUser"
-        android:layout_width="265dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/ic_phone1"
-        android:drawablePadding="40dp"
-        android:fontFamily="@font/unicode_optima"
-        android:gravity="center|start"
-        android:text="0123456789"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEmailUser" />
-
-    <TextView
-        android:id="@+id/tvTtile2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/unicode_optima"
-        android:text="@string/titleListRoomDetail"
-        android:textColor="@color/black"
-        android:layout_marginStart="10dp"
-        android:textSize="40dp"
-        android:textStyle="bold" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.428" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvPayment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/unicode_optima"
-        android:text="@string/tvPayment"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|fill_horizontal"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/unicode_optima"
-            android:text="@string/tvRoomMoney"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/tvRoomCharge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|end"
-            android:fontFamily="@font/unicode_optima"
-            android:text="2.000.000 VND"
-            android:textColor="@color/black"
-            android:textSize="30dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tv1233"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/unicode_optima"
-            android:text="@string/tvAdvanceDeposit"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-        <TextView
-            android:id="@+id/tvAdvanceDeposit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/unicode_optima"
-            android:gravity="center|start"
-            android:inputType="numberDecimal"
-            android:text="200000"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/tvTax"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/unicode_optima"
-            android:gravity="center|start"
-            android:text="@string/tvTax"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/tvVAT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity=""
-            android:fontFamily="@font/unicode_optima"
-            android:text="200.000 VND"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="400dp"
-        android:layout_height="3dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="end"
-        android:background="@color/black" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:paddingRight="20dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/textView32"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/unicode_optima"
-            android:text="Total"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-        <TextView
-            android:id="@+id/tvTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/unicode_optima"
-            android:text="2.200.000 VND"
-            android:textColor="#FD9B02"
-            android:textSize="30dp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvTtile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/unicode_optima"
+                android:text="@string/tvThongtin"
+                android:textColor="@color/black"
+                android:textSize="40dp"
+                android:textStyle="bold" />
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvDateStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="10dp"
+                    android:height="35dp"
+                    android:drawableLeft="@drawable/ic_clock"
+                    android:drawablePadding="30dp"
+                    android:fontFamily="@font/unicode_optima"
+                    android:gravity="center"
+                    android:text="22/11/1999"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
 
-        <Button
-            android:id="@+id/btnConfirm"
-            android:layout_width="252dp"
-            android:layout_height="90dp"
-            android:background="@drawable/custom_button_chung"
-            android:backgroundTint="#8BC34A"
-            android:fontFamily="@font/unicode_optima"
-            android:text="@string/btnDaXacNhan"
-            android:textColor="@color/black"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="to"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
 
-        <Button
-            android:id="@+id/btnCancelRoom"
-            android:layout_width="252dp"
-            android:layout_height="90dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/custom_button_chung"
-            android:backgroundTint="#EF1B1B"
-            android:fontFamily="@font/unicode_optima"
-            android:text="@string/btnHuyPhong"
-            android:textColor="@color/black"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tvDateEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:height="35dp"
+                    android:fontFamily="@font/unicode_optima"
+                    android:gravity="center"
+                    android:text="23/11/2021"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvFullnameUser"
+                android:layout_width="wrap_content"
+                android:layout_height="39dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:height="35dp"
+                android:drawableLeft="@drawable/ic_user"
+                android:drawablePadding="30dp"
+                android:fontFamily="@font/unicode_optima"
+                android:gravity="center|start"
+                android:text="Trần Văn A"
+                android:textColor="@color/black"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/tvEmailUser"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:height="35dp"
+                android:drawableLeft="@drawable/email"
+                android:drawablePadding="30dp"
+                android:fontFamily="@font/unicode_optima"
+                android:gravity="center|start"
+                android:text="abcdasdph01123@fpt.edu.vn"
+                android:textColor="@color/black"
+                android:textSize="30dp" />
+
+            <TextView
+
+                android:id="@+id/tvPhoneUser"
+                android:layout_width="265dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:height="35dp"
+                android:drawableLeft="@drawable/ic_phone1"
+                android:drawablePadding="40dp"
+                android:fontFamily="@font/unicode_optima"
+                android:gravity="center|start"
+                android:text="0123456789"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmailUser" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp">
+
+                <TextView
+                    android:id="@+id/tvTtile2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="@string/titleListRoomDetail"
+                    android:textColor="@color/black"
+                    android:textSize="40dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/btn_delete"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_delete"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/btn_add"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_add" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.428" />
+
+            <TextView
+                android:id="@+id/tvPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/unicode_optima"
+                android:text="@string/tvPayment"
+                android:textColor="@color/black"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical|fill_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="@string/tvRoomMoney"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/tvRoomCharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|end"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="2.000.000 VND"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:id="@+id/tv1233"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="@string/tvAdvanceDeposit"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/tvAdvanceDeposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/unicode_optima"
+                    android:gravity="center|start"
+                    android:inputType="numberDecimal"
+                    android:text="200000"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:id="@+id/tvTax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/unicode_optima"
+                    android:gravity="center|start"
+                    android:text="@string/tvTax"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/tvVAT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="200.000 VND"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="400dp"
+                android:layout_height="3dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/textView32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="Total"
+                    android:textColor="@color/black"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="2.200.000 VND"
+                    android:textColor="#FD9B02"
+                    android:textSize="30dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnConfirm"
+                    android:layout_width="252dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/custom_button_chung"
+                    android:backgroundTint="#8BC34A"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="@string/btnDaXacNhan"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnCancelRoom"
+                    android:layout_width="252dp"
+                    android:layout_height="90dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/custom_button_chung"
+                    android:backgroundTint="#EF1B1B"
+                    android:fontFamily="@font/unicode_optima"
+                    android:text="@string/btnHuyPhong"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

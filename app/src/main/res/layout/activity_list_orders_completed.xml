@@ -27,22 +27,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <EditText
-                    android:layout_width="700dp"
+                <LinearLayout
+                    android:layout_width="750dp"
                     android:layout_height="70dp"
-                    android:layout_marginVertical="20dp"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="10dp"
                     android:layout_gravity="center_horizontal"
-                    android:drawableLeft="@drawable/ic_search"
-                    android:drawablePadding="20dp"
-                    android:id="@+id/edt_search"
-                    android:textColor="@color/black"
-                    android:inputType="number"
-                    android:fontFamily="@font/optima_b"
-                    android:hint="@string/phone_number"
-                    android:textSize="30dp"
-                    android:background="@drawable/custom_border"
-                    android:paddingHorizontal="10dp"
-                    />
+                    android:gravity="center">
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:layout_weight="1"
+                        android:layout_marginVertical="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:drawableLeft="@drawable/ic_search"
+                        android:drawablePadding="20dp"
+                        android:id="@+id/edt_search"
+                        android:textColor="@color/black"
+                        android:inputType="number"
+                        android:fontFamily="@font/optima_b"
+                        android:hint="@string/phone_number"
+                        android:textSize="30dp"
+                        android:background="@drawable/custom_border"
+                        android:paddingHorizontal="10dp"
+                        />
+                    <ImageView
+                        android:id="@+id/btn_filter"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/background_shadow_layout_item"
+                        android:src="@drawable/ic_menu"/>
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recListOrderCompleted"

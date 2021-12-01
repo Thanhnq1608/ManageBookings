@@ -6,162 +6,214 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".views.createOrder.CreateOrderActivity">
+
     <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/customer_information"
-        android:textColor="@color/black"
-        android:fontFamily="@font/optima_b"
-        android:textSize="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"/>
-    <EditText
-        android:id="@+id/edt_fullname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/customer_fullname"
-        android:textColor="@color/black"
-        android:fontFamily="@font/unicode_optima"
-        android:textSize="35dp"
-        android:text="Thanh"
-        android:layout_marginLeft="20dp"
-        android:layout_marginVertical="20dp"
-        android:drawableLeft="@drawable/ic_person"
-        android:drawablePadding="20dp"
-        android:drawableTintMode="add"/>
-    <EditText
-        android:id="@+id/edt_phone_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/customer_phone_number"
-        android:textColor="@color/black"
-        android:fontFamily="@font/unicode_optima"
-        android:textSize="35dp"
-        android:text="0332751701"
-        android:layout_marginLeft="20dp"
-        android:layout_marginVertical="20dp"
-        android:drawableLeft="@drawable/ic_phone"
-        android:drawablePadding="20dp"
-        android:drawableTintMode="add"
-        android:inputType="number"/>
-    <EditText
-        android:id="@+id/edt_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/customer_email"
-        android:textColor="@color/black"
-        android:fontFamily="@font/unicode_optima"
-        android:textSize="35dp"
-        android:text="Thanh123@gmail.com"
-        android:layout_marginLeft="20dp"
-        android:layout_marginVertical="20dp"
-        android:drawableLeft="@drawable/ic_email"
-        android:drawablePadding="20dp"
-        android:drawableTintMode="add"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/booking_time"
-        android:textColor="@color/black"
-        android:fontFamily="@font/optima_b"
-        android:textSize="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"/>
-    <LinearLayout
+        android:layout_height="wrap_content" />
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout_createOrder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="100dp"
-        android:paddingHorizontal="20dp"
-        android:gravity="center"
-        android:layout_marginVertical="20dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+
         <LinearLayout
-            android:id="@+id/btn_bookingStart"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingVertical="10dp"
-            android:orientation="vertical"
-            android:background="@drawable/background_shadow_layout_item">
-            <TextView
-                android:id="@+id/tv_time_bookingStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12:00"
-                android:textColor="@color/black"
-                android:fontFamily="@font/unicode_optima"
-                android:textStyle="bold"
-                android:textSize="35dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_date_bookingStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="24/15/2021"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/optima_b"
+                android:text="@string/customer_information"
                 android:textColor="@color/black"
+                android:textSize="40dp" />
+
+                <EditText
+                    android:id="@+id/edt_fullname"
+                    android:layout_width="700dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableLeft="@drawable/ic_person"
+                    android:drawablePadding="20dp"
+                    android:drawableTintMode="add"
+                    android:fontFamily="@font/unicode_optima"
+                    android:hint="@string/customer_fullname"
+                    android:textColor="@color/black"
+                    android:textSize="35dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_error_fullname"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:textSize="30dp"/>
+
+            <EditText
+                android:id="@+id/edt_phone_number"
+                android:layout_width="700dp"
+                android:layout_height="70dp"
+                android:layout_marginVertical="20dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/ic_phone"
+                android:drawablePadding="20dp"
+                android:drawableTintMode="add"
                 android:fontFamily="@font/unicode_optima"
+                android:hint="@string/customer_phone_number"
+                android:inputType="number"
+                android:textColor="@color/black"
+                android:textSize="35dp" />
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="700dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawablePadding="20dp"
+                android:drawableTintMode="add"
+                android:fontFamily="@font/unicode_optima"
+                android:hint="@string/customer_email"
+                android:textColor="@color/black"
+                android:textSize="35dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_error_email"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/red"
                 android:textStyle="bold"
-                android:textSize="35dp"/>
+                android:textSize="30dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/optima_b"
+                android:text="@string/booking_time"
+                android:textColor="@color/black"
+                android:textSize="40dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="100dp">
+
+                <LinearLayout
+                    android:id="@+id/btn_bookingStart"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_shadow_layout_item"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_time_bookingStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/unicode_optima"
+                        android:text="12:00"
+                        android:textColor="@color/black"
+                        android:textSize="35dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_date_bookingStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/unicode_optima"
+                        android:text="24/15/2021"
+                        android:textColor="@color/black"
+                        android:textSize="35dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_bookingEnd"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:background="@drawable/background_shadow_layout_item"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_time_bookingEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/unicode_optima"
+                        android:text="12:00"
+                        android:textColor="@color/black"
+                        android:textSize="35dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_date_bookingEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/unicode_optima"
+                        android:text="24/15/2021"
+                        android:textColor="@color/black"
+                        android:textSize="35dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="180dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_create_order"
+                    android:layout_width="200dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/custom_button_chung"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/create"
+                    android:textSize="30dp" />
+
+                <Button
+                    android:id="@+id/btn_cancel_order"
+                    android:layout_width="200dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/custom_button_chung"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/cancel"
+                    android:textSize="30dp" />
+            </LinearLayout>
+
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/btn_bookingEnd"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginLeft="100dp"
-            android:paddingVertical="10dp"
-            android:orientation="vertical"
-            android:background="@drawable/background_shadow_layout_item">
-            <TextView
-                android:id="@+id/tv_time_bookingEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12:00"
-                android:textColor="@color/black"
-                android:fontFamily="@font/unicode_optima"
-                android:textStyle="bold"
-                android:textSize="35dp"/>
 
-            <TextView
-                android:id="@+id/tv_date_bookingEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="24/15/2021"
-                android:textColor="@color/black"
-                android:fontFamily="@font/unicode_optima"
-                android:textStyle="bold"
-                android:textSize="35dp"/>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view_createOrder"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:theme="@style/NavigationDrawerStyle"
+            app:headerLayout="@layout/drawer_header"
+            app:itemIconSize="30dp"
+            app:menu="@menu/menu_drawer" />
+    </androidx.drawerlayout.widget.DrawerLayout>
 
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="250dp"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btn_create_order"
-            android:layout_width="200dp"
-            android:layout_height="80dp"
-            android:text="@string/create"
-            android:textSize="30dp"
-            android:background="@drawable/custom_button_chung"
-            android:backgroundTint="@color/green"/>
-        <Button
-            android:id="@+id/btn_cancel_order"
-            android:layout_width="200dp"
-            android:layout_height="80dp"
-            android:text="@string/cancel"
-            android:textSize="30dp"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/custom_button_chung"
-            android:backgroundTint="@color/red"/>
-    </LinearLayout>
 
 </LinearLayout>

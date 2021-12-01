@@ -1,5 +1,6 @@
 package com.fpoly.managebookings.views.createOrder;
 
+import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
@@ -29,9 +30,9 @@ public class CreateOrderPresenter implements ApiOrderBookedInterface {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void onClickCreate(OrderRoomBooked orderRoomBooked) throws ParseException {
+    public void onClickCreate(OrderRoomBooked orderRoomBooked, Context context) throws ParseException {
         if (checkInforOrder(orderRoomBooked)){
-            mApiOrderRoomBooked.createOrder(orderRoomBooked);
+            mApiOrderRoomBooked.createOrder(orderRoomBooked,context);
         }
     }
 
@@ -48,14 +49,14 @@ public class CreateOrderPresenter implements ApiOrderBookedInterface {
              timeEnd = Formater.formatToDateTime(orderRoomBooked.getTimeBookingEnd());
         }
 
-        if (orderRoomBooked.getPhone().trim().isEmpty() || orderRoomBooked.getEmail().trim().isEmpty() || orderRoomBooked.getFullName().trim().isEmpty() || orderRoomBooked.getTimeBookingStart().isEmpty() || orderRoomBooked.getTimeBookingEnd().isEmpty()) {
+        if (orderRoomBooked.getPhone().trim().isEmpty() || orderRoomBooked.getEmail().trim().isEmpty() || orderRoomBooked.getFullName().trim().isEmpty()) {
             mCreateOrderInterface.emptyData("User information cannot be empty!");
             return false;
-        }else if (timeStart.compareTo(currentTime) <= 0){
-            Log.e("now===",timeStart +"==="+currentTime);
-            mCreateOrderInterface.checkTimeBooking("Booking time must be after current date!");
+        }else if ( orderRoomBooked.getTimeBookingStart().isEmpty() || orderRoomBooked.getTimeBookingEnd().isEmpty()){
+            mCreateOrderInterface.emptyData("You do not select time booking!");
             return false;
-        }else if(timeStart.compareTo(timeEnd) >= 0){
+        }
+        else if(timeStart.compareTo(timeEnd) >= 0){
             mCreateOrderInterface.checkTimeBooking("Booking end time must be after start date!");
             return false;
         }else return true;

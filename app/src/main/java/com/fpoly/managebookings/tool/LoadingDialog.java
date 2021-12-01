@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.view.LayoutInflater;
 
 import com.fpoly.managebookings.R;
@@ -24,9 +25,13 @@ public class LoadingDialog {
         builder.setCancelable(false);
         alertDialog = builder.create();
         alertDialog.show();
-    }
 
-    public void dismissDialog(){
-        alertDialog.dismiss();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                alertDialog.dismiss();
+            }
+        }, 1000);
     }
 }

@@ -28,6 +28,7 @@ import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.tool.DialogExit;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -62,17 +63,6 @@ public class ListOrderOccupiedActivity extends AppCompatActivity implements ApiO
         navigationView = findViewById(R.id.nav_view);
         edt_search = findViewById(R.id.edt_search);
 
-        //Loading Data
-        loadingDialog = new LoadingDialog(ListOrderOccupiedActivity.this);
-        loadingDialog.startLoadingDialog();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadingDialog.dismissDialog();
-            }
-        }, 2000);
-
         initializeNavigationView();
 
         //Get all room empty with bookingStatus = 0
@@ -85,6 +75,10 @@ public class ListOrderOccupiedActivity extends AppCompatActivity implements ApiO
         super.onStart();
         getOrderWaiting.getOrderByBookingStatus(2);
         setPullRefresh();
+
+        //Loading Data
+        loadingDialog = new LoadingDialog(ListOrderOccupiedActivity.this);
+        loadingDialog.startLoadingDialog();
     }
 
     void searchOrderByPhone(){
@@ -136,6 +130,9 @@ public class ListOrderOccupiedActivity extends AppCompatActivity implements ApiO
                         break;
                     case R.id.list_rooms:
                         startActivity(new Intent(ListOrderOccupiedActivity.this, ListRoomEmptyActivity.class));
+                        break;
+                    case R.id.create_order:
+                        startActivity(new Intent(ListOrderOccupiedActivity.this, CreateOrderActivity.class));
                         break;
                     case R.id.menu_exit:
                         DialogExit dialogExit = new DialogExit();

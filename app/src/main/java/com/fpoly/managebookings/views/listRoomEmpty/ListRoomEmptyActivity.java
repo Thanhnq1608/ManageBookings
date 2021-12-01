@@ -17,13 +17,16 @@ import android.os.Handler;
 import android.os.RecoverySystem;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListRoomEmptyAdapter;
+import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
+import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.LoadingDialog;
@@ -36,8 +39,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomDetailInterface {
+public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomDetailInterface, ListRoomEmptyAdapter.ListRoomEmptyInterface {
     private ListRoomEmptyAdapter mListRoomEmptyAdapter;
     private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this);
     private LinearLayout layoutListRoomEmpty;
@@ -47,8 +51,12 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     private NavigationView navView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private LoadingDialog loadingDialog;
-    private FloatingActionButton actionButton;
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
+    private LinearLayout layout_button;
+    private Button btnCofirm, btnCancel;
+    private OrderRoomBooked updateOrderRoomBooked;
+    private ApiOrderRoomBooked apiOrderRoomBooked = new ApiOrderRoomBooked();
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,30 +68,27 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_room_empty);
         recListRoomEmpty = (RecyclerView) findViewById(R.id.recListRoomEmpty);
         navView = (NavigationView) findViewById(R.id.nav_view_room_empty);
-        actionButton = findViewById(R.id.float_button_add_booking);
+        btnCofirm = findViewById(R.id.btnConfirm);
+        btnCancel = findViewById(R.id.btnCancelRoom);
+        layout_button = findViewById(R.id.layout_button);
 
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ListRoomEmptyActivity.this, CreateOrderActivity.class));
-            }
-        });
+        intent = getIntent();
+        updateOrderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
 
-        //Loading Data
-        loadingDialog = new LoadingDialog(ListRoomEmptyActivity.this);
-        loadingDialog.startLoadingDialog();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadingDialog.dismissDialog();
-            }
-        },1000);
+        if (updateOrderRoomBooked != null) {
+            layout_button.setVisibility(View.VISIBLE);
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
 
         initializeNavigationView();
         setPullRefresh();
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         recListRoomEmpty.setLayoutManager(gridLayoutManager);
 
     }
@@ -92,9 +97,13 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     protected void onStart() {
         super.onStart();
         mApiRoomDetail.getAllRoom(0);
+
+        //Loading Data
+        loadingDialog = new LoadingDialog(ListRoomEmptyActivity.this);
+        loadingDialog.startLoadingDialog();
     }
 
-    void setPullRefresh(){
+    void setPullRefresh() {
         final SwipeRefreshLayout pullRefresh = findViewById(R.id.refresh);
         pullRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -111,7 +120,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.open, R.string.close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
@@ -131,6 +140,9 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                     case R.id.orders_completed:
                         startActivity(new Intent(ListRoomEmptyActivity.this, ListOrdersCompletedActivity.class));
                         break;
+                    case R.id.create_order:
+                        startActivity(new Intent(ListRoomEmptyActivity.this, CreateOrderActivity.class));
+                        break;
                     case R.id.list_rooms:
                         startActivity(new Intent(ListRoomEmptyActivity.this, ListRoomEmptyActivity.class));
                         break;
@@ -144,7 +156,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
 
     @Override
     public void getAllRoomEmpty(ArrayList<RoomDetail> roomDetails) {
-        mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this,roomDetails);
+        mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this, roomDetails, updateOrderRoomBooked, this);
         recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
 
     }
@@ -162,5 +174,32 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     @Override
     public void updateWhileRemoveOrder(String message) {
         fixSizeForToast.fixSizeToast(message);
+    }
+
+    @Override
+    public void roomsAreSelected(List<RoomDetail> roomDetails) {
+        btnCofirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (updateOrderRoomBooked != null) {
+                    int total = 0;
+                    for (int i = 0; i < roomDetails.size(); i++) {
+                        mApiRoomDetail.removeRoomFromOrder(roomDetails.get(i).getId(), 1, updateOrderRoomBooked.get_id());
+                        total = total + roomDetails.get(i).getRoomPrice();
+                    }
+                    total= updateOrderRoomBooked.getTotalRoomRate() + total;
+                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(),total );
+                    intent = getIntent();
+                    String context = intent.getStringExtra("CONTEXT");
+                    if (context.equalsIgnoreCase("CreateOrderActivity")){
+                        startActivity(new Intent(ListRoomEmptyActivity.this,ListOrderWaitingActivity.class));
+                    }else {
+                        onBackPressed();
+                    }
+
+                }
+            }
+        });
+
     }
 }

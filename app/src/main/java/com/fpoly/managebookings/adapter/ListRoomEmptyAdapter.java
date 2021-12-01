@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fpoly.managebookings.R;
+import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface;
@@ -20,15 +22,26 @@ import com.fpoly.managebookings.views.roomDetail.RoomDetailActivity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdapter.ViewHolder> implements ListOrderWaitingInterface {
     private Context context;
     private ArrayList<RoomDetail> roomDetails;
+    private OrderRoomBooked orderRoomBooked;
+    private List<RoomDetail> roomDetailList = new ArrayList<>();
+    private ListRoomEmptyInterface mListRoomEmptyInterface;
+    private boolean isCheck = false;
+
+    public interface ListRoomEmptyInterface {
+        void roomsAreSelected(List<RoomDetail> roomDetails);
+    }
 
 
-    public ListRoomEmptyAdapter(Context context, ArrayList<RoomDetail> roomDetails) {
+    public ListRoomEmptyAdapter(Context context, ArrayList<RoomDetail> roomDetails, OrderRoomBooked orderRoomBooked, ListRoomEmptyInterface mListRoomEmptyInterface) {
         this.context = context;
         this.roomDetails = roomDetails;
+        this.orderRoomBooked = orderRoomBooked;
+        this.mListRoomEmptyInterface = mListRoomEmptyInterface;
     }
 
     @NonNull
@@ -53,19 +66,52 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
             return;
         }
 
+        if (orderRoomBooked != null) {
+            holder.layout_item_room.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (holder.img_check.getVisibility() == View.INVISIBLE && isCheck == false) {
+                        holder.layout_item_room.setBackgroundResource(android.R.color.system_accent3_100);
+                        isCheck = true;
+                        holder.img_check.setVisibility(View.VISIBLE);
+                        roomDetailList.add(roomDetail);
+                        mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
+                    }
+                    return true;
+                }
+            });
+            holder.layout_item_room.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isCheck) {
+                        if (holder.img_check.getVisibility() == View.VISIBLE) {
+                            holder.img_check.setVisibility(View.INVISIBLE);
+                            holder.layout_item_room.setBackgroundResource(R.drawable.background_shadow_layout_item);
+                            roomDetailList.remove(roomDetail);
+                            mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
+                            if (roomDetailList.isEmpty()) {
+                                isCheck = false;
+                            }
+                        } else {
+                            holder.layout_item_room.setBackgroundResource(android.R.color.system_accent3_100);
+                            holder.img_check.setVisibility(View.VISIBLE);
+                            roomDetailList.add(roomDetail);
+                            mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
+                        }
+                    } else {
+                        Intent intent = new Intent(context, RoomDetailActivity.class);
+                        intent.putExtra("ROOMDETAIL", roomDetail);
+                        context.startActivity(intent);
+                    }
+                }
+            });
+        }
+
         holder.tvNameRoom.setText(roomDetail.getRoomName());
         holder.tvKindOfRoom.setText(Formater.getKindOfRoom(roomDetail.getIdKindOfRoom()));
         holder.tvNumberOfPerson.setText(roomDetail.getMaximumNumberOfPeople() + " people");
         holder.tvPrice.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
         holder.imgRoom.setImageResource(R.drawable.sample_image);
-        holder.imgRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, RoomDetailActivity.class);
-                intent.putExtra("ROOMDETAIL",roomDetail);
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -73,9 +119,10 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
         return roomDetails.size();
     }
 
-    public static class ViewHolder extends  RecyclerView.ViewHolder{
-        TextView tvNameRoom,tvKindOfRoom,tvNumberOfPerson,tvPrice;
-        ImageView imgRoom;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvNameRoom, tvKindOfRoom, tvNumberOfPerson, tvPrice;
+        ImageView imgRoom, img_check;
+        ConstraintLayout layout_item_room;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,7 +131,8 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
             tvKindOfRoom = itemView.findViewById(R.id.tvRoomType);
             tvPrice = itemView.findViewById(R.id.tvPriceRoom);
             tvNumberOfPerson = itemView.findViewById(R.id.tvNumberOfPerson);
-
+            layout_item_room = itemView.findViewById(R.id.layout_item_room);
+            img_check = itemView.findViewById(R.id.img_check);
         }
     }
 }

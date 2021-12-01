@@ -6,6 +6,7 @@ import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
 import com.fpoly.managebookings.models.updateOrder.UpdateBookingStatus;
+import com.fpoly.managebookings.models.updateOrder.UpdateTotalRoomRate;
 
 import java.util.List;
 
@@ -28,11 +29,22 @@ public interface ApiService {
             .create(ApiService.class);
 
     // OrderRoomBorder
-    @GET("orderRoomBooked/{bookingStatus}")
+    @GET("orderRoomBooked/getOrderByBookingStatus/{bookingStatus}")
     Call<List<OrderRoomBooked>> getOrderRoom(@Path("bookingStatus") int bookingStatus);
 
+    @GET("orderRoomBooked/{id}")
+    Call<OrderRoomBooked> getOrderRoomById(@Path("id") String id);
+
+    @FormUrlEncoded
     @POST("orderRoomBooked/create")
-    Call<OrderRoomBooked> createOrder(@Body OrderRoomBooked orderRoomBooked);
+    Call<OrderRoomBooked> createOrder(@Field("fullName") String fullName,
+                                      @Field("phone") String phone,
+                                      @Field("email") String email,
+                                      @Field("timeBookingStart") String timeBookingStart,
+                                      @Field("timeBookingEnd") String timeBookingEnd,
+                                      @Field("bookingStatus") int bookingStatus,
+                                      @Field("totalRoomRate") int totalRoomRate,
+                                      @Field("advanceDeposit") int advanceDeposit);
 
     @POST("orderRoomBooked/delete/{id}")
     Call<ResponseMessage> deleteOrder(@Path("id") String id);
@@ -40,6 +52,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("orderRoomBooked/update/{id}")
     Call<UpdateBookingStatus> changeBookingStatus(@Path("id") String id, @Field("bookingStatus") int bookingStatus);
+
+    @FormUrlEncoded
+    @POST("orderRoomBooked/update/{id}")
+    Call<UpdateTotalRoomRate> updatePaymentWhileUpdateRoom(@Path("id") String id, @Field("totalRoomRate") int totalRoomRate);
 
     //OrderDetail
     @GET("oderRoomBookingDetail/{idBooking}")
@@ -63,7 +79,11 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("roomDetail/updateAny/{idBooking}")
-    Call<UpdateAnyRoomDetail> updateWhileRemoveOrder(@Path("idBooking") String idBooking, @Field("roomStatus") int roomStatus,@Field("idBooking") String updateIdBooking);
+    Call<UpdateAnyRoomDetail> updateWhileRemoveOrder(@Path("idBooking") String idBooking, @Field("roomStatus") int roomStatus, @Field("idBooking") String updateIdBooking);
+
+    @FormUrlEncoded
+    @PUT("roomDetail/update/{id}")
+    Call<ResponseMessage> removeRoomFromOrder(@Path("id") String id, @Field("roomStatus") int roomStatus, @Field("idBooking") String idBooking);
 
 
 }

@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/layout_room_detail_order"
+    android:layout_marginHorizontal="10dp"
+    android:orientation="vertical"
     android:background="@drawable/background_shadow_layout_item">
 
     <LinearLayout
         android:id="@+id/titleRoom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
         android:background="#E4E6EC"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvKindOfRoom"
@@ -32,50 +29,59 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvRoomName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/unicode_optima"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="Standard Single Room x1"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleRoom"
-        app:layout_constraintVertical_bias="0.32" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="horizontal">
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:gravity="center_vertical"
+           android:orientation="vertical">
+           <TextView
+               android:id="@+id/tvRoomName"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:fontFamily="@font/unicode_optima"
+               android:gravity="center|center_horizontal|center_vertical"
+               android:text="Standard Single Room x1"
+               android:textColor="@color/black"
+               android:textSize="30dp" />
 
-    <TextView
-        android:id="@+id/tvGiaTienPhong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="40dp"
-        android:fontFamily="@font/optima_b"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="2.000.000 VND"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvRoomName" />
 
-    <TextView
-        android:id="@+id/tvRoomPosition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:drawableLeft="@drawable/ic_room_position"
-        android:drawablePadding="10dp"
-        android:fontFamily="@font/unicode_optima"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="@string/tvRoomType2"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvRoomName"
-        app:layout_constraintTop_toBottomOf="@+id/tvRoomName"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+           <TextView
+               android:id="@+id/tvRoomPosition"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="16dp"
+               android:drawableLeft="@drawable/ic_room_position"
+               android:drawablePadding="10dp"
+               android:fontFamily="@font/unicode_optima"
+               android:gravity="center|center_horizontal|center_vertical"
+               android:text="@string/tvRoomType2"
+               android:textColor="@color/black"
+               android:textSize="25dp" />
+       </LinearLayout>
+
+       <TextView
+           android:id="@+id/tvGiaTienPhong"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginEnd="40dp"
+           android:fontFamily="@font/optima_b"
+           android:gravity="center|center_horizontal|center_vertical"
+           android:text="2.000.000 VND"
+           android:layout_gravity="center_vertical"
+           android:textColor="@color/black"
+           android:textSize="35dp" />
+       <ImageView
+           android:id="@+id/btn_checked"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:src="@drawable/ic_checked"
+           android:layout_marginRight="20dp"
+           android:layout_gravity="center_vertical"
+           android:visibility="invisible"/>
+   </LinearLayout>
+</LinearLayout>

@@ -19,6 +19,9 @@ import retrofit2.Response;
 public class ApiRoomDetail {
     private ApiRoomDetailInterface mApiRoomDetailInterface;
 
+    public ApiRoomDetail() {
+    }
+
     public ApiRoomDetail(ApiRoomDetailInterface mApiRoomDetailInterface) {
         this.mApiRoomDetailInterface = mApiRoomDetailInterface;
     }
@@ -109,4 +112,22 @@ public class ApiRoomDetail {
             });
         }
     }
+    public void removeRoomFromOrder(String id,int roomStatus,String updateIdBooking){
+        ApiService.apiService.removeRoomFromOrder(id,roomStatus,updateIdBooking).enqueue(new Callback<ResponseMessage>() {
+            @Override
+            public void onResponse(Call<ResponseMessage> call, Response<ResponseMessage> response) {
+                if (response.isSuccessful()) {
+                    Log.e("Status",""+response.body().getMessage());
+                } else {
+                    Log.e("Loi", "" + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMessage> call, Throwable t) {
+                Log.e("ErrorRoom", "" + t.getMessage());
+            }
+        });
+    }
+
 }

@@ -36,11 +36,25 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
     private ArrayList<OrderRoomBooked> orderRoomBookedFilter;
     private ArrayList<OrderRoomBooked> orderRoomBookeds;
     private ListOrderWaitingPresenter mListOrderWaitingPresenter = new ListOrderWaitingPresenter(this);
+    private ListOrderFilterInterface mListOrderFilterInterface;
+
+    public interface ListOrderFilterInterface {
+        void listOrderFilter(ArrayList<OrderRoomBooked> orderRoomBookeds);
+    }
 
     public ListOrdersAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds) {
         this.context = context;
         this.orderRoomBookeds = orderRoomBookeds;
         orderRoomBookedFilter = new ArrayList<>(orderRoomBookeds);
+        notifyDataSetChanged();
+    }
+
+
+    public ListOrdersAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds, ListOrderFilterInterface mListOrderFilterInterface) {
+        this.context = context;
+        this.orderRoomBookeds = orderRoomBookeds;
+        orderRoomBookedFilter = new ArrayList<>(orderRoomBookeds);
+        this.mListOrderFilterInterface = mListOrderFilterInterface;
         notifyDataSetChanged();
     }
 
@@ -73,7 +87,7 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
             } else {
                 holder.tvDate.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingEnd()));
             }
-        }catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         holder.tvFullName.setText(orderRoomBooked.getFullName());
@@ -106,7 +120,7 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
     private Filter mFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<OrderRoomBooked> filteredList = new ArrayList<>();
+            ArrayList<OrderRoomBooked> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(orderRoomBookedFilter);
@@ -121,7 +135,6 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
             }
             FilterResults results = new FilterResults();
             results.values = filteredList;
-
             return results;
         }
 
@@ -129,6 +142,9 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
         protected void publishResults(CharSequence constraint, FilterResults results) {
             orderRoomBookeds.clear();
             orderRoomBookeds.addAll((ArrayList) results.values);
+            if (orderRoomBookeds.get(0).getBookingStatus() == 3) {
+                mListOrderFilterInterface.listOrderFilter(orderRoomBookeds);
+            }
             notifyDataSetChanged();
         }
     };
@@ -146,7 +162,6 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
             tvTime = itemView.findViewById(R.id.tvTime);
             tvFullName = itemView.findViewById(R.id.tvFullName);
             tvPhone = itemView.findViewById(R.id.tvPhone);
-//            textView14 = (TextView) findViewById(R.id.textView14);
             tvStatusOrder = itemView.findViewById(R.id.tvStatus);
 
         }

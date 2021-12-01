@@ -28,6 +28,7 @@ import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.tool.DialogExit;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -62,30 +63,22 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
         navigationView = findViewById(R.id.nav_view);
         edt_search = findViewById(R.id.edt_search);
 
-
-        //Loading Data
-        loadingDialog = new LoadingDialog(ListOrderWaitingActivity.this);
-        loadingDialog.startLoadingDialog();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadingDialog.dismissDialog();
-            }
-        }, 2000);
-
         initializeNavigationView();
 
         //Get all room empty with bookingStatus = 0
         recView.setLayoutManager(new GridLayoutManager(this, 1));
 
+        setPullRefresh();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         getOrderWaiting.getOrderByBookingStatus(0);
-        setPullRefresh();
+
+        //Loading Data
+        loadingDialog = new LoadingDialog(ListOrderWaitingActivity.this);
+        loadingDialog.startLoadingDialog();
 
     }
 
@@ -138,6 +131,9 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
                         break;
                     case R.id.list_rooms:
                         startActivity(new Intent(ListOrderWaitingActivity.this, ListRoomEmptyActivity.class));
+                        break;
+                    case R.id.create_order:
+                        startActivity(new Intent(ListOrderWaitingActivity.this, CreateOrderActivity.class));
                         break;
                     case R.id.menu_exit:
                         DialogExit dialogExit = new DialogExit();

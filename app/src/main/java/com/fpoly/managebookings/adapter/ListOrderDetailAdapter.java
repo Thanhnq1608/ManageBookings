@@ -1,10 +1,14 @@
 package com.fpoly.managebookings.adapter;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,19 +23,31 @@ import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface;
+import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActivity;
 import com.fpoly.managebookings.views.roomDetail.RoomDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetailAdapter.ViewHolder>  {
+public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetailAdapter.ViewHolder> {
     private Context context;
     private ArrayList<RoomDetail> roomDetails = new ArrayList<>();
+    private List<RoomDetail> listIdRoom = new ArrayList<>();
+    private RoomSelectedInterface mRoomSelectedInterface;
+    private boolean isCheck = false;
+    private OrderRoomBooked orderRoomBooked;
 
-    public ListOrderDetailAdapter(Context context, ArrayList<RoomDetail> roomDetails) {
+    public interface RoomSelectedInterface {
+        void listIdRoomSelected(List<RoomDetail> roomIds);
+    }
+
+    public ListOrderDetailAdapter(Context context, ArrayList<RoomDetail> roomDetails, RoomSelectedInterface mRoomSelectedInterface, OrderRoomBooked orderRoomBooked) {
         this.context = context;
         this.roomDetails = roomDetails;
+        this.mRoomSelectedInterface = mRoomSelectedInterface;
+        this.orderRoomBooked = orderRoomBooked;
     }
 
     @NonNull
@@ -42,8 +58,7 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Collections.sort(roomDetails, new Comparator<RoomDetail>() {
             @Override
             public int compare(RoomDetail o1, RoomDetail o2) {
@@ -67,13 +82,47 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
         holder.tvPrice.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
         holder.tvRoomName.setText(roomDetail.getRoomName());
         holder.tvRoomPosition.setText(roomDetail.getIdRoom());
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (holder.btn_checked.getVisibility() == View.INVISIBLE && isCheck == false && orderRoomBooked.getBookingStatus() != 3) {
+                    holder.layout.setBackgroundResource(android.R.color.system_accent3_100);
+                    isCheck = true;
+                    holder.btn_checked.setVisibility(View.VISIBLE);
+                    listIdRoom.add(roomDetail);
+                    mRoomSelectedInterface.listIdRoomSelected(listIdRoom);
+                }
+
+                return true;
+            }
+        });
+
+
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, RoomDetailActivity.class);
-                intent.putExtra("ROOMDETAIL",roomDetail);
-                intent.putExtra("HIDEBUTTON",true);
-                context.startActivity(intent);
+                if (isCheck) {
+                    if (holder.btn_checked.getVisibility() == View.VISIBLE) {
+                        holder.btn_checked.setVisibility(View.INVISIBLE);
+                        holder.layout.setBackgroundResource(R.drawable.background_shadow_layout_item);
+                        listIdRoom.remove(roomDetail);
+                        mRoomSelectedInterface.listIdRoomSelected(listIdRoom);
+                        if (listIdRoom.isEmpty()) {
+                            isCheck = false;
+                        }
+                    } else {
+                        holder.btn_checked.setVisibility(View.VISIBLE);
+                        holder.layout.setBackgroundResource(android.R.color.system_accent3_100);
+                        listIdRoom.add(roomDetail);
+                        mRoomSelectedInterface.listIdRoomSelected(listIdRoom);
+                    }
+
+                } else {
+                    Intent intent = new Intent(context, RoomDetailActivity.class);
+                    intent.putExtra("ROOMDETAIL", roomDetail);
+                    intent.putExtra("HIDEBUTTON", true);
+                    context.startActivity(intent);
+                }
             }
         });
 
@@ -88,7 +137,9 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
     public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout title;
         TextView tvKindOfRoom, tvRoomName, tvPrice, tvRoomPosition;
-        ConstraintLayout layout;
+        LinearLayout layout;
+        ImageView btn_checked;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.titleRoom);
@@ -97,6 +148,7 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
             tvPrice = itemView.findViewById(R.id.tvGiaTienPhong);
             tvRoomPosition = itemView.findViewById(R.id.tvRoomPosition);
             layout = itemView.findViewById(R.id.layout_room_detail_order);
+            btn_checked = itemView.findViewById(R.id.btn_checked);
         }
     }
 }

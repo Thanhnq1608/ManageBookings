@@ -105,4 +105,9 @@
     <string name="booking_time">Booking Time</string>
     <string name="create">Create</string>
     <string name="cancel">cancel</string>
+    <string name="date">Date</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="create_new_order">Create New Order</string>
+    <string name="error_fullname">*Full name must be more than 6 characters</string>
 </resources>
