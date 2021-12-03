@@ -39,6 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -62,6 +63,7 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
     private String dateStart ="", dateEnd ="";
     private Date now = Calendar.getInstance().getTime();
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
+    private Date date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +195,22 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
             }
         });
 
+    }
+
+    private void getCurrentDateTime() {
+        tvTimeBookingStart.setText(now.getHours() + ":" + now.getMinutes());
+        tvTimeBookingEnd.setText(now.getHours() + ":" + now.getMinutes());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd hh:mm:ss zzz yyyy");
+        SimpleDateFormat outputSdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            date = sdf.parse(now.toString());
+
+            tvDateBookingStart.setText(outputSdf.format(date));
+            tvDateBookingEnd.setText(outputSdf.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     void anhXa() {

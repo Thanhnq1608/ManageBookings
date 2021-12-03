@@ -51,6 +51,8 @@
             android:name=".MainActivity"
             android:exported="true" />
 
+        <activity android:name=".Activity_quen_mk"/>
+
         <meta-data
             android:name="optima_fonts"
             android:resource="@array/unicode_optima" />

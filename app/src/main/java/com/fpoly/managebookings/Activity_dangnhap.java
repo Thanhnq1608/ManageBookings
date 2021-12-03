@@ -7,19 +7,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class Activity_dangnhap extends AppCompatActivity {
+public class Activity_dangnhap extends AppCompatActivity implements View.OnClickListener{
 
     EditText et_username, et_password;
 //    Button btn_login;
+
+    private TextView tvForgetPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dangnhap);
 
-        Login();
+        initView();
+
+        tvForgetPass.setOnClickListener(this);
+    }
+
+    private void initView() {
+        tvForgetPass = findViewById(R.id.tvForgetPass);
     }
 
     private void Login(){
@@ -39,5 +48,14 @@ public class Activity_dangnhap extends AppCompatActivity {
 //                }
 //            }
 //        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tvForgetPass:
+                startActivity(new Intent(this, Activity_quen_mk.class));
+                break;
+        }
     }
 }
