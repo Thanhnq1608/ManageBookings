@@ -49,7 +49,7 @@ public class ApiOrderDetail {
                         orderDetails.add(response.body());
                     }
                 }
-                BottomS
+
                 @Override
                 public void onFailure(Call<OrderDetail> call, Throwable t) {
 

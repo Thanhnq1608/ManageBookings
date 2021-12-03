@@ -72,6 +72,7 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
 
         anhXa();
         initializeNavigationView();
+        getCurrentDateTime();
 
 //        tvTimeBookingStart.setText(now.getHours() + ":" + now.getMinutes());
 //        tvDateBookingStart.setText(now.getDay() + "/" + (now.getMonth()+1) + "/" + now.getYear());
