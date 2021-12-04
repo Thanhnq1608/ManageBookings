@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -41,6 +43,7 @@ import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.databinding.DatePickerBottomSheetBinding;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.tool.DialogExit;
+import com.fpoly.managebookings.tool.DialogSelectDate;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
@@ -52,10 +55,11 @@ import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ListOrdersCompletedActivity extends AppCompatActivity implements ApiOrderBookedInterface, ListOrdersAdapter.ListOrderFilterInterface {
+public class ListOrdersCompletedActivity extends AppCompatActivity implements ApiOrderBookedInterface, ListOrdersAdapter.ListOrderFilterInterface, DialogSelectDate.ValueOfDatePicker {
     private ApiOrderRoomBooked mApiOrderRoomBooked = new ApiOrderRoomBooked(this);
     private ListOrdersAdapter adapter;
     private RecyclerView recyclerView;
@@ -69,10 +73,10 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
     private EditText edt_search;
     private ImageView btn_filter;
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
-    private String day, month, year;
     private String dateFilter;
     private ArrayList<OrderRoomBooked> orderRoomBookeds = new ArrayList<>();
     private ArrayList<OrderRoomBooked> orderRoomBookedFilters = new ArrayList<>();
+    private DialogSelectDate mDialogSelectDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +91,10 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         initializeNavigationView();
 
         btn_filter.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                dialogFilterOrder();
+                mDialogSelectDate = new DialogSelectDate(ListOrdersCompletedActivity.this, "Select Filter", 1);
+                mDialogSelectDate.show(getSupportFragmentManager(), "Select Filter");
             }
         });
 
@@ -107,106 +111,6 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         //Loading Data
         loadingDialog = new LoadingDialog(ListOrdersCompletedActivity.this);
         loadingDialog.startLoadingDialog();
-    }
-
-    void dialogFilterOrder() {
-        BottomSheetDialog dialog = new BottomSheetDialog(ListOrdersCompletedActivity.this);
-        dialog.setContentView(R.layout.dialog_filter_statistical);
-        dialog.setCancelable(false);
-
-        RadioButton rdoDay, rdoMonth, rdoYear;
-        NumberPicker dayPicker, monthPicker, yearPicker;
-        TextView btnConfirm;
-        ImageView btnCancel;
-
-        rdoDay = (RadioButton) dialog.findViewById(R.id.rdo_day);
-        rdoMonth = (RadioButton) dialog.findViewById(R.id.rdo_month);
-        rdoYear = (RadioButton) dialog.findViewById(R.id.rdo_year);
-        dayPicker = (NumberPicker) dialog.findViewById(R.id.day_picker);
-        monthPicker = (NumberPicker) dialog.findViewById(R.id.month_picker);
-        yearPicker = (NumberPicker) dialog.findViewById(R.id.year_picker);
-        btnConfirm = dialog.findViewById(R.id.btn_confirm_filter);
-        btnCancel = dialog.findViewById(R.id.btn_cancel_filter);
-
-        Calendar cal = Calendar.getInstance();
-
-
-        dayPicker.setMinValue(1);
-        dayPicker.setValue(cal.get(Calendar.DAY_OF_MONTH));
-        dayPicker.setMaxValue(30);
-
-        monthPicker.setMinValue(1);
-        monthPicker.setMaxValue(12);
-        monthPicker.setValue(cal.get(Calendar.MONTH) + 1);
-        monthPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
-                if (picker.getValue() == 2) {
-                    dayPicker.setMaxValue(28);
-                } else if (picker.getValue() == 4 || picker.getValue() == 6 || picker.getValue() == 9 || picker.getValue() == 11) {
-                    dayPicker.setMaxValue(30);
-                } else {
-                    dayPicker.setMaxValue(31);
-                }
-
-            }
-        });
-
-        yearPicker.setMinValue(2000);
-        yearPicker.setMaxValue(2040);
-        yearPicker.setValue(cal.get(Calendar.YEAR));
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (dayPicker.getValue() < 10) {
-//                    day = "0" + dayPicker.getValue();
-//                } else {
-                    day = String.valueOf(dayPicker.getValue());
-//                }
-
-//                if (monthPicker.getValue() < 10) {
-//                    month = "0" + monthPicker.getValue();
-//                } else {
-                    month = String.valueOf(monthPicker.getValue());
-//                }
-
-                year = "" + yearPicker.getValue();
-
-                if (rdoDay.isChecked()) {
-                    dateFilter = day + "/" + month + "/" + year;
-                } else if (rdoMonth.isChecked()) {
-                    dateFilter = month + "/" + year;
-                } else if (rdoYear.isChecked()) {
-                    dateFilter = year;
-                }
-                orderRoomBookedFilters.clear();
-                for (int i = 0; i< orderRoomBookeds.size();i++){
-                    if (orderRoomBookeds.get(i).getTimeBookingEnd().contains(dateFilter)){
-                        orderRoomBookedFilters.add(orderRoomBookeds.get(i));
-                    }
-                }
-                adapter = new ListOrdersAdapter(ListOrdersCompletedActivity.this, orderRoomBookedFilters, ListOrdersCompletedActivity.this);
-                recyclerView.setAdapter(adapter);
-                tvTotalOrders.setText(String.valueOf(orderRoomBookedFilters.size()));
-                int totalPayment = 0;
-                for (int i = 0; i < orderRoomBookedFilters.size(); i++) {
-                    totalPayment += orderRoomBookedFilters.get(i).getTotalRoomRate();
-                }
-                tvTotalPayment.setText(Formater.getFormatMoney(totalPayment));
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
     }
 
     void anhXa() {
@@ -247,9 +151,6 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
 
                 @Override
                 public void afterTextChanged(Editable s) {
-//                    dateFilter = "";
-//                    adapter = new ListOrdersAdapter(ListOrdersCompletedActivity.this, orderRoomBookeds, ListOrdersCompletedActivity.this,dateFilter);
-//                    recyclerView.setAdapter(adapter);
                     adapter.getFilter().filter(s);
                 }
             });
@@ -332,11 +233,11 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
 
     @Override
     public void listOrderFilter(ArrayList<OrderRoomBooked> orderRoomBookeds) {
-        if (orderRoomBookeds.isEmpty()){
+        if (orderRoomBookeds.isEmpty()) {
             tvTotalOrders.setText(0);
             int totalPayment = 0;
             tvTotalPayment.setText(Formater.getFormatMoney(totalPayment));
-        }else {
+        } else {
             tvTotalOrders.setText(String.valueOf(orderRoomBookeds.size()));
             int totalPayment = 0;
             for (int i = 0; i < orderRoomBookeds.size(); i++) {
@@ -344,5 +245,41 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
             }
             tvTotalPayment.setText(Formater.getFormatMoney(totalPayment));
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void getDateValue(String hour, String minute, String day, String month, String year, int isRadioButton) {
+        switch (isRadioButton) {
+            case 0:
+                dateFilter = day + "/" + month + "/" + year;
+                break;
+            case 1:
+                dateFilter = month + "/" + year;
+                break;
+            case 2:
+                dateFilter = year;
+                break;
+        }
+
+        orderRoomBookedFilters.clear();
+        try {
+            for (int i = 0; i < orderRoomBookeds.size(); i++) {
+
+                if (Formater.formatDateTimeToString(orderRoomBookeds.get(i).getTimeBookingEnd()).contains(dateFilter)) {
+                    orderRoomBookedFilters.add(orderRoomBookeds.get(i));
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        adapter = new ListOrdersAdapter(ListOrdersCompletedActivity.this, orderRoomBookedFilters, ListOrdersCompletedActivity.this);
+        recyclerView.setAdapter(adapter);
+        tvTotalOrders.setText(String.valueOf(orderRoomBookedFilters.size()));
+        int totalPayment = 0;
+        for (int i = 0; i < orderRoomBookedFilters.size(); i++) {
+            totalPayment += orderRoomBookedFilters.get(i).getTotalRoomRate();
+        }
+        tvTotalPayment.setText(Formater.getFormatMoney(totalPayment));
     }
 }

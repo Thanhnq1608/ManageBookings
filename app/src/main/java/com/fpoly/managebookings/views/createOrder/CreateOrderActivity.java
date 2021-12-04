@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.tool.DialogExit;
+import com.fpoly.managebookings.tool.DialogSelectDate;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
@@ -43,7 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CreateOrderActivity extends AppCompatActivity implements CreateOrderInterface {
+public class CreateOrderActivity extends AppCompatActivity implements CreateOrderInterface, DialogSelectDate.ValueOfDatePicker {
     private Toolbar toolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
@@ -60,7 +61,8 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
     private Button btnCreateOrder;
     private Button btnCancelOrder;
     private CreateOrderPresenter mCreateOrderPresenter = new CreateOrderPresenter(this);
-    private String dateStart ="", dateEnd ="";
+    private DialogSelectDate mDialogSelectDate;
+    private String dateStart = "", dateEnd = "";
     private Date now = Calendar.getInstance().getTime();
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
     private Date date;
@@ -73,12 +75,6 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
         anhXa();
         initializeNavigationView();
         getCurrentDateTime();
-
-//        tvTimeBookingStart.setText(now.getHours() + ":" + now.getMinutes());
-//        tvDateBookingStart.setText(now.getDay() + "/" + (now.getMonth()+1) + "/" + now.getYear());
-//
-//        tvTimeBookingEnd.setText(now.getHours() + ":" + now.getMinutes());
-//        tvDateBookingEnd.setText(now.getDay() + "/" + (now.getMonth()+1) + "/" + now.getYear());
 
         btnCreateOrder.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -110,33 +106,35 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CreateOrderActivity.this);
-                bottomSheetDialog.setContentView(R.layout.date_picker_bottom_sheet);
-
-                TimePicker timePicker = bottomSheetDialog.findViewById(R.id.time_picker);
-                DatePicker datePicker = bottomSheetDialog.findViewById(R.id.date_picker);
-                TextView tvDone = bottomSheetDialog.findViewById(R.id.tv_done);
-                timePicker.setIs24HourView(true);
-                datePicker.setMinDate(new Date().getTime());
-                if (!dateStart.isEmpty()) {
-                    try {
-                        timePicker.setHour(Formater.formatToDateTime(dateStart).getHours());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-                tvDone.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dateStart = timePicker.getHour() + ":" + timePicker.getMinute() + " " + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear();
-                        tvTimeBookingStart.setText(timePicker.getHour() + ":" + timePicker.getMinute());
-                        tvDateBookingStart.setText(datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1) + "/" + datePicker.getYear());
-                        bottomSheetDialog.dismiss();
-                    }
-                });
-                bottomSheetDialog.show();
+                mDialogSelectDate = new DialogSelectDate(CreateOrderActivity.this, "Select date and time", 0);
+                mDialogSelectDate.show(getSupportFragmentManager(), "start");
+//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CreateOrderActivity.this);
+//                bottomSheetDialog.setContentView(R.layout.date_picker_bottom_sheet);
+//
+//                TimePicker timePicker = bottomSheetDialog.findViewById(R.id.time_picker);
+//                DatePicker datePicker = bottomSheetDialog.findViewById(R.id.date_picker);
+//                TextView tvDone = bottomSheetDialog.findViewById(R.id.tv_done);
+//                timePicker.setIs24HourView(true);
+//                datePicker.setMinDate(new Date().getTime());
+//                if (!dateStart.isEmpty()) {
+//                    try {
+//                        timePicker.setHour(Formater.formatToDateTime(dateStart).getHours());
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//
+//                tvDone.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dateStart = timePicker.getHour() + ":" + timePicker.getMinute() + " " + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear();
+//                        tvTimeBookingStart.setText(timePicker.getHour() + ":" + timePicker.getMinute());
+//                        tvDateBookingStart.setText(datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1) + "/" + datePicker.getYear());
+//                        bottomSheetDialog.dismiss();
+//                    }
+//                });
+//                bottomSheetDialog.show();
             }
         });
 
@@ -144,34 +142,36 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CreateOrderActivity.this);
-                bottomSheetDialog.setContentView(R.layout.date_picker_bottom_sheet);
-
-                TimePicker timePicker = bottomSheetDialog.findViewById(R.id.time_picker);
-                DatePicker datePicker = bottomSheetDialog.findViewById(R.id.date_picker);
-                TextView tvDone = bottomSheetDialog.findViewById(R.id.tv_done);
-                timePicker.setIs24HourView(true);
-                datePicker.setMinDate(new Date().getTime());
-                if (!dateEnd.isEmpty()) {
-                    try {
-                        timePicker.setHour(Formater.formatToDateTime(dateEnd).getHours());
-                        datePicker.setMinDate(Formater.formatToDateTime(dateStart).getTime());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                tvDone.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dateEnd = timePicker.getHour() + ":" + timePicker.getMinute() + " " + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear();
-                        tvTimeBookingEnd.setText(timePicker.getHour() + ":" + timePicker.getMinute());
-                        tvDateBookingEnd.setText(datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1 )+ "/" + datePicker.getYear());
-                        bottomSheetDialog.dismiss();
-                    }
-                });
-
-                bottomSheetDialog.show();
+                mDialogSelectDate = new DialogSelectDate(CreateOrderActivity.this, "Select date and time", 0);
+                mDialogSelectDate.show(getSupportFragmentManager(), "end");
+//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CreateOrderActivity.this);
+//                bottomSheetDialog.setContentView(R.layout.date_picker_bottom_sheet);
+//
+//                TimePicker timePicker = bottomSheetDialog.findViewById(R.id.time_picker);
+//                DatePicker datePicker = bottomSheetDialog.findViewById(R.id.date_picker);
+//                TextView tvDone = bottomSheetDialog.findViewById(R.id.tv_done);
+//                timePicker.setIs24HourView(true);
+//                datePicker.setMinDate(new Date().getTime());
+//                if (!dateEnd.isEmpty()) {
+//                    try {
+//                        timePicker.setHour(Formater.formatToDateTime(dateEnd).getHours());
+//                        datePicker.setMinDate(Formater.formatToDateTime(dateStart).getTime());
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                tvDone.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dateEnd = timePicker.getHour() + ":" + timePicker.getMinute() + " " + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear();
+//                        tvTimeBookingEnd.setText(timePicker.getHour() + ":" + timePicker.getMinute());
+//                        tvDateBookingEnd.setText(datePicker.getDayOfMonth() + "/" + (datePicker.getMonth() + 1) + "/" + datePicker.getYear());
+//                        bottomSheetDialog.dismiss();
+//                    }
+//                });
+//
+//                bottomSheetDialog.show();
             }
         });
 
@@ -300,5 +300,19 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
         intent.putExtra("ORDERROOMBOOKED", orderRoomBooked);
         intent.putExtra("CONTEXT", "CreateOrderActivity");
         startActivity(intent);
+    }
+
+    @Override
+    public void getDateValue(String hour, String minute, String day, String month, String year, int isRadioButton) {
+        if (mDialogSelectDate.getTag().equalsIgnoreCase("start")) {
+            dateStart= hour + ":" + minute+" "+day + "/" + month + "/" + year;
+            tvTimeBookingStart.setText(hour + ":" + minute);
+            tvDateBookingStart.setText(day + "/" + month + "/" + year);
+        } else if (mDialogSelectDate.getTag().equalsIgnoreCase("end")) {
+            dateEnd= hour + ":" + minute+" "+day + "/" + month + "/" + year;
+            tvTimeBookingEnd.setText(hour + ":" + minute);
+            tvDateBookingEnd.setText(day + "/" + month + "/" + year);
+        }
+
     }
 }
