@@ -116,7 +116,7 @@ public class DialogSelectDate extends BottomSheetDialogFragment {
         Calendar cal = Calendar.getInstance();
 
         dayPicker.setMinValue(1);
-        dayPicker.setValue(cal.get(Calendar.DAY_OF_MONTH));
+        dayPicker.setValue(cal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
         dayPicker.setMaxValue(30);
 
         monthPicker.setMinValue(1);
@@ -147,9 +147,9 @@ public class DialogSelectDate extends BottomSheetDialogFragment {
         hourPicker.setValue(cal.getTime().getHours());
 
         minutePicker.setValue(0);
-        minutePicker.setMaxValue(11);
+        minutePicker.setMaxValue(1);
         minutePicker.setValue(0);
-        minutePicker.setDisplayedValues(new String[]{"00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"});
+        minutePicker.setDisplayedValues(new String[]{"00", "30"});
     }
 
     private void initView() {

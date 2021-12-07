@@ -14,38 +14,20 @@ import com.fpoly.managebookings.R;
 
 public class LoadingDialog {
     private Activity activity;
-    private AlertDialog alertDialog;
     private Dialog dialog;
 
-    public LoadingDialog(Activity mActivity){
-        this.activity = mActivity;
+    public LoadingDialog(Activity activity) {
+        this.activity = activity;
     }
 
-//    public void startLoadingDialog(){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(activity, Color.TRANSPARENT);
-//
-//        LayoutInflater inflater = activity.getLayoutInflater();
-//        builder.setView(inflater.inflate(R.layout.dialog_loading,null));
-//        builder.setCancelable(false);
-//        alertDialog = builder.create();
-//        alertDialog.show();
-//
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                alertDialog.dismiss();
-//            }
-//        }, 1000);
-//    }
-
-    public void startLoadingDialog(){
+    public void startLoadingDialog(
+            int timeDelay) {
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_loading);
 
         Window window = dialog.getWindow();
-        if (window == null){
+        if (window == null) {
             return;
         }
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -59,6 +41,6 @@ public class LoadingDialog {
             public void run() {
                 dialog.dismiss();
             }
-        }, 1000);
+        }, timeDelay);
     }
 }

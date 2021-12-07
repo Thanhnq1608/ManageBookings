@@ -78,7 +78,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListOrderWaitingActivity.this);
-        loadingDialog.startLoadingDialog();
+        loadingDialog.startLoadingDialog(1000);
 
     }
 

@@ -5,6 +5,7 @@ import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
+import com.fpoly.managebookings.models.login.ResponseLogin;
 import com.fpoly.managebookings.models.updateOrder.UpdateBookingStatus;
 import com.fpoly.managebookings.models.updateOrder.UpdateTotalRoomRate;
 
@@ -68,8 +69,11 @@ public interface ApiService {
     Call<ResponseMessage> deleteOrderDetail(@Path("id") String id);
 
     // RoomDetail
+    @GET("roomDetail/all")
+    Call<List<RoomDetail>> getAllRoom();
+
     @GET("roomDetail/getAllByStatus/{roomStatus}")
-    Call<List<RoomDetail>> getAllRoom(@Path("roomStatus") int roomStatus);
+    Call<List<RoomDetail>> getRoomByStatus(@Path("roomStatus") int roomStatus);
 
     @GET("roomDetail/idBooking/{idBooking}")
     Call<List<RoomDetail>> getAllRoomByIdBooking(@Path("idBooking") String idBooking);
@@ -84,6 +88,11 @@ public interface ApiService {
     @FormUrlEncoded
     @PUT("roomDetail/update/{id}")
     Call<ResponseMessage> removeRoomFromOrder(@Path("id") String id, @Field("roomStatus") int roomStatus, @Field("idBooking") String idBooking);
+
+    //User
+    @FormUrlEncoded
+    @POST("api/v1/auth/login")
+    Call<ResponseLogin> login(@Field("email")String email,@Field("passWord")String password);
 
 
 }

@@ -78,7 +78,7 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListOrderConfirmedActivity.this);
-        loadingDialog.startLoadingDialog();
+        loadingDialog.startLoadingDialog(1000);
     }
 
     void searchOrderByPhone(){

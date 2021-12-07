@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "356090388818",
+    "project_id": "notification-booking",
+    "storage_bucket": "notification-booking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356090388818:android:8b18be442d5b9798a75a8b",
+        "android_client_info": {
+          "package_name": "com.fpoly.managebookings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356090388818-bshtfbvj01lobhcp3sf9dkpffqsv34gh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACy9OCJa7g5_ju8Dxv73IvXTIaGi5_p4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356090388818-bshtfbvj01lobhcp3sf9dkpffqsv34gh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -18,16 +18,40 @@ import retrofit2.Response;
 
 public class ApiRoomDetail {
     private ApiRoomDetailInterface mApiRoomDetailInterface;
+    private GetAllRoomInterface mGetAllRoomInterface;
 
     public ApiRoomDetail() {
     }
 
-    public ApiRoomDetail(ApiRoomDetailInterface mApiRoomDetailInterface) {
+    public ApiRoomDetail(ApiRoomDetailInterface mApiRoomDetailInterface, GetAllRoomInterface mGetAllRoomInterface) {
         this.mApiRoomDetailInterface = mApiRoomDetailInterface;
+        this.mGetAllRoomInterface = mGetAllRoomInterface;
     }
-    public void getAllRoom(int roomStatus){
+
+    public void getAllRoom(){
         ArrayList<RoomDetail> list = new ArrayList<>();
-        ApiService.apiService.getAllRoom(roomStatus).enqueue(new Callback<List<RoomDetail>>() {
+        ApiService.apiService.getAllRoom().enqueue(new Callback<List<RoomDetail>>() {
+            @Override
+            public void onResponse(Call<List<RoomDetail>> call, Response<List<RoomDetail>> response) {
+                if (response.isSuccessful()) {
+                    list.addAll(response.body()) ;
+                    mGetAllRoomInterface.getAllRoom(list);
+                    Log.e("SizeRoom===================", "" + list.size());
+                } else {
+                    Log.e("Loi", "" + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RoomDetail>> call, Throwable t) {
+                Log.e("ErrorRoom", "" + t.getMessage());
+            }
+        });
+    }
+
+    public void getRooMByStatus(int roomStatus){
+        ArrayList<RoomDetail> list = new ArrayList<>();
+        ApiService.apiService.getRoomByStatus(roomStatus).enqueue(new Callback<List<RoomDetail>>() {
             @Override
             public void onResponse(Call<List<RoomDetail>> call, Response<List<RoomDetail>> response) {
                 if (response.isSuccessful()) {

@@ -161,7 +161,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         }
 
         loadingDialog = new LoadingDialog(OrderBookingDetailActivity.this);
-        loadingDialog.startLoadingDialog();
+        loadingDialog.startLoadingDialog(2000);
     }
 
     private void findViewsById() {

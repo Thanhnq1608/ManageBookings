@@ -78,7 +78,7 @@ public class ListOrderOccupiedActivity extends AppCompatActivity implements ApiO
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListOrderOccupiedActivity.this);
-        loadingDialog.startLoadingDialog();
+        loadingDialog.startLoadingDialog(1000);
     }
 
     void searchOrderByPhone(){

@@ -110,7 +110,7 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListOrdersCompletedActivity.this);
-        loadingDialog.startLoadingDialog();
+        loadingDialog.startLoadingDialog(1000);
     }
 
     void anhXa() {

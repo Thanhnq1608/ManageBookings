@@ -26,6 +26,7 @@ import com.fpoly.managebookings.adapter.ListRoomEmptyAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
+import com.fpoly.managebookings.api.roomDetail.GetAllRoomInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.FixSizeForToast;
@@ -41,9 +42,9 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomDetailInterface, ListRoomEmptyAdapter.ListRoomEmptyInterface {
+public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomDetailInterface, GetAllRoomInterface, ListRoomEmptyAdapter.ListRoomEmptyInterface {
     private ListRoomEmptyAdapter mListRoomEmptyAdapter;
-    private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this);
+    private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this,this);
     private LinearLayout layoutListRoomEmpty;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -96,11 +97,11 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     @Override
     protected void onStart() {
         super.onStart();
-        mApiRoomDetail.getAllRoom(0);
+        mApiRoomDetail.getAllRoom();
 
         //Loading Data
         loadingDialog = new LoadingDialog(ListRoomEmptyActivity.this);
-        loadingDialog.startLoadingDialog();
+        loadingDialog.startLoadingDialog(2000);
     }
 
     void setPullRefresh() {
@@ -201,5 +202,11 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
             }
         });
 
+    }
+
+    @Override
+    public void getAllRoom(ArrayList<RoomDetail> roomDetails) {
+        mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this, roomDetails, updateOrderRoomBooked, this);
+        recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
     }
 }
