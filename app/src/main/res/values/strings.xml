@@ -54,9 +54,9 @@
     <string name="titleListRoomDetail">Rooming List</string>
     <string name="btnHuy">HỦY</string>
     <string name="btnXacNhan">Xác Nhận</string>
-    <string name="tvForget">Quên mật khẩu</string>
+    <string name="tvForget">Forgot password</string>
     <string name="tvLogin">Login</string>
-    <string name="tv1231">Đăng nhập để tiếp tục</string>
+    <string name="tv1231">Sign in to continue</string>
     <string name="tvForget123">Nhập mật khẩu mới bên dưới</string>
     <string name="tvBack">Quay Lại</string>
     <string name="btnSave">Lưu</string>

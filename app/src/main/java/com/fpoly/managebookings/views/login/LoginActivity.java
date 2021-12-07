@@ -15,12 +15,14 @@ import com.fpoly.managebookings.api.user.ApiUser;
 import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity implements ApiLoginUserInterface {
-    private EditText edtPassword;
+    private TextInputEditText edtPassword;
     private TextView tvForgetPass;
-    private EditText edtUsername;
+    private TextInputEditText edtUsername;
     private Button btnLogin;
     private ApiUser mApiUser = new ApiUser(this);
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
@@ -44,16 +46,16 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
     }
 
     private void initView() {
-        edtPassword = (EditText) findViewById(R.id.edtPassword);
+        edtPassword = (TextInputEditText) findViewById(R.id.edtPassword);
         tvForgetPass = (TextView) findViewById(R.id.tvForgetPass);
-        edtUsername = (EditText) findViewById(R.id.edtUsername);
+        edtUsername = (TextInputEditText) findViewById(R.id.edtUsername);
         btnLogin = (Button) findViewById(R.id.btnLogin);
     }
 
     private void login() {
         if (checkLogin()) {
             mApiUser.login(edtUsername.getText().toString().trim(), edtPassword.getText().toString().trim());
-            loadingDialog.startLoadingDialog(2000);
+//            loadingDialog.startLoadingDialog(2000);
         }
     }
 
@@ -72,10 +74,14 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
             fixSizeForToast.fixSizeToast("Incorrect account or password");
         } else {
             fixSizeForToast.fixSizeToast(status);
+
+            SharedPref_InfoUser.getInstance(this).storeUserEmail(user.getEmail());
+            SharedPref_InfoUser.getInstance(this).storeUserFullName(user.getFullName());
+            SharedPref_InfoUser.getInstance(this).storeUserAvatar(user.getAvatar());
+
             Intent intent = new Intent(this, ListOrderWaitingActivity.class);
-            intent.putExtra("TOKEN", token);
-            intent.putExtra("USER", user);
             startActivity(intent);
+            finish();
         }
     }
 

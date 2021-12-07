@@ -16,22 +16,30 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListOrdersAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
+import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.tool.DialogExit;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
+import com.fpoly.managebookings.views.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,6 +51,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     private ApiOrderRoomBooked getOrderWaiting = new ApiOrderRoomBooked(this);
     private ArrayList<OrderRoomBooked> orderRoomBookeds = new ArrayList<>();
     private Toolbar toolbar;
+    private TextView toolbar_text;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private LinearLayout layout;
     private DrawerLayout drawerLayout;
@@ -50,6 +59,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     private LoadingDialog loadingDialog;
     private NavigationView navigationView;
     private EditText edt_search;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +70,10 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
         layout = findViewById(R.id.layoutListWaiting);
         drawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
+        toolbar_text = findViewById(R.id.toolbar_text);
         navigationView = findViewById(R.id.nav_view);
         edt_search = findViewById(R.id.edt_search);
+
 
         initializeNavigationView();
 
@@ -69,6 +81,47 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
         recView.setLayoutManager(new GridLayoutManager(this, 1));
 
         setPullRefresh();
+
+        getInfoUser();
+
+    }
+
+    private void getInfoUser() {
+        TextView tv_email_drawer_header, tv_fullname_drawer_header;
+        RoundedImageView ava_drawer_header;
+
+        View mView = navigationView.getHeaderView(0);
+        tv_email_drawer_header = mView.findViewById(R.id.tv_email_drawer_header);
+        tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
+        ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
+
+        tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
+        tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
+        Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            finishApp();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Nhấn  " + '"' + "TRỞ VỀ" + '"' + "  lần nữa để thoát", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
+    private void finishApp(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
@@ -104,7 +157,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     }
 
     private void initializeNavigationView() {
-        toolbar.setTitle(getString(R.string.orders_waiting));
+        toolbar_text.setText(getString(R.string.orders_waiting));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

@@ -23,6 +23,10 @@ public class ApiRoomDetail {
     public ApiRoomDetail() {
     }
 
+    public ApiRoomDetail(ApiRoomDetailInterface mApiRoomDetailInterface) {
+        this.mApiRoomDetailInterface = mApiRoomDetailInterface;
+    }
+
     public ApiRoomDetail(ApiRoomDetailInterface mApiRoomDetailInterface, GetAllRoomInterface mGetAllRoomInterface) {
         this.mApiRoomDetailInterface = mApiRoomDetailInterface;
         this.mGetAllRoomInterface = mGetAllRoomInterface;

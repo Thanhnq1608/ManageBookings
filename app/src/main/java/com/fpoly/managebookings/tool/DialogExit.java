@@ -21,7 +21,6 @@ public class DialogExit {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         context.finish();
-                        System.exit(0);
                     }
                 })
                 .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
