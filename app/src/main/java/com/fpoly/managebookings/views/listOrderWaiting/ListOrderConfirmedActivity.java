@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -28,10 +29,14 @@ import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.tool.DialogExit;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
+import com.fpoly.managebookings.views.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -64,6 +69,8 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
         edt_search = findViewById(R.id.edt_search);
 
         initializeNavigationView();
+
+        getInfoUser();
 
         //Get all room empty with bookingStatus = 0
         recView.setLayoutManager(new GridLayoutManager(this, 1));
@@ -102,8 +109,23 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
         }
     }
 
+    private void getInfoUser() {
+        TextView tv_email_drawer_header, tv_fullname_drawer_header;
+        RoundedImageView ava_drawer_header;
+
+        View mView = navigationView.getHeaderView(0);
+        tv_email_drawer_header = mView.findViewById(R.id.tv_email_drawer_header);
+        tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
+        ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
+
+        tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
+        tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
+        Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
+    }
+
     private void initializeNavigationView() {
-        toolbar.setTitle(R.string.orders_confirmed);
+        TextView toolbar_text = findViewById(R.id.toolbar_text);
+        toolbar_text.setText(getString(R.string.orders_confirmed));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -134,9 +156,15 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
                     case R.id.create_order:
                         startActivity(new Intent(ListOrderConfirmedActivity.this, CreateOrderActivity.class));
                         break;
+                    case R.id.menu_logout:
+                        SharedPref_InfoUser.getInstance(ListOrderConfirmedActivity.this).clearSharedPreferences();
+                        startActivity(new Intent(ListOrderConfirmedActivity.this, LoginActivity.class));
+                        finishAffinity();
+                        break;
                     case R.id.menu_exit:
                         DialogExit dialogExit = new DialogExit();
                         dialogExit.exit(ListOrderConfirmedActivity.this);
+                        break;
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);

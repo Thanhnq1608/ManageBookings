@@ -8,11 +8,11 @@
                 android:title="@string/orders_waiting" />
             <item
                 android:id="@+id/confirm_order"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/ic_confirm"
                 android:title="@string/confirmed_orders" />
             <item
                 android:id="@+id/occupied_order"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/ic_occupied"
                 android:title="@string/occupied_orders" />
             <item
                 android:id="@+id/orders_completed"

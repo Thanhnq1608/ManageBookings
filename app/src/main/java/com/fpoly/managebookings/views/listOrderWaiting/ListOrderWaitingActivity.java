@@ -31,13 +31,18 @@ import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.tool.DialogExit;
+import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
 import com.fpoly.managebookings.views.login.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -56,10 +61,12 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     private LinearLayout layout;
     private DrawerLayout drawerLayout;
     private Observable<ArrayList<OrderRoomBooked>> observable;
+    private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
     private LoadingDialog loadingDialog;
     private NavigationView navigationView;
     private EditText edt_search;
     private boolean doubleBackToExitPressedOnce = false;
+    private static final String TAG = ListOrderWaitingActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,24 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
 
         getInfoUser();
 
+        messageFirebase();
+
+    }
+
+    private void messageFirebase() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "FCM Fail" + task.getException());
+                    return;
+                }
+
+                String token = task.getResult();
+
+                Log.e(TAG, token);
+            }
+        });
     }
 
     private void getInfoUser() {
@@ -104,21 +129,22 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
-            finishApp();
+            finishAffinity();
+            finish();
             return;
         }
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Nhấn  " + '"' + "TRỞ VỀ" + '"' + "  lần nữa để thoát", Toast.LENGTH_SHORT).show();
+        fixSizeForToast.fixSizeToast("Nhấn  " + '"' + "TRỞ VỀ" + '"' + "  lần nữa để thoát");
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
 
-    private void finishApp(){
+    private void finishApp() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -135,9 +161,9 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
 
     }
 
-    void searchOrderByPhone(){
+    void searchOrderByPhone() {
         edt_search.setText("");
-        if (edt_search != null){
+        if (edt_search != null) {
             edt_search.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -188,9 +214,15 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
                     case R.id.create_order:
                         startActivity(new Intent(ListOrderWaitingActivity.this, CreateOrderActivity.class));
                         break;
+                    case R.id.menu_logout:
+                        SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).clearSharedPreferences();
+                        startActivity(new Intent(ListOrderWaitingActivity.this, LoginActivity.class));
+                        finishAffinity();
+                        break;
                     case R.id.menu_exit:
                         DialogExit dialogExit = new DialogExit();
                         dialogExit.exit(ListOrderWaitingActivity.this);
+                        break;
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);

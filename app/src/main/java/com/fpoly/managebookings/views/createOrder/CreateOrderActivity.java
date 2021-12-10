@@ -31,13 +31,17 @@ import com.fpoly.managebookings.tool.DialogExit;
 import com.fpoly.managebookings.tool.DialogSelectDate;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
+import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
+import com.fpoly.managebookings.views.login.LoginActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,6 +79,7 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
         anhXa();
         initializeNavigationView();
         getCurrentDateTime();
+        getInfoUser();
 
         btnCreateOrder.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -108,33 +113,6 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
             public void onClick(View v) {
                 mDialogSelectDate = new DialogSelectDate(CreateOrderActivity.this, "Select date and time", 0);
                 mDialogSelectDate.show(getSupportFragmentManager(), "start");
-//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CreateOrderActivity.this);
-//                bottomSheetDialog.setContentView(R.layout.date_picker_bottom_sheet);
-//
-//                TimePicker timePicker = bottomSheetDialog.findViewById(R.id.time_picker);
-//                DatePicker datePicker = bottomSheetDialog.findViewById(R.id.date_picker);
-//                TextView tvDone = bottomSheetDialog.findViewById(R.id.tv_done);
-//                timePicker.setIs24HourView(true);
-//                datePicker.setMinDate(new Date().getTime());
-//                if (!dateStart.isEmpty()) {
-//                    try {
-//                        timePicker.setHour(Formater.formatToDateTime(dateStart).getHours());
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//
-//                tvDone.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dateStart = timePicker.getHour() + ":" + timePicker.getMinute() + " " + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear();
-//                        tvTimeBookingStart.setText(timePicker.getHour() + ":" + timePicker.getMinute());
-//                        tvDateBookingStart.setText(datePicker.getDayOfMonth() + "/" + (datePicker.getMonth()+1) + "/" + datePicker.getYear());
-//                        bottomSheetDialog.dismiss();
-//                    }
-//                });
-//                bottomSheetDialog.show();
             }
         });
 
@@ -144,34 +122,6 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
             public void onClick(View v) {
                 mDialogSelectDate = new DialogSelectDate(CreateOrderActivity.this, "Select date and time", 0);
                 mDialogSelectDate.show(getSupportFragmentManager(), "end");
-//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CreateOrderActivity.this);
-//                bottomSheetDialog.setContentView(R.layout.date_picker_bottom_sheet);
-//
-//                TimePicker timePicker = bottomSheetDialog.findViewById(R.id.time_picker);
-//                DatePicker datePicker = bottomSheetDialog.findViewById(R.id.date_picker);
-//                TextView tvDone = bottomSheetDialog.findViewById(R.id.tv_done);
-//                timePicker.setIs24HourView(true);
-//                datePicker.setMinDate(new Date().getTime());
-//                if (!dateEnd.isEmpty()) {
-//                    try {
-//                        timePicker.setHour(Formater.formatToDateTime(dateEnd).getHours());
-//                        datePicker.setMinDate(Formater.formatToDateTime(dateStart).getTime());
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                tvDone.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dateEnd = timePicker.getHour() + ":" + timePicker.getMinute() + " " + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear();
-//                        tvTimeBookingEnd.setText(timePicker.getHour() + ":" + timePicker.getMinute());
-//                        tvDateBookingEnd.setText(datePicker.getDayOfMonth() + "/" + (datePicker.getMonth() + 1) + "/" + datePicker.getYear());
-//                        bottomSheetDialog.dismiss();
-//                    }
-//                });
-//
-//                bottomSheetDialog.show();
             }
         });
 
@@ -214,6 +164,20 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
         }
     }
 
+    private void getInfoUser() {
+        TextView tv_email_drawer_header, tv_fullname_drawer_header;
+        RoundedImageView ava_drawer_header;
+
+        View mView = navigationView.getHeaderView(0);
+        tv_email_drawer_header = mView.findViewById(R.id.tv_email_drawer_header);
+        tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
+        ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
+
+        tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
+        tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
+        Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
+    }
+
     void anhXa() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         edtFullname = (EditText) findViewById(R.id.edt_fullname);
@@ -233,7 +197,8 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
     }
 
     private void initializeNavigationView() {
-        toolbar.setTitle(getString(R.string.orders_comleted));
+        TextView toolbar_text = findViewById(R.id.toolbar_text);
+        toolbar_text.setText(getString(R.string.orders_comleted));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -264,9 +229,15 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
                     case R.id.create_order:
                         startActivity(new Intent(CreateOrderActivity.this, CreateOrderActivity.class));
                         break;
+                    case R.id.menu_logout:
+                        SharedPref_InfoUser.getInstance(CreateOrderActivity.this).clearSharedPreferences();
+                        startActivity(new Intent(CreateOrderActivity.this, LoginActivity.class));
+                        finishAffinity();
+                        break;
                     case R.id.menu_exit:
                         DialogExit dialogExit = new DialogExit();
                         dialogExit.exit(CreateOrderActivity.this);
+                        break;
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);

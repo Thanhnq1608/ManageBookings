@@ -1,25 +1,35 @@
 package com.fpoly.managebookings.views.login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fpoly.managebookings.R;
+import com.fpoly.managebookings.api.sendNotifyFirebase.ApiSendNotifyWithFirebase;
 import com.fpoly.managebookings.api.user.ApiLoginUserInterface;
 import com.fpoly.managebookings.api.user.ApiUser;
 import com.fpoly.managebookings.models.User;
+import com.fpoly.managebookings.models.firebase.DataSendMessFirebase;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
+import com.fpoly.managebookings.views.forgertPass.ForgetPasswordActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.JsonObject;
 
 public class LoginActivity extends AppCompatActivity implements ApiLoginUserInterface {
+    private static final String SENDER_ID = "ManageBooking";
     private TextInputEditText edtPassword;
     private TextView tvForgetPass;
     private TextInputEditText edtUsername;
@@ -27,7 +37,8 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
     private ApiUser mApiUser = new ApiUser(this);
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
     private LoadingDialog loadingDialog = new LoadingDialog(this);
-
+    private boolean doubleBackToExitPressedOnce = false;
+    private ApiSendNotifyWithFirebase apiSendNotifyWithFirebase = new ApiSendNotifyWithFirebase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +48,49 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
 //        getSupportActionBar().hide();
         initView();
 
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                JsonObject payload = new JsonObject();
+                payload.addProperty("to", "dOkCu5PISgS62M0SCZfT3q:APA91bGhCT6NLXl-iFyFMFln63Pg23LdUx0O4MsYh1uJBGsWzrU6r-6tZKeRNPmx2b7Nl9AtD364lbmv5yLFzdeHNdPcm04wadUipbUKNPRymAYkAUdD9TirzXBKtCsuyPzH1NgZzmdu");
+                // compose data payload here
+                JsonObject data = new JsonObject();
+                data.addProperty("title", "tESST");
+                data.addProperty("message", "tHAAYS Rồi này");
+                // add data payload
+                payload.add("data", data);
+                apiSendNotifyWithFirebase.sendNotify(payload);
                 login();
             }
         });
+
+        tvForgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            finishAffinity();
+            finish();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        fixSizeForToast.fixSizeToast("Nhấn  " + '"' + "TRỞ VỀ" + '"' + "  lần nữa để thoát");
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+
     }
 
     private void initView() {

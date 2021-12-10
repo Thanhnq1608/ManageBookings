@@ -31,17 +31,19 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
     private List<RoomDetail> roomDetailList = new ArrayList<>();
     private ListRoomEmptyInterface mListRoomEmptyInterface;
     private boolean isCheck = false;
+    private int isSort;
 
     public interface ListRoomEmptyInterface {
         void roomsAreSelected(List<RoomDetail> roomDetails);
     }
 
 
-    public ListRoomEmptyAdapter(Context context, ArrayList<RoomDetail> roomDetails, OrderRoomBooked orderRoomBooked, ListRoomEmptyInterface mListRoomEmptyInterface) {
+    public ListRoomEmptyAdapter(Context context, ArrayList<RoomDetail> roomDetails, OrderRoomBooked orderRoomBooked, ListRoomEmptyInterface mListRoomEmptyInterface, int isSort) {
         this.context = context;
         this.roomDetails = roomDetails;
         this.orderRoomBooked = orderRoomBooked;
         this.mListRoomEmptyInterface = mListRoomEmptyInterface;
+        this.isSort = isSort;
     }
 
     @NonNull
@@ -53,12 +55,39 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Collections.sort(roomDetails, new Comparator<RoomDetail>() {
-            @Override
-            public int compare(RoomDetail o1, RoomDetail o2) {
-                return o1.getRoomName().compareTo(o2.getRoomName());
-            }
-        });
+        switch (isSort){
+            case 0:
+                Collections.sort(roomDetails, new Comparator<RoomDetail>() {
+                @Override
+                public int compare(RoomDetail o1, RoomDetail o2) {
+                    return String.valueOf(o1.getRoomPrice()).compareTo(String.valueOf(o2.getRoomPrice()));
+                }
+            });
+                break;
+            case 1:
+                Collections.sort(roomDetails, new Comparator<RoomDetail>() {
+                    @Override
+                    public int compare(RoomDetail o1, RoomDetail o2) {
+                        return String.valueOf(o1.getIdKindOfRoom()).compareTo(String.valueOf(o2.getIdKindOfRoom()));
+                    }
+                });
+                break;
+            case 2:
+                Collections.sort(roomDetails, new Comparator<RoomDetail>() {
+                    @Override
+                    public int compare(RoomDetail o1, RoomDetail o2) {
+                        return String.valueOf(o1.getIdRoom().substring(0,1)).compareTo(String.valueOf(o2.getIdRoom().substring(0,1)));
+                    }
+                });
+                break;
+            default:
+                Collections.sort(roomDetails, new Comparator<RoomDetail>() {
+                    @Override
+                    public int compare(RoomDetail o1, RoomDetail o2) {
+                        return o1.getRoomName().compareTo(o2.getRoomName());
+                    }
+                });
+        }
 
         RoomDetail roomDetail = roomDetails.get(position);
 
@@ -101,8 +130,19 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
                     } else {
                         Intent intent = new Intent(context, RoomDetailActivity.class);
                         intent.putExtra("ROOMDETAIL", roomDetail);
+                        intent.putExtra("ORDERROOMBOOKED",orderRoomBooked);
                         context.startActivity(intent);
                     }
+                }
+            });
+        }else {
+            holder.layout_item_room.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RoomDetailActivity.class);
+                    intent.putExtra("ROOMDETAIL", roomDetail);
+                    intent.putExtra("HIDEBUTTON",true);
+                    context.startActivity(intent);
                 }
             });
         }
@@ -112,6 +152,19 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
         holder.tvNumberOfPerson.setText(roomDetail.getMaximumNumberOfPeople() + " people");
         holder.tvPrice.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
         holder.imgRoom.setImageResource(R.drawable.sample_image);
+        holder.tvRoomStatus.setText(Formater.getRoomStatus(roomDetail.getRoomStatus()));
+
+        switch (roomDetail.getRoomStatus()){
+            case 0:
+                holder.tvRoomStatus.setTextColor(0xFF28B237);
+                break;
+            case 1:
+                holder.tvRoomStatus.setTextColor(0xFFFFC107);
+                break;
+            case 2:
+                holder.tvRoomStatus.setTextColor(0xFFF10A0A);
+                break;
+        }
     }
 
     @Override
@@ -120,7 +173,7 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNameRoom, tvKindOfRoom, tvNumberOfPerson, tvPrice;
+        TextView tvNameRoom, tvKindOfRoom, tvNumberOfPerson, tvPrice,tvRoomStatus;
         ImageView imgRoom, img_check;
         ConstraintLayout layout_item_room;
 
@@ -133,6 +186,7 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
             tvNumberOfPerson = itemView.findViewById(R.id.tvNumberOfPerson);
             layout_item_room = itemView.findViewById(R.id.layout_item_room);
             img_check = itemView.findViewById(R.id.img_check);
+            tvRoomStatus = itemView.findViewById(R.id.tv_room_status);
         }
     }
 }

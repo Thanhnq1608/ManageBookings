@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fpoly.managebookings.R;
+import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
+import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
+import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.Formater;
 
@@ -32,6 +35,11 @@ public class RoomDetailActivity extends AppCompatActivity {
     private TextView textView15;
     private TextView tvContentRoom;
     private Button btnSelectRoom;
+    private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail();
+    private ApiOrderRoomBooked mApiOrderRoomBooked = new ApiOrderRoomBooked();
+    private OrderRoomBooked orderRoomBooked;
+    private RoomDetail roomDetail;
+    private boolean isHideButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,36 +49,49 @@ public class RoomDetailActivity extends AppCompatActivity {
         anhXa();
 
         Intent intent = getIntent();
-        RoomDetail roomDetail =(RoomDetail) intent.getSerializableExtra("ROOMDETAIL");
-        boolean isHideButton = intent.getBooleanExtra("HIDEBUTTON",false);
+        roomDetail = (RoomDetail) intent.getSerializableExtra("ROOMDETAIL");
+        isHideButton = intent.getBooleanExtra("HIDEBUTTON", false);
+        orderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
 
-        if (isHideButton){
+        if (isHideButton) {
             btnSelectRoom.setVisibility(View.INVISIBLE);
         }
 
-        if (roomDetail != null){
+        if (roomDetail != null) {
             tvRoomNameDetail.setText(roomDetail.getRoomName());
             tvRoomPositionDetail.setText(roomDetail.getIdRoom());
             tvRoomPriceDetail.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
         }
 
-        if (roomDetail != null){
+        if (roomDetail != null) {
             setToolbar(roomDetail.getRoomName());
-        }else {
+        } else {
             setToolbar(getString(R.string.room_detail_lower));
         }
 
+        btnSelectRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int total = 0;
+                mApiRoomDetail.removeRoomFromOrder(roomDetail.getId(), 1, orderRoomBooked.get_id());
+                total = total + roomDetail.getRoomPrice();
+                total = orderRoomBooked.getTotalRoomRate() + total;
+                mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
+            }
+        });
+
     }
 
-    void setToolbar(String name){
-        toolbar.setTitle(name);
+    void setToolbar(String name) {
+        TextView toolbar_text = findViewById(R.id.toolbar_text);
+        toolbar_text.setText(name);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
-    void anhXa(){
+    void anhXa() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         imageRoom = (ImageView) findViewById(R.id.image_room);
@@ -90,7 +111,7 @@ public class RoomDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);

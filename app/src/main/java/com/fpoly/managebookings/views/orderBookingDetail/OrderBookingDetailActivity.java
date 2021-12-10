@@ -164,6 +164,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         loadingDialog.startLoadingDialog(2000);
     }
 
+
     private void findViewsById() {
         tvEmailUser = findViewById(R.id.tvEmailUser);
         tvDateStart = findViewById(R.id.tvDateStart);
@@ -183,8 +184,9 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     }
 
     private void setToolbar() {
+        TextView toolbar_text = findViewById(R.id.toolbar_text);
+        toolbar_text.setText(getString(R.string.order_Detail));
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getString(R.string.order_Detail));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back);

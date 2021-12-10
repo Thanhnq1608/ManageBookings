@@ -21,6 +21,6 @@ public class FixSizeForToast {
     public void fixSizeToast(String message){
         SpannableStringBuilder biggerText = new SpannableStringBuilder(message);
         biggerText.setSpan(new RelativeSizeSpan(2.0f), 0, message.length(), 0);
-        Toast.makeText(context, biggerText, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, biggerText, Toast.LENGTH_SHORT).show();
     }
 }

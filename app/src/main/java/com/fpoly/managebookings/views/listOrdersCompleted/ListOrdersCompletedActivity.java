@@ -47,13 +47,17 @@ import com.fpoly.managebookings.tool.DialogSelectDate;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
+import com.fpoly.managebookings.views.login.LoginActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -90,6 +94,8 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
 
         initializeNavigationView();
 
+        getInfoUser();
+
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +131,20 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         btn_filter = findViewById(R.id.btn_filter);
     }
 
+    private void getInfoUser() {
+        TextView tv_email_drawer_header, tv_fullname_drawer_header;
+        RoundedImageView ava_drawer_header;
+
+        View mView = navigationView.getHeaderView(0);
+        tv_email_drawer_header = mView.findViewById(R.id.tv_email_drawer_header);
+        tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
+        ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
+
+        tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
+        tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
+        Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
+    }
+
     void setPullRefresh() {
         final SwipeRefreshLayout pullRefresh = findViewById(R.id.refresh);
         pullRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -158,7 +178,8 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
     }
 
     private void initializeNavigationView() {
-        toolbar.setTitle(getString(R.string.orders_comleted));
+        TextView toolbar_text = findViewById(R.id.toolbar_text);
+        toolbar_text.setText(getString(R.string.orders_comleted));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -189,9 +210,15 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
                     case R.id.create_order:
                         startActivity(new Intent(ListOrdersCompletedActivity.this, CreateOrderActivity.class));
                         break;
+                    case R.id.menu_logout:
+                        SharedPref_InfoUser.getInstance(ListOrdersCompletedActivity.this).clearSharedPreferences();
+                        startActivity(new Intent(ListOrdersCompletedActivity.this, LoginActivity.class));
+                        finishAffinity();
+                        break;
                     case R.id.menu_exit:
                         DialogExit dialogExit = new DialogExit();
                         dialogExit.exit(ListOrdersCompletedActivity.this);
+                        break;
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);

@@ -67,6 +67,12 @@ public interface Formater {
         return output.parse(temp.toString());
     }
 
+    static String formatStringToPhone(String phone){
+        String temp = "+84" + phone.substring(1,phone.length());
+        Log.e("Phone",""+temp);
+        return temp;
+    }
+
     static String getKindOfRoom(int id){
         String temp = "";
         switch (id){
@@ -81,6 +87,22 @@ public interface Formater {
                 break;
             case 3:
                 temp = "VIP Double Room";
+                break;
+        }
+        return temp;
+    }
+
+    static String getRoomStatus(int id){
+        String temp = "";
+        switch (id){
+            case 0:
+                temp = "Empty";
+                break;
+            case 1:
+                temp = "Reserved";
+                break;
+            case 2:
+                temp = "Occupied";
                 break;
         }
         return temp;

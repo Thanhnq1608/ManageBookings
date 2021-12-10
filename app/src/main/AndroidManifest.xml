@@ -5,12 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".views.forgertPass.ForgetPasswordActivity"
+            android:exported="true" />
         <activity
             android:name=".views.login.LoginActivity"
             android:exported="true" />
@@ -42,7 +46,7 @@
             android:label="List Room Empty" />
         <activity
             android:name=".views.listOrderWaiting.ListOrderWaitingActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -52,9 +56,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity_quen_mk" />
-        <service android:name=".tool.FirebaseNotification"
-            android:exported="true">
+
+        <service
+            android:name=".tool.fcm.FirebaseNotification"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
