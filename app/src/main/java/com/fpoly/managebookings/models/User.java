@@ -20,6 +20,12 @@ public class User implements Serializable {
     private String updateBy;
     private String createdAt;
     private String updatedAt;
+    private String tokenId;
+
+    public String getTokenId() {
+        return tokenId;
+    }
+
     private long v;
 
     public User() {

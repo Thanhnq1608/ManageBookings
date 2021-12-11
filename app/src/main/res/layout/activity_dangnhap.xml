@@ -36,14 +36,14 @@
             app:layout_constraintTop_toBottomOf="@+id/tv1231">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:text="nguyenhainam362@gmail.com"
-                android:id="@+id/edtUsername"
+                android:text="0332751701"
+                android:id="@+id/edtPhoneNumber"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/email"
+                android:drawableLeft="@drawable/ic_phone"
                 android:drawablePadding="10dp"
-                android:hint="Email"
+                android:hint="Phone Number"
                 android:inputType="textEmailAddress"
                 android:textSize="30dp" />
 
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tilUsername">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:text="1234567890"
+                android:text="123456789"
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

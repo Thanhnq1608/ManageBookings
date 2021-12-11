@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
     private static final String SENDER_ID = "ManageBooking";
     private TextInputEditText edtPassword;
     private TextView tvForgetPass;
-    private TextInputEditText edtUsername;
+    private TextInputEditText edtPhone;
     private Button btnLogin;
     private ApiUser mApiUser = new ApiUser(this);
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
@@ -96,19 +96,19 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
     private void initView() {
         edtPassword = (TextInputEditText) findViewById(R.id.edtPassword);
         tvForgetPass = (TextView) findViewById(R.id.tvForgetPass);
-        edtUsername = (TextInputEditText) findViewById(R.id.edtUsername);
+        edtPhone = (TextInputEditText) findViewById(R.id.edtPhoneNumber);
         btnLogin = (Button) findViewById(R.id.btnLogin);
     }
 
     private void login() {
         if (checkLogin()) {
-            mApiUser.login(edtUsername.getText().toString().trim(), edtPassword.getText().toString().trim());
+            mApiUser.login(edtPhone.getText().toString().trim(), edtPassword.getText().toString().trim());
 //            loadingDialog.startLoadingDialog(2000);
         }
     }
 
     boolean checkLogin() {
-        if (edtPassword.getText().length() == 0 || edtUsername.getText().length() == 0) {
+        if (edtPassword.getText().length() == 0 || edtPhone.getText().length() == 0) {
             fixSizeForToast.fixSizeToast("Account or password cannot be empty!");
             return false;
         } else {

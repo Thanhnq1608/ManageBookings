@@ -61,12 +61,12 @@ public class DialogSelectDate extends BottomSheetDialogFragment {
             case 0:
                 selectTimePicker.setBottom(20);
                 datePickerLayout.setBottom(50);
-                filterRadio.setVisibility(View.INVISIBLE);
+                filterRadio.setVisibility(View.GONE);
                 break;
             case 1:
                 filterRadio.setTop(20);
                 datePickerLayout.setTop(50);
-                selectTimePicker.setVisibility(View.INVISIBLE);
+                selectTimePicker.setVisibility(View.GONE);
                 break;
         }
 

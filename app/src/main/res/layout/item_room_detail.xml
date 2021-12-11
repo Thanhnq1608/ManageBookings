@@ -1,122 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_item_room"
     android:layout_width="match_parent"
-    android:layout_height="320dp"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp"
+    android:orientation="vertical"
     android:background="@drawable/background_shadow_layout_item">
 
-    <TextView
-        android:id="@+id/tvNameRoom"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layout_title_item_room"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:fontFamily="@font/unicode_optima"
-        android:text="Standard Single Room"
-        android:textColor="@color/black"
-        android:textSize="37dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="5dp"
+        android:background="#DAD6D6"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title_item_room"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="40dp"
+            android:textColor="@color/black"
+            android:text="Tầng 1"/>
 
-    <ImageView
-        android:id="@+id/imgImageRoom"
-        android:layout_width="420dp"
-        android:layout_height="205dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameRoom"
-        app:srcCompat="@drawable/sample_image" />
 
-    <TextView
-        android:id="@+id/tvRoomType"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/ic_room_type"
-        android:drawablePadding="10dp"
-        android:fontFamily="@font/optima"
-        android:gravity="center|start"
-        android:text="Phòng đơn thường"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.031"
-        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameRoom" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvPriceRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/ic_price_room"
-        android:drawablePadding="10dp"
-        android:ellipsize="middle"
-        android:fontFamily="@font/optima"
-        android:gravity="center|start"
-        android:text="6000000 Vnd"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
-        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_item_room"
+        android:layout_width="match_parent"
+        android:layout_height="320dp">
 
-    <TextView
-        android:id="@+id/tvNumberOfPerson"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:height="35dp"
-        android:drawableLeft="@drawable/ic_group_person"
-        android:drawablePadding="5dp"
-        android:fontFamily="@font/optima"
-        android:gravity="center|start"
-        android:text="@string/tvSonguoi"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvPriceRoom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvPriceRoom"
-        app:layout_constraintTop_toBottomOf="@+id/tvRoomType"
-        app:layout_constraintVertical_bias="0.393" />
+        <TextView
+            android:id="@+id/tvNameRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/unicode_optima"
+            android:text="Standard Single Room"
+            android:textColor="@color/black"
+            android:textSize="37dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/img_check"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/imgImageRoom"
-        app:layout_constraintEnd_toStartOf="@+id/tvNameRoom"
-        app:layout_constraintHorizontal_bias="0.097"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvNameRoom"
-        app:layout_constraintVertical_bias="0.076"
-        app:srcCompat="@drawable/ic_checked" />
+        <ImageView
+            android:id="@+id/imgImageRoom"
+            android:layout_width="420dp"
+            android:layout_height="205dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameRoom"
+            app:srcCompat="@drawable/sample_image" />
 
-    <TextView
-        android:id="@+id/tv_room_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Empty"
-        android:textColor="@color/green"
-        android:textSize="35dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.865"
-        app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
-        app:layout_constraintTop_toBottomOf="@+id/tvPriceRoom"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/tvRoomType"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:height="35dp"
+            android:drawableLeft="@drawable/ic_room_type"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/optima"
+            android:gravity="center|start"
+            android:text="Phòng đơn thường"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.031"
+            app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameRoom" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvPriceRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:height="35dp"
+            android:drawableLeft="@drawable/ic_price_room"
+            android:drawablePadding="10dp"
+            android:ellipsize="middle"
+            android:fontFamily="@font/optima"
+            android:gravity="center|start"
+            android:text="6000000 Vnd"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.075"
+            app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.69" />
+
+        <TextView
+            android:id="@+id/tvNumberOfPerson"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:height="35dp"
+            android:drawableLeft="@drawable/ic_group_person"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/optima"
+            android:gravity="center|start"
+            android:text="@string/tvSonguoi"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvPriceRoom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvPriceRoom"
+            app:layout_constraintTop_toBottomOf="@+id/tvRoomType"
+            app:layout_constraintVertical_bias="0.393" />
+
+        <ImageView
+            android:id="@+id/img_check"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/imgImageRoom"
+            app:layout_constraintEnd_toStartOf="@+id/tvNameRoom"
+            app:layout_constraintHorizontal_bias="0.097"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvNameRoom"
+            app:layout_constraintVertical_bias="0.076"
+            app:srcCompat="@drawable/ic_checked" />
+
+        <TextView
+            android:id="@+id/tv_room_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Empty"
+            android:textColor="@color/green"
+            android:textSize="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.865"
+            app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
+            app:layout_constraintTop_toBottomOf="@+id/tvPriceRoom"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

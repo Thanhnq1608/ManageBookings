@@ -14,16 +14,14 @@ import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActivity;
 
 public class DialogExit {
-    private Dialog dialog;
 
     public void exit(Activity context) {
         LayoutInflater inflater = (LayoutInflater) context.getLayoutInflater();
         View rootLayout = inflater.inflate(R.layout.dialog_custom_message,null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                context);
-        alertDialogBuilder.setView(rootLayout);
+        Dialog dialog = new Dialog(context);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(rootLayout);
 
-        AlertDialog dialog = alertDialogBuilder.create();
         dialog.setCancelable(false);
 
         TextView tvTitleDialog;

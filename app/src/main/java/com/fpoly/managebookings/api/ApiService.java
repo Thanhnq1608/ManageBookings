@@ -7,6 +7,7 @@ import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
 import com.fpoly.managebookings.models.firebase.DataSendMessFirebase;
 import com.fpoly.managebookings.models.firebase.ResponseSendMessage;
+import com.fpoly.managebookings.models.login.ResponseForgetPass;
 import com.fpoly.managebookings.models.login.ResponseLogin;
 import com.fpoly.managebookings.models.updateOrder.UpdateBookingStatus;
 import com.fpoly.managebookings.models.updateOrder.UpdateTotalRoomRate;
@@ -98,7 +99,11 @@ public interface ApiService {
     //User
     @FormUrlEncoded
     @POST("api/v1/auth/login")
-    Call<ResponseLogin> login(@Field("email")String email,@Field("passWord")String password);
+    Call<ResponseLogin> login(@Field("phone")String phone,@Field("passWord")String password);
+
+    @FormUrlEncoded
+    @POST("api/v1/auth/ResetPassWord")
+    Call<ResponseForgetPass> forgetPassword(@Field("phone")String phone, @Field("password") String password);
 
 
 }

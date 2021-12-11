@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,25 +61,49 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
                 Collections.sort(roomDetails, new Comparator<RoomDetail>() {
                 @Override
                 public int compare(RoomDetail o1, RoomDetail o2) {
-                    return String.valueOf(o1.getRoomPrice()).compareTo(String.valueOf(o2.getRoomPrice()));
+                    return Integer.valueOf(o1.getRoomPrice()).compareTo(Integer.valueOf(o2.getRoomPrice()));
                 }
             });
                 break;
             case 1:
+                holder.layotTitle.setVisibility(View.VISIBLE);
                 Collections.sort(roomDetails, new Comparator<RoomDetail>() {
                     @Override
                     public int compare(RoomDetail o1, RoomDetail o2) {
                         return String.valueOf(o1.getIdKindOfRoom()).compareTo(String.valueOf(o2.getIdKindOfRoom()));
                     }
                 });
+                holder.tvTitle.setText(Formater.getKindOfRoom(roomDetails.get(position).getIdKindOfRoom()));
+                if (position > 0) {
+                    int i = position - 1;
+                    if (i < roomDetails.size() && roomDetails.get(position).getIdKindOfRoom() == roomDetails.get(i).getIdKindOfRoom()) {
+                        holder.layotTitle.setVisibility(View.GONE);
+                    }
+                }
                 break;
             case 2:
+                holder.layotTitle.setVisibility(View.VISIBLE);
+                if (Integer.parseInt(roomDetails.get(position).getIdRoom().substring(0,1)) == 1){
+                    holder.tvTitle.setText(roomDetails.get(position).getIdRoom().substring(0,1)+"st floor");
+                }else if (Integer.parseInt(roomDetails.get(position).getIdRoom().substring(0,1)) == 2){
+                    holder.tvTitle.setText(roomDetails.get(position).getIdRoom().substring(0,1)+"nd floor");
+                }else if (Integer.parseInt(roomDetails.get(position).getIdRoom().substring(0,1)) == 3){
+                    holder.tvTitle.setText(roomDetails.get(position).getIdRoom().substring(0,1)+"rd floor");
+                }else {
+                    holder.tvTitle.setText(roomDetails.get(position).getIdRoom().substring(0,1)+"th floor");
+                }
                 Collections.sort(roomDetails, new Comparator<RoomDetail>() {
                     @Override
                     public int compare(RoomDetail o1, RoomDetail o2) {
-                        return String.valueOf(o1.getIdRoom().substring(0,1)).compareTo(String.valueOf(o2.getIdRoom().substring(0,1)));
+                        return Integer.valueOf(o1.getIdRoom().substring(0,1)).compareTo(Integer.valueOf(o2.getIdRoom().substring(0,1)));
                     }
                 });
+                if (position > 0) {
+                    int i = position - 1;
+                    if (i < roomDetails.size() && Integer.parseInt(roomDetails.get(position).getIdRoom().substring(0,1)) == Integer.parseInt(roomDetails.get(i).getIdRoom().substring(0,1))) {
+                        holder.layotTitle.setVisibility(View.GONE);
+                    }
+                }
                 break;
             default:
                 Collections.sort(roomDetails, new Comparator<RoomDetail>() {
@@ -173,9 +198,10 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNameRoom, tvKindOfRoom, tvNumberOfPerson, tvPrice,tvRoomStatus;
+        TextView tvNameRoom, tvKindOfRoom, tvNumberOfPerson, tvPrice,tvRoomStatus, tvTitle;
         ImageView imgRoom, img_check;
         ConstraintLayout layout_item_room;
+        LinearLayout layotTitle;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -187,6 +213,8 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
             layout_item_room = itemView.findViewById(R.id.layout_item_room);
             img_check = itemView.findViewById(R.id.img_check);
             tvRoomStatus = itemView.findViewById(R.id.tv_room_status);
+            tvTitle = itemView.findViewById(R.id.tv_title_item_room);
+            layotTitle = itemView.findViewById(R.id.layout_title_item_room);
         }
     }
 }
