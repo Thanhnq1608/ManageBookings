@@ -159,7 +159,6 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
             layout = itemView.findViewById(R.id.itemOrderWaiting);
             imgRoom = itemView.findViewById(R.id.imgImageRoom);
             tvDate = itemView.findViewById(R.id.tvDate);
-            tvTime = itemView.findViewById(R.id.tvTime);
             tvFullName = itemView.findViewById(R.id.tvFullName);
             tvPhone = itemView.findViewById(R.id.tvPhone);
             tvStatusOrder = itemView.findViewById(R.id.tvStatus);

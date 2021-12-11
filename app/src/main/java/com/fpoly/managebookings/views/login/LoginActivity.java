@@ -1,15 +1,12 @@
 package com.fpoly.managebookings.views.login;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fpoly.managebookings.R;
@@ -17,16 +14,12 @@ import com.fpoly.managebookings.api.sendNotifyFirebase.ApiSendNotifyWithFirebase
 import com.fpoly.managebookings.api.user.ApiLoginUserInterface;
 import com.fpoly.managebookings.api.user.ApiUser;
 import com.fpoly.managebookings.models.User;
-import com.fpoly.managebookings.models.firebase.DataSendMessFirebase;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.forgertPass.ForgetPasswordActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
-import com.google.gson.JsonObject;
 
 public class LoginActivity extends AppCompatActivity implements ApiLoginUserInterface {
     private static final String SENDER_ID = "ManageBooking";
@@ -43,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dangnhap);
+        setContentView(R.layout.activity_login);
 
 //        getSupportActionBar().hide();
         initView();

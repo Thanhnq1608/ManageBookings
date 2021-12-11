@@ -2,17 +2,16 @@ package com.fpoly.managebookings.api;
 
 import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
+import com.fpoly.managebookings.models.picture.PictureOfRoom;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
 import com.fpoly.managebookings.models.User;
-import com.fpoly.managebookings.models.firebase.DataSendMessFirebase;
-import com.fpoly.managebookings.models.firebase.ResponseSendMessage;
 import com.fpoly.managebookings.models.login.ResponseForgetPass;
 import com.fpoly.managebookings.models.login.ResponseLogin;
+import com.fpoly.managebookings.models.picture.ResponGetPicture;
 import com.fpoly.managebookings.models.updateOrder.UpdateBookingStatus;
 import com.fpoly.managebookings.models.updateOrder.UpdateTotalRoomRate;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 
 import java.util.List;
 
@@ -23,8 +22,6 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -109,5 +106,8 @@ public interface ApiService {
     @GET("api/v1/auth/getPhone/{phone}")
     Call<User> getUserByPhone(@Path("phone") String phone);
 
+    //Picture
+    @GET("api/v1/pictureOfRoom/getPrice/{price}")
+    Call<ResponGetPicture> getPictureRoom(@Path("price") int price);
 
 }
