@@ -5,6 +5,7 @@ import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
+import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.models.firebase.DataSendMessFirebase;
 import com.fpoly.managebookings.models.firebase.ResponseSendMessage;
 import com.fpoly.managebookings.models.login.ResponseForgetPass;
@@ -104,6 +105,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/v1/auth/ResetPassWord")
     Call<ResponseForgetPass> forgetPassword(@Field("phone")String phone, @Field("password") String password);
+
+    @GET("api/v1/auth/getPhone/{phone}")
+    Call<User> getUserByPhone(@Path("phone") String phone);
 
 
 }

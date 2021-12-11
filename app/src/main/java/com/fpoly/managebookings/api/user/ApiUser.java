@@ -15,6 +15,11 @@ import retrofit2.Response;
 public class ApiUser {
     private ApiLoginUserInterface mApiLoginUserInterface;
     private ApiForgetPassInterface mApiForgetPassInterface;
+    private GetUserInterface mGetUserInterface;
+
+    public ApiUser(GetUserInterface mGetUserInterface) {
+        this.mGetUserInterface = mGetUserInterface;
+    }
 
     public ApiUser(ApiForgetPassInterface mApiForgetPassInterface) {
         this.mApiForgetPassInterface = mApiForgetPassInterface;
@@ -73,4 +78,28 @@ public class ApiUser {
             }
         });
     }
+
+    public void getUserByPhone(String phone) {
+        ApiService.apiService.getUserByPhone(phone).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User data = response.body();
+                    mGetUserInterface.getUserByPhone(data);
+                    Log.e("user", "" + data);
+                } else {
+                    mGetUserInterface.getUserByPhone(null);
+                    Log.e("User Exception", "" + response.code() + " " + response.message());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("User Error", "" + t.getMessage());
+            }
+        });
+    }
+
+
 }

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/waiting"
-        android:title="@string/orders_waiting" />
+        android:id="@+id/room_all"
+        android:title="@string/all_rooms"/>
     <item
-        android:id="@+id/check_in"
-        android:title="@string/orders_check_in" />
+        android:id="@+id/room_empty"
+        android:title="@string/empty_rooms" />
     <item
-        android:id="@+id/occupied"
-        android:title="@string/occupied" />
+        android:id="@+id/room_reserved"
+        android:title="@string/reserved_rooms" />
+    <item
+        android:id="@+id/room_occupied"
+        android:title="@string/occupied_rooms" />
 
 </menu>

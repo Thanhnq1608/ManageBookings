@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
     private Button btnLogin;
     private ApiUser mApiUser = new ApiUser(this);
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
-    private LoadingDialog loadingDialog = new LoadingDialog(this);
+    private LoadingDialog loadingDialog;
     private boolean doubleBackToExitPressedOnce = false;
     private ApiSendNotifyWithFirebase apiSendNotifyWithFirebase = new ApiSendNotifyWithFirebase();
 
@@ -47,21 +47,15 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
 
 //        getSupportActionBar().hide();
         initView();
+        loadingDialog = new LoadingDialog(this);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JsonObject payload = new JsonObject();
-                payload.addProperty("to", "dOkCu5PISgS62M0SCZfT3q:APA91bGhCT6NLXl-iFyFMFln63Pg23LdUx0O4MsYh1uJBGsWzrU6r-6tZKeRNPmx2b7Nl9AtD364lbmv5yLFzdeHNdPcm04wadUipbUKNPRymAYkAUdD9TirzXBKtCsuyPzH1NgZzmdu");
-                // compose data payload here
-                JsonObject data = new JsonObject();
-                data.addProperty("title", "tESST");
-                data.addProperty("message", "tHAAYS Rồi này");
-                // add data payload
-                payload.add("data", data);
-                apiSendNotifyWithFirebase.sendNotify(payload);
                 login();
+                loadingDialog.startLoadingDialog(2000);
+
             }
         });
 

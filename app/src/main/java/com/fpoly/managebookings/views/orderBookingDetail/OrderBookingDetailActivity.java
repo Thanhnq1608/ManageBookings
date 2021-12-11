@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -32,9 +33,13 @@ import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.api.orderRoomBooked.ResponseGetOrderInterface;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
+import com.fpoly.managebookings.api.sendNotifyFirebase.ApiSendNotifyWithFirebase;
+import com.fpoly.managebookings.api.user.ApiUser;
+import com.fpoly.managebookings.api.user.GetUserInterface;
 import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
@@ -43,6 +48,7 @@ import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
+import com.google.gson.JsonObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -52,7 +58,8 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         ApiRoomDetailInterface,
         ApiOrderDetailInterface,
         ListOrderDetailAdapter.RoomSelectedInterface,
-        ResponseGetOrderInterface {
+        ResponseGetOrderInterface,
+        GetUserInterface {
     private TextView tvEmailUser;
     private TextView tvDateStart;
     private TextView tvDateEnd;
@@ -75,6 +82,8 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
     private ImageView btn_delete, btn_add;
     private LoadingDialog loadingDialog;
+    private ApiSendNotifyWithFirebase apiSendNotifyWithFirebase = new ApiSendNotifyWithFirebase();
+    private ApiUser apiUser = new ApiUser(this);
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -113,7 +122,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 mApiRoomDetail.updateWhileRemoveOrCheck(itemOrderRoomBooked.get_id(), 0, null);
-                                mOrderBookingDetailPresenter.onClickCancel(itemOrderRoomBooked.get_id());
+                                mOrderBookingDetailPresenter.onClickCancel(itemOrderRoomBooked);
                             }
                         })
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -133,6 +142,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                apiUser.getUserByPhone(itemOrderRoomBooked.getPhone());
                 mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked, listRoomDetails, OrderBookingDetailActivity.this);
             }
         });
@@ -203,6 +213,19 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         });
     }
 
+    private void sendNotification(String message, String tokenTo){
+        JsonObject payload = new JsonObject();
+//        payload.addProperty("to", "dOkCu5PISgS62M0SCZfT3q:APA91bGhCT6NLXl-iFyFMFln63Pg23LdUx0O4MsYh1uJBGsWzrU6r-6tZKeRNPmx2b7Nl9AtD364lbmv5yLFzdeHNdPcm04wadUipbUKNPRymAYkAUdD9TirzXBKtCsuyPzH1NgZzmdu");
+        payload.addProperty("to",tokenTo);
+        // compose data payload here
+        JsonObject data = new JsonObject();
+        data.addProperty("title", "Hotel Booking");
+        data.addProperty("message", message);
+        // add data payload
+        payload.add("data", data);
+        apiSendNotifyWithFirebase.sendNotify(payload);
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -224,6 +247,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     @Override
     public void onCancelRoom(String cancelStatus) {
         fixSizeForToast.fixSizeToast(cancelStatus);
+        apiUser.getUserByPhone(itemOrderRoomBooked.getPhone());
         onBackPressed();
     }
 
@@ -325,5 +349,22 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         tvAdvanceDeposit.setText(Formater.getFormatMoney(orderRoomBooked.getAdvanceDeposit()));
         tvVAT.setText(Formater.getFormatMoney((int) (orderRoomBooked.getTotalRoomRate() * 0.05)));
         mOrderBookingDetailPresenter.getTotal(orderRoomBooked.getTotalRoomRate(), orderRoomBooked.getAdvanceDeposit());
+    }
+
+    @Override
+    public void getUserByPhone(User user) {
+        if (user != null){
+            switch (itemOrderRoomBooked.getBookingStatus()){
+                case 0:
+                    sendNotification("Your booking has been confirmed",user.getTokenId());
+                    break;
+                case 1:
+                    sendNotification("Your booking has been checked-in",user.getTokenId());
+                    break;
+                case 2:
+                    sendNotification("Your booking has been completed",user.getTokenId());
+                    break;
+            }
+        }
     }
 }

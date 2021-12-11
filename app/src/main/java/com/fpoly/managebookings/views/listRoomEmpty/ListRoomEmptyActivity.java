@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RecoverySystem;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -163,6 +164,35 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
         btnSortMoney.setBackgroundResource(R.drawable.custom_button3);
         btnSortType.setBackgroundResource(R.drawable.custom_button3);
         btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_filter_room, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.room_all:
+                mApiRoomDetail.getAllRoom();
+                loadingDialog.startLoadingDialog(2000);
+                break;
+            case R.id.room_empty:
+                mApiRoomDetail.getRooMByStatus(0);
+                loadingDialog.startLoadingDialog(2000);
+                break;
+            case R.id.room_reserved:
+                mApiRoomDetail.getRooMByStatus(1);
+                loadingDialog.startLoadingDialog(2000);
+                break;
+            case R.id.room_occupied:
+                mApiRoomDetail.getRooMByStatus(2);
+                loadingDialog.startLoadingDialog(2000);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     void setPullRefresh() {

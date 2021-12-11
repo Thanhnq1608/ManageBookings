@@ -119,4 +119,8 @@
     <string name="floor">Floor</string>
     <string name="type">Type</string>
     <string name="price_text">Price</string>
+    <string name="empty_rooms">Empty Rooms</string>
+    <string name="occupied_rooms">Occupied Rooms</string>
+    <string name="reserved_rooms">Reserved Rooms</string>
+    <string name="all_rooms">All Rooms</string>
 </resources>

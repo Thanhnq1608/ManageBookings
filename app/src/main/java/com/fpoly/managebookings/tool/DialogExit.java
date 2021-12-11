@@ -12,16 +12,13 @@ import android.widget.TextView;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class DialogExit {
 
     public void exit(Activity context) {
-        LayoutInflater inflater = (LayoutInflater) context.getLayoutInflater();
-        View rootLayout = inflater.inflate(R.layout.dialog_custom_message,null);
-        Dialog dialog = new Dialog(context);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.setContentView(rootLayout);
-
+        BottomSheetDialog dialog = new BottomSheetDialog(context);
+        dialog.setContentView(R.layout.dialog_custom_message);
         dialog.setCancelable(false);
 
         TextView tvTitleDialog;
@@ -29,12 +26,15 @@ public class DialogExit {
         TextView btnYesDialog;
         TextView btnNoDialog;
 
-        btnYesDialog = (TextView) rootLayout.findViewById(R.id.btn_yes_dialog);
-        btnNoDialog = (TextView) rootLayout.findViewById(R.id.btn_no_dialog);
+        btnYesDialog = (TextView) dialog.findViewById(R.id.btn_yes_dialog);
+        btnNoDialog = (TextView) dialog.findViewById(R.id.btn_no_dialog);
+        tvTitleDialog = dialog.findViewById(R.id.tvTitleDialog);
+        tvMessageDialog = dialog.findViewById(R.id.tv_message_dialog);
 
         btnYesDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                context.finishAffinity();
                 context.finish();
             }
         });
