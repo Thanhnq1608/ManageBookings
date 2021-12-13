@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.RequiresApi;
 
 import com.fpoly.managebookings.R;
@@ -36,14 +37,14 @@ public interface Formater {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     static String formatDateToStringForCreateAt(String date) throws ParseException {
-        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.forLanguageTag("vi"));
-        SimpleDateFormat output = new SimpleDateFormat("hh:mm dd/MM/yyyy",Locale.forLanguageTag("vi"));
+        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.forLanguageTag("vi"));
+        SimpleDateFormat output = new SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
         input.setTimeZone(TimeZone.getTimeZone("UTC"));
         ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
         output.setTimeZone(TimeZone.getTimeZone(zoneId));
         Date temp = input.parse(date);
         String dateTime = output.format(temp);
-        Log.e("date",""+dateTime);
+        Log.e("date", "" + dateTime);
         return dateTime;
     }
 
@@ -59,7 +60,7 @@ public interface Formater {
     @RequiresApi(api = Build.VERSION_CODES.O)
     static Date formatDateTimeToStringGMT(String date) throws ParseException {
         SimpleDateFormat input = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy");
-        SimpleDateFormat output = new SimpleDateFormat("hh:mm dd/MM/yyyy",Locale.forLanguageTag("vi"));
+        SimpleDateFormat output = new SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
 //        input.setTimeZone(TimeZone.getTimeZone("UTC"));
         ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
         output.setTimeZone(TimeZone.getTimeZone(zoneId));
@@ -67,15 +68,15 @@ public interface Formater {
         return output.parse(temp.toString());
     }
 
-    static String formatStringToPhone(String phone){
-        String temp = "+84" + phone.substring(1,phone.length());
-        Log.e("Phone",""+temp);
+    static String formatStringToPhone(String phone) {
+        String temp = "+84" + phone.substring(1, phone.length());
+        Log.e("Phone", "" + temp);
         return temp;
     }
 
-    static String getKindOfRoom(int id){
+    static String getKindOfRoom(int id) {
         String temp = "";
-        switch (id){
+        switch (id) {
             case 0:
                 temp = "Single Room";
                 break;
@@ -92,9 +93,9 @@ public interface Formater {
         return temp;
     }
 
-    static String getRoomStatus(int id){
+    static String getRoomStatus(int id) {
         String temp = "";
-        switch (id){
+        switch (id) {
             case 0:
                 temp = "Empty";
                 break;
@@ -108,8 +109,8 @@ public interface Formater {
         return temp;
     }
 
-    static void setButtonWithBookingStatus(int bookingStatus, Button btn,Button btnRemove){
-        switch (bookingStatus){
+    static void setButtonWithBookingStatus(int bookingStatus, Button btn, Button btnRemove) {
+        switch (bookingStatus) {
             case 0:
                 btn.setText(R.string.confirm);
                 break;
@@ -126,15 +127,15 @@ public interface Formater {
         }
     }
 
-    static String getFormatMoney(int price){
+    static String getFormatMoney(int price) {
         DecimalFormat dFormat = new DecimalFormat();
         String formattedString = dFormat.format(price);
         return formattedString + " VND";
     }
 
     @SuppressLint("ResourceAsColor")
-    static void setStatusForOrder(int bookingStatus, TextView status){
-        switch (bookingStatus){
+    static void setStatusForOrder(int bookingStatus, TextView status) {
+        switch (bookingStatus) {
             case 0:
                 status.setText(R.string.choXacNhan);
                 status.setTextColor(0xFFF10A0A);
@@ -152,5 +153,25 @@ public interface Formater {
                 status.setTextColor(0XFF28B237);
                 break;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    static String getUsedTDate(String timeStart, String timeEnd) throws ParseException {
+        Date start = formatToDateTime(timeStart);
+        Date end = formatToDateTime(timeEnd);
+
+        long distanceTime = end.getTime() - start.getTime();
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long usedDate = distanceTime / daysInMilli;
+        distanceTime = distanceTime % daysInMilli;
+
+        long usedHour = distanceTime / hoursInMilli;
+
+        return usedDate+","+usedHour;
     }
 }

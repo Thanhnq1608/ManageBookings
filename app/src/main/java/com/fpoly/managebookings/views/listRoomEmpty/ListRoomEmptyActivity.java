@@ -1,6 +1,7 @@
 package com.fpoly.managebookings.views.listRoomEmpty;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,16 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.RecoverySystem;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListRoomEmptyAdapter;
@@ -31,8 +30,9 @@ import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
 import com.fpoly.managebookings.api.roomDetail.GetAllRoomInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
-import com.fpoly.managebookings.tool.DialogExit;
+import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.FixSizeForToast;
+import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
@@ -41,11 +41,11 @@ import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.login.LoginActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -259,8 +259,8 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                         finishAffinity();
                         break;
                     case R.id.menu_exit:
-                        DialogExit dialogExit = new DialogExit();
-                        dialogExit.exit(ListRoomEmptyActivity.this);
+                        DialogMessage dialogMessage = new DialogMessage();
+                        dialogMessage.exit(ListRoomEmptyActivity.this);
                         break;
                 }
 
@@ -297,6 +297,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     @Override
     public void roomsAreSelected(List<RoomDetail> roomDetails) {
         btnCofirm.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 if (updateOrderRoomBooked != null) {
@@ -305,8 +306,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                         mApiRoomDetail.removeRoomFromOrder(roomDetails.get(i).getId(), 1, updateOrderRoomBooked.get_id());
                         total = total + roomDetails.get(i).getRoomPrice();
                     }
-                    total= updateOrderRoomBooked.getTotalRoomRate() + total;
-                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(),total );
+                    setTotalWhileAddRoom(total, updateOrderRoomBooked.getTotalRoomRate());
                     intent = getIntent();
                     String context = intent.getStringExtra("CONTEXT");
                     if (context.equalsIgnoreCase("CreateOrderActivity")){
@@ -319,6 +319,35 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
             }
         });
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void setTotalWhileAddRoom(int total , int orderRoomRate) {
+        try {
+            String[] dateTime = Formater.getUsedTDate(updateOrderRoomBooked.getTimeBookingStart(), updateOrderRoomBooked.getTimeBookingEnd()).split(",");
+            if (Integer.parseInt(dateTime[0]) > 0) {
+                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12){
+                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1)) + (total / 2);
+                    total = total + orderRoomRate;
+                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
+                }else {
+                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1 + 1));
+                    total = total + orderRoomRate;
+                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
+                }
+            }else {
+                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12){
+                    total = (total / 2);
+                    total = total + orderRoomRate;
+                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
+                }else {
+                    total = total + orderRoomRate;
+                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

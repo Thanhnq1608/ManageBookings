@@ -153,23 +153,21 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
                             mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
                         }
                     } else {
-                        Intent intent = new Intent(context, RoomDetailActivity.class);
-                        intent.putExtra("ROOMDETAIL", roomDetail);
-                        intent.putExtra("ORDERROOMBOOKED",orderRoomBooked);
-                        context.startActivity(intent);
+                        if (orderRoomBooked != null){
+                            Intent intent = new Intent(context, RoomDetailActivity.class);
+                            intent.putExtra("ROOMDETAIL", roomDetail);
+                            intent.putExtra("ORDERROOMBOOKED",orderRoomBooked);
+                            context.startActivity(intent);
+                        }else {
+                            Intent intent = new Intent(context, RoomDetailActivity.class);
+                            intent.putExtra("ROOMDETAIL", roomDetail);
+                            context.startActivity(intent);
+                        }
                     }
                 }
             });
         }else {
-            holder.layout_item_room.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, RoomDetailActivity.class);
-                    intent.putExtra("ROOMDETAIL", roomDetail);
-                    intent.putExtra("HIDEBUTTON",true);
-                    context.startActivity(intent);
-                }
-            });
+            return;
         }
 
         holder.tvNameRoom.setText(roomDetail.getRoomName());

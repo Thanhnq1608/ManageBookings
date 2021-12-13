@@ -22,15 +22,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListOrdersAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
-import com.fpoly.managebookings.models.User;
-import com.fpoly.managebookings.tool.DialogExit;
+import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
@@ -42,7 +40,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -220,8 +217,8 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
                         finishAffinity();
                         break;
                     case R.id.menu_exit:
-                        DialogExit dialogExit = new DialogExit();
-                        dialogExit.exit(ListOrderWaitingActivity.this);
+                        DialogMessage dialogMessage = new DialogMessage();
+                        dialogMessage.exit(ListOrderWaitingActivity.this);
                         break;
                 }
 

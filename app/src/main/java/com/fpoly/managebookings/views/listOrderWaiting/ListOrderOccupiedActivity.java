@@ -2,7 +2,6 @@ package com.fpoly.managebookings.views.listOrderWaiting;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -27,7 +26,7 @@ import com.fpoly.managebookings.adapter.ListOrdersAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.models.OrderRoomBooked;
-import com.fpoly.managebookings.tool.DialogExit;
+import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
@@ -162,8 +161,8 @@ public class ListOrderOccupiedActivity extends AppCompatActivity implements ApiO
                         finishAffinity();
                         break;
                     case R.id.menu_exit:
-                        DialogExit dialogExit = new DialogExit();
-                        dialogExit.exit(ListOrderOccupiedActivity.this);
+                        DialogMessage dialogMessage = new DialogMessage();
+                        dialogMessage.exit(ListOrderOccupiedActivity.this);
                         break;
                 }
 

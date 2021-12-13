@@ -2,6 +2,7 @@ package com.fpoly.managebookings.models;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 public class User implements Serializable {
     private String id;
@@ -13,23 +14,15 @@ public class User implements Serializable {
     private String password;
     private String position;
     private String dateOfBirth;
-    private String avatar;
     private String status;
     private String address;
     private String createBy;
     private String updateBy;
     private String createdAt;
     private String updatedAt;
-    private String tokenId;
-
-    public String getTokenId() {
-        return tokenId;
-    }
-
     private long v;
-
-    public User() {
-    }
+    private String avatar;
+    private String tokenId;
 
     public String getId() {
         return id;
@@ -67,10 +60,6 @@ public class User implements Serializable {
         return dateOfBirth;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -99,5 +88,11 @@ public class User implements Serializable {
         return v;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public String getTokenId() {
+        return tokenId;
+    }
 }

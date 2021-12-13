@@ -12,36 +12,24 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListOrdersAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.models.OrderRoomBooked;
-import com.fpoly.managebookings.tool.DialogExit;
+import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.DialogSelectDate;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
@@ -53,14 +41,12 @@ import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
 import com.fpoly.managebookings.views.login.LoginActivity;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class ListOrdersCompletedActivity extends AppCompatActivity implements ApiOrderBookedInterface, ListOrdersAdapter.ListOrderFilterInterface, DialogSelectDate.ValueOfDatePicker {
     private ApiOrderRoomBooked mApiOrderRoomBooked = new ApiOrderRoomBooked(this);
@@ -215,8 +201,8 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
                         finishAffinity();
                         break;
                     case R.id.menu_exit:
-                        DialogExit dialogExit = new DialogExit();
-                        dialogExit.exit(ListOrdersCompletedActivity.this);
+                        DialogMessage dialogMessage = new DialogMessage();
+                        dialogMessage.exit(ListOrdersCompletedActivity.this);
                         break;
                 }
 

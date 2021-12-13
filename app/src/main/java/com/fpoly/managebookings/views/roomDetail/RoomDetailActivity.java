@@ -1,12 +1,15 @@
 package com.fpoly.managebookings.views.roomDetail;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,10 +28,13 @@ import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.picture.PictureOfRoom;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.squareup.picasso.Picasso;
+
+import java.text.ParseException;
 
 public class RoomDetailActivity extends AppCompatActivity implements ResponGetPictureRoom {
     private Toolbar toolbar;
@@ -50,9 +56,9 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
     private ApiOrderRoomBooked mApiOrderRoomBooked = new ApiOrderRoomBooked();
     private OrderRoomBooked orderRoomBooked;
     private RoomDetail roomDetail;
-    private boolean isHideButton;
     private ApiPictureRoom apiPictureRoom = new ApiPictureRoom(this);
     private LoadingDialog loadingDialog;
+    private DialogMessage dialogMessage = new DialogMessage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +70,10 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
 
         Intent intent = getIntent();
         roomDetail = (RoomDetail) intent.getSerializableExtra("ROOMDETAIL");
-        isHideButton = intent.getBooleanExtra("HIDEBUTTON", false);
         orderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
 
-        if (isHideButton) {
-            btnSelectRoom.setVisibility(View.INVISIBLE);
+        if (orderRoomBooked == null) {
+            btnSelectRoom.setVisibility(View.GONE);
         }
 
         if (roomDetail != null) {
@@ -84,16 +89,46 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
         }
 
         btnSelectRoom.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 int total = 0;
                 mApiRoomDetail.removeRoomFromOrder(roomDetail.getId(), 1, orderRoomBooked.get_id());
                 total = total + roomDetail.getRoomPrice();
-                total = orderRoomBooked.getTotalRoomRate() + total;
-                mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
+                setTotalWhileAddRoom(total, orderRoomBooked.getTotalRoomRate() );
+                dialogMessage.message(RoomDetailActivity.this, "Alert", "Do you want to continue to choose the room?", orderRoomBooked);
             }
         });
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void setTotalWhileAddRoom(int total, int orderRoomRate) {
+        try {
+            String[] dateTime = Formater.getUsedTDate(orderRoomBooked.getTimeBookingStart(), orderRoomBooked.getTimeBookingEnd()).split(",");
+            if (Integer.parseInt(dateTime[0]) > 0) {
+                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12){
+                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1)) + (total / 2);
+                    total = total + orderRoomRate;
+                    mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
+                }else {
+                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1 + 1));
+                    total = total + orderRoomRate;
+                    mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
+                }
+            }else {
+                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12){
+                    total = (total / 2);
+                    total = total + orderRoomRate;
+                    mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
+                }else {
+                    total = total + orderRoomRate;
+                    mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

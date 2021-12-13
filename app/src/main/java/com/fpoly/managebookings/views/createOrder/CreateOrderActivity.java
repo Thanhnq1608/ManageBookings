@@ -18,19 +18,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.models.OrderRoomBooked;
-import com.fpoly.managebookings.tool.DialogExit;
+import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.DialogSelectDate;
 import com.fpoly.managebookings.tool.FixSizeForToast;
-import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
@@ -38,7 +34,6 @@ import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
 import com.fpoly.managebookings.views.login.LoginActivity;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -235,8 +230,8 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
                         finishAffinity();
                         break;
                     case R.id.menu_exit:
-                        DialogExit dialogExit = new DialogExit();
-                        dialogExit.exit(CreateOrderActivity.this);
+                        DialogMessage dialogMessage = new DialogMessage();
+                        dialogMessage.exit(CreateOrderActivity.this);
                         break;
                 }
 

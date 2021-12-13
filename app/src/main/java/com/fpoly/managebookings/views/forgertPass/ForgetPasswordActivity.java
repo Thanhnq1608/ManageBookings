@@ -108,7 +108,6 @@ public class ForgetPasswordActivity extends AppCompatActivity implements VerifyP
             @Override
             public void onClick(View v) {
                 onBackPressed();
-                finishAffinity();
             }
         });
 
