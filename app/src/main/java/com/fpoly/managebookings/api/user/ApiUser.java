@@ -7,6 +7,7 @@ import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.models.login.Data;
 import com.fpoly.managebookings.models.login.ResponseForgetPass;
 import com.fpoly.managebookings.models.login.ResponseLogin;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,6 +17,9 @@ public class ApiUser {
     private ApiLoginUserInterface mApiLoginUserInterface;
     private ApiForgetPassInterface mApiForgetPassInterface;
     private GetUserInterface mGetUserInterface;
+
+    public ApiUser() {
+    }
 
     public ApiUser(GetUserInterface mGetUserInterface) {
         this.mGetUserInterface = mGetUserInterface;
@@ -62,6 +66,29 @@ public class ApiUser {
                     ResponseForgetPass responseForgetPass = response.body();
                     User data = responseForgetPass.getData();
                     mApiForgetPassInterface.changePassSuccess();
+                    Log.e("token", "" + responseForgetPass.getStatus());
+                } else if (response.code() == 400) {
+                    mApiLoginUserInterface.loginFail(response.message());
+                    Log.e("Exception 400", "" + response.code() + " " + response.message());
+                } else {
+                    Log.e("Login Exception", "" + response.code() + " " + response.message());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseForgetPass> call, Throwable t) {
+                Log.e("Login Error", "" + t.getMessage());
+            }
+        });
+    }
+
+    public void updateTokenId(String token, JsonObject tokenId) {
+        ApiService.apiService.updateTokenId("Bearer "+token, tokenId).enqueue(new Callback<ResponseForgetPass>() {
+            @Override
+            public void onResponse(Call<ResponseForgetPass> call, Response<ResponseForgetPass> response) {
+                if (response.isSuccessful()) {
+                    ResponseForgetPass responseForgetPass = response.body();
                     Log.e("token", "" + responseForgetPass.getStatus());
                 } else if (response.code() == 400) {
                     mApiLoginUserInterface.loginFail(response.message());

@@ -14,6 +14,8 @@ public class SharedPref_InfoUser {
     //Username
     private static final String USER_EMAIL = "user_token";
     private static final String USER_TOKEN = "user_email";
+    private static final String TOKEN_ID = "token_id";
+    private static final String USER_ID = "user_id";
     private static final String USER_FULLNAME = "full_name";
     private static final String USER_AVATAR = "user_avatar";
 
@@ -32,6 +34,31 @@ public class SharedPref_InfoUser {
             mInstance = new SharedPref_InfoUser(context);
         }
         return mInstance;
+    }
+
+    public void storeUserId(String id) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(USER_ID, id);
+        editor.apply();
+    }
+
+    public String loggedInUserId() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(USER_ID, null);
+    }
+
+    //method to store user data
+    public void storeUserToKenIdApp(String tokenId) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TOKEN_ID, tokenId);
+        editor.apply();
+    }
+
+    public String loggedInUserTokenIdApp() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(TOKEN_ID, null);
     }
 
     //method to store user data

@@ -34,16 +34,6 @@ public class FirebaseNotification extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-//        RemoteMessage.Notification notification = remoteMessage.getNotification();
-//        if (notification != null) {
-//            Log.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-//            String title = notification.getTitle();
-//            String message = notification.getBody();
-//
-//            sendNotification(title,message);
-//        }else {
-//            return;
-//        }
 
         //Data message
         Map<String, String> stringMap = remoteMessage.getData();

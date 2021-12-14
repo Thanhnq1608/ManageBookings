@@ -27,6 +27,7 @@ import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListOrdersAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
+import com.fpoly.managebookings.api.user.ApiUser;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.FixSizeForToast;
@@ -40,6 +41,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.JsonObject;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -52,6 +54,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
     private ListOrdersAdapter adapter;
     private ApiOrderRoomBooked getOrderWaiting = new ApiOrderRoomBooked(this);
     private ArrayList<OrderRoomBooked> orderRoomBookeds = new ArrayList<>();
+    private ApiUser apiUser = new ApiUser();
     private Toolbar toolbar;
     private TextView toolbar_text;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -102,6 +105,14 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
                 }
 
                 String token = task.getResult();
+
+                if (!token.equals(SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).loggedInUserTokenIdApp())) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("tokenId",token);
+                    Log.e("token",""+SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).LoggedInUserToken());
+                    apiUser.updateTokenId(SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).LoggedInUserToken(),jsonObject);
+//                    SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).storeUserToKenIdApp(token);
+                }
 
                 Log.e(TAG, token);
             }

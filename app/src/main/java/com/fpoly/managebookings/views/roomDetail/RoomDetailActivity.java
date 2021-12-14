@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.picture.PictureOfRoom;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.tool.DialogAddRoom;
 import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
@@ -59,6 +61,8 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
     private ApiPictureRoom apiPictureRoom = new ApiPictureRoom(this);
     private LoadingDialog loadingDialog;
     private DialogMessage dialogMessage = new DialogMessage();
+    private boolean isDataEntry;
+    private DialogAddRoom dialogAddRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +71,13 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
 
         anhXa();
         loadingDialog = new LoadingDialog(this);
+        dialogAddRoom = new DialogAddRoom(RoomDetailActivity.this);
 
         Intent intent = getIntent();
         roomDetail = (RoomDetail) intent.getSerializableExtra("ROOMDETAIL");
         orderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
+        isDataEntry = intent.getBooleanExtra("DATAENTRY", false);
+
 
         if (orderRoomBooked == null) {
             btnSelectRoom.setVisibility(View.GONE);
@@ -167,9 +174,22 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (isDataEntry){
+            getMenuInflater().inflate(R.menu.menu_update, menu);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+        }else if (item.getItemId() == R.id.menu_update_room) {
+            boolean temp = dialogAddRoom.dialogAddRoom(roomDetail);
+            if (temp){
+                onStart();
+            }
         }
         return super.onOptionsItemSelected(item);
     }

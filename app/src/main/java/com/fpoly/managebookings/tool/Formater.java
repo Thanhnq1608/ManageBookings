@@ -78,16 +78,16 @@ public interface Formater {
         String temp = "";
         switch (id) {
             case 0:
-                temp = "Single Room";
+                temp = "Standard Room";
                 break;
             case 1:
-                temp = "Double Room";
+                temp = "Superior Room";
                 break;
             case 2:
-                temp = "VIP Single Room";
+                temp = "Deluxe Room";
                 break;
             case 3:
-                temp = "VIP Double Room";
+                temp = "Suite Room";
                 break;
         }
         return temp;

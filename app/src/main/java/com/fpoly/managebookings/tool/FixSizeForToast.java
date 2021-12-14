@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.fpoly.managebookings.R;
 
 public class FixSizeForToast {
-    private Activity context;
+    private Context context;
 
-    public FixSizeForToast(Activity context) {
+    public FixSizeForToast(Context context) {
         this.context = context;
     }
 

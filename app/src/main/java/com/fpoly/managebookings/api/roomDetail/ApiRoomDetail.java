@@ -8,6 +8,7 @@ import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,18 @@ import retrofit2.Response;
 public class ApiRoomDetail {
     private ApiRoomDetailInterface mApiRoomDetailInterface;
     private GetAllRoomInterface mGetAllRoomInterface;
+    private ResponseCreateRoomInterface mResponseCreateRoomInterface;
+    private ResponseRemoveRoomInterface mResponseRemoveRoomInterface;
 
     public ApiRoomDetail() {
+    }
+
+    public ApiRoomDetail(ResponseRemoveRoomInterface mResponseRemoveRoomInterface) {
+        this.mResponseRemoveRoomInterface = mResponseRemoveRoomInterface;
+    }
+
+    public ApiRoomDetail(ResponseCreateRoomInterface mResponseCreateRoomInterface) {
+        this.mResponseCreateRoomInterface = mResponseCreateRoomInterface;
     }
 
     public ApiRoomDetail(ApiRoomDetailInterface mApiRoomDetailInterface) {
@@ -95,6 +106,27 @@ public class ApiRoomDetail {
         });
     }
 
+    public void createNewRoom(JsonObject jsonObject){
+        ApiService.apiService.createNewRoom(jsonObject).enqueue(new Callback<RoomDetail>() {
+            @Override
+            public void onResponse(Call<RoomDetail> call, Response<RoomDetail> response) {
+                if (response.isSuccessful()) {
+                    mResponseCreateRoomInterface.createSucces(response.body());
+                    Log.e("New Room", "" + response.body().toString());
+                } else {
+                    Log.e("Loi", "" + response.code());
+                    mResponseCreateRoomInterface.createFail(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RoomDetail> call, Throwable t) {
+                Log.e("ErrorRoom", "" + t.getMessage());
+                mResponseCreateRoomInterface.createFail(t.getMessage());
+            }
+        });
+    }
+
     public void updateWhileRemoveOrCheck(String idBooking,int roomStatus,String updateIdBooking){
         ApiService.apiService.updateWhileRemoveOrder(idBooking,roomStatus,updateIdBooking).enqueue(new Callback<UpdateAnyRoomDetail>() {
             @Override
@@ -145,6 +177,25 @@ public class ApiRoomDetail {
             @Override
             public void onResponse(Call<ResponseMessage> call, Response<ResponseMessage> response) {
                 if (response.isSuccessful()) {
+                    Log.e("Status",""+response.body().getMessage());
+                } else {
+                    Log.e("Loi", "" + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMessage> call, Throwable t) {
+                Log.e("ErrorRoom", "" + t.getMessage());
+            }
+        });
+    }
+
+    public void removeRoom(String id){
+        ApiService.apiService.removeRoom(id).enqueue(new Callback<ResponseMessage>() {
+            @Override
+            public void onResponse(Call<ResponseMessage> call, Response<ResponseMessage> response) {
+                if (response.isSuccessful()) {
+                    mResponseRemoveRoomInterface.response(response.body().getMessage());
                     Log.e("Status",""+response.body().getMessage());
                 } else {
                     Log.e("Loi", "" + response.code());

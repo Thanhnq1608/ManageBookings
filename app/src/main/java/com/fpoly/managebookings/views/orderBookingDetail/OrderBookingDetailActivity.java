@@ -213,6 +213,35 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void getTotalWhileRemoveRoom(int total, int orderRoomRate) {
+        try {
+            String[] dateTime = Formater.getUsedTDate(itemOrderRoomBooked.getTimeBookingStart(), itemOrderRoomBooked.getTimeBookingEnd()).split(",");
+            if (Integer.parseInt(dateTime[0]) > 0) {
+                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
+                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1)) + (total / 2);
+                    total = orderRoomRate - total;
+                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
+                } else {
+                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1 + 1));
+                    total = orderRoomRate - total;
+                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
+                }
+            } else {
+                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
+                    total = (total / 2);
+                    total = orderRoomRate - total;
+                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
+                } else {
+                    total = orderRoomRate - total;
+                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void sendNotification(String message, String tokenTo){
         JsonObject payload = new JsonObject();
 //        payload.addProperty("to", "dOkCu5PISgS62M0SCZfT3q:APA91bGhCT6NLXl-iFyFMFln63Pg23LdUx0O4MsYh1uJBGsWzrU6r-6tZKeRNPmx2b7Nl9AtD364lbmv5yLFzdeHNdPcm04wadUipbUKNPRymAYkAUdD9TirzXBKtCsuyPzH1NgZzmdu");
@@ -302,14 +331,14 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
                             .setMessage("Are you sure you want to delete this room?")
                             .setCancelable(false)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.O)
                                 public void onClick(DialogInterface dialog, int id) {
                                     int total = 0;
                                     for (int i = 0; i < roomIds.size(); i++) {
                                         mApiRoomDetail.removeRoomFromOrder(roomIds.get(i).getId(), 0, "");
                                         total = total + roomIds.get(i).getRoomPrice();
                                     }
-                                    total = itemOrderRoomBooked.getTotalRoomRate() - total;
-                                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(),total );
+                                    getTotalWhileRemoveRoom(total, itemOrderRoomBooked.getTotalRoomRate());
                                     onStart();
                                 }
                             })

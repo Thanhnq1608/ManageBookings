@@ -123,4 +123,6 @@
     <string name="occupied_rooms">Occupied Rooms</string>
     <string name="reserved_rooms">Reserved Rooms</string>
     <string name="all_rooms">All Rooms</string>
+    <string name="add_room">Add Room</string>
+    <string name="update_room">Update Room</string>
 </resources>

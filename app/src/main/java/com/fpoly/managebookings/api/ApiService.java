@@ -12,6 +12,7 @@ import com.fpoly.managebookings.models.login.ResponseLogin;
 import com.fpoly.managebookings.models.picture.ResponGetPicture;
 import com.fpoly.managebookings.models.updateOrder.UpdateBookingStatus;
 import com.fpoly.managebookings.models.updateOrder.UpdateTotalRoomRate;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -19,9 +20,11 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -86,6 +89,9 @@ public interface ApiService {
     @GET("roomDetail/{id}")
     Call<RoomDetail> getRoomById(@Path("id") String id);
 
+    @POST("roomDetail/create")
+    Call<RoomDetail> createNewRoom(@Body JsonObject jsonObject);
+
     @FormUrlEncoded
     @POST("roomDetail/updateAny/{idBooking}")
     Call<UpdateAnyRoomDetail> updateWhileRemoveOrder(@Path("idBooking") String idBooking, @Field("roomStatus") int roomStatus, @Field("idBooking") String updateIdBooking);
@@ -93,6 +99,9 @@ public interface ApiService {
     @FormUrlEncoded
     @PUT("roomDetail/update/{id}")
     Call<ResponseMessage> removeRoomFromOrder(@Path("id") String id, @Field("roomStatus") int roomStatus, @Field("idBooking") String idBooking);
+
+    @DELETE("roomDetail/delete/{id}")
+    Call<ResponseMessage> removeRoom(@Path("id") String id);
 
     //User
     @FormUrlEncoded
@@ -105,6 +114,9 @@ public interface ApiService {
 
     @GET("api/v1/auth/getPhone/{phone}")
     Call<User> getUserByPhone(@Path("phone") String phone);
+
+    @PUT("api/v1/auth/updateTokenId")
+    Call<ResponseForgetPass> updateTokenId(@Header("Authorization") String token, @Body JsonObject jsonObject);
 
     //Picture
     @GET("api/v1/pictureOfRoom/getPrice/{price}")

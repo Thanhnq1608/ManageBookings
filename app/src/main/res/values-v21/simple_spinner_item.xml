@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="planets_array">
+        <item>Choose Room Type</item>
+        <item>Standard Room</item>
+        <item>Superior Room</item>
+        <item>Deluxe Room</item>
+        <item>Suite Room</item>
+    </string-array>
+</resources>

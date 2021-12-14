@@ -17,7 +17,7 @@
         android:paddingVertical="5dp"
         android:background="#DAD6D6"
         android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/tv_title_item_room"
             android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
             android:id="@+id/img_check"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/imgImageRoom"
             app:layout_constraintEnd_toStartOf="@+id/tvNameRoom"
             app:layout_constraintHorizontal_bias="0.097"
@@ -128,6 +128,21 @@
             app:layout_constraintTop_toTopOf="@+id/tvNameRoom"
             app:layout_constraintVertical_bias="0.076"
             app:srcCompat="@drawable/ic_checked" />
+
+
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/imgImageRoom"
+            app:layout_constraintEnd_toStartOf="@+id/tvNameRoom"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintStart_toEndOf="@+id/img_check"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.509"
+            app:srcCompat="@drawable/ic_close" />
 
         <TextView
             android:id="@+id/tv_room_status"

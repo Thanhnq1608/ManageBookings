@@ -19,6 +19,7 @@ import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.forgertPass.ForgetPasswordActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
+import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity implements ApiLoginUserInterface {
@@ -47,7 +48,6 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
             @Override
             public void onClick(View v) {
                 login();
-                loadingDialog.startLoadingDialog(2000);
 
             }
         });
@@ -107,12 +107,41 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
     public void loginSuccess(String token, User user, String status) {
         if (user.getRole().equalsIgnoreCase("customer")) {
             fixSizeForToast.fixSizeToast("Incorrect account or password");
-        } else {
+//        } else if (user.getRole().equalsIgnoreCase("admin")){
+//            fixSizeForToast.fixSizeToast(status);
+//
+//            SharedPref_InfoUser.getInstance(this).storeUserEmail(user.getEmail());
+//            SharedPref_InfoUser.getInstance(this).storeUserFullName(user.getFullName());
+//            SharedPref_InfoUser.getInstance(this).storeUserAvatar(user.getAvatar());
+//            SharedPref_InfoUser.getInstance(this).storeUserToKen(token);
+//            SharedPref_InfoUser.getInstance(this).storeUserToKenIdApp(user.getTokenId());
+//            SharedPref_InfoUser.getInstance(this).storeUserId(user.getId());
+//
+//            Intent intent = new Intent(this, ListRoomEmptyActivity.class);
+//            intent.putExtra("DATAENTRY", true);
+//            startActivity(intent);
+//            finishAffinity();
+        } else if (user.getRole().equalsIgnoreCase("dataEntry")){
             fixSizeForToast.fixSizeToast(status);
 
             SharedPref_InfoUser.getInstance(this).storeUserEmail(user.getEmail());
             SharedPref_InfoUser.getInstance(this).storeUserFullName(user.getFullName());
             SharedPref_InfoUser.getInstance(this).storeUserAvatar(user.getAvatar());
+
+            Intent intent = new Intent(this, ListRoomEmptyActivity.class);
+            intent.putExtra("DATAENTRY", true);
+            startActivity(intent);
+            finishAffinity();
+        }
+        else {
+            fixSizeForToast.fixSizeToast(status);
+
+            SharedPref_InfoUser.getInstance(this).storeUserEmail(user.getEmail());
+            SharedPref_InfoUser.getInstance(this).storeUserFullName(user.getFullName());
+            SharedPref_InfoUser.getInstance(this).storeUserAvatar(user.getAvatar());
+            SharedPref_InfoUser.getInstance(this).storeUserToKen(token);
+            SharedPref_InfoUser.getInstance(this).storeUserToKenIdApp(user.getTokenId());
+            SharedPref_InfoUser.getInstance(this).storeUserId(user.getId());
 
             Intent intent = new Intent(this, ListOrderWaitingActivity.class);
             startActivity(intent);
