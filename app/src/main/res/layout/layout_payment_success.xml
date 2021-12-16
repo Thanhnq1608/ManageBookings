@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout_payment_success"
+    android:visibility="gone"
+    android:layout_marginVertical="50dp"
+    android:orientation="vertical">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/payment_successful" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment Success"
+        android:layout_gravity="center"
+        android:textSize="50dp"
+        android:textColor="@color/teal_700"
+        android:textStyle="bold"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginVertical="50dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Excess cash:"
+            android:textColor="@color/green"
+            android:textSize="40dp"/>
+        <TextView
+            android:id="@+id/tv_excess_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 VND"
+            android:paddingLeft="100dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="40dp"/>
+    </LinearLayout>
+</LinearLayout>

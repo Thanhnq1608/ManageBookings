@@ -65,7 +65,7 @@ public class DialogMessage {
 
         btnYesDialog = (TextView) dialog.findViewById(R.id.btn_yes_dialog);
         btnNoDialog = (TextView) dialog.findViewById(R.id.btn_no_dialog);
-        tvTitleDialog = dialog.findViewById(R.id.tvTitleDialog);
+        tvTitleDialog = dialog.findViewById(R.id.tv_title_dialog);
         tvMessageDialog = dialog.findViewById(R.id.tv_message_dialog);
 
         tvTitleDialog.setText(title);
@@ -84,6 +84,36 @@ public class DialogMessage {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, ListOrderWaitingActivity.class));
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void detail(Activity context, String title, String message) {
+        BottomSheetDialog dialog = new BottomSheetDialog(context);
+        dialog.setContentView(R.layout.dialog_custom_message);
+        dialog.setCancelable(false);
+
+        TextView tvTitleDialog;
+        TextView tvMessageDialog;
+        TextView btnYesDialog;
+        TextView btnNoDialog;
+
+        btnYesDialog = (TextView) dialog.findViewById(R.id.btn_yes_dialog);
+        btnNoDialog = (TextView) dialog.findViewById(R.id.btn_no_dialog);
+        tvTitleDialog = dialog.findViewById(R.id.tv_title_dialog);
+        tvMessageDialog = dialog.findViewById(R.id.tv_message_dialog);
+        btnYesDialog.setVisibility(View.GONE);
+        btnNoDialog.setText(R.string.done);
+
+        tvTitleDialog.setText(title);
+        tvMessageDialog.setText(message);
+
+        btnNoDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
 

@@ -1,7 +1,10 @@
 package com.fpoly.managebookings.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,12 +31,14 @@ import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface
 import com.fpoly.managebookings.views.roomDetail.RoomDetailActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdapter.ViewHolder> implements ResponGetPictureRoom, ListOrderWaitingInterface, ResponseRemoveRoomInterface {
+public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdapter.ViewHolder> implements ListOrderWaitingInterface, ResponseRemoveRoomInterface {
     private Context context;
     private ArrayList<RoomDetail> roomDetails;
     private OrderRoomBooked orderRoomBooked;
@@ -40,21 +46,22 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
     private ListRoomEmptyInterface mListRoomEmptyInterface;
     private boolean isCheck = false;
     private int isSort;
-    private boolean isDataEntry = false;
+    private boolean isDataEntry;
     private ApiRoomDetail apiRoomDetail;
-    private ApiPictureRoom apiPictureRoom;
-    private List<String> imageRooms = new ArrayList<>();
+    private List<PictureOfRoom> imageRooms = new ArrayList<>();
 
     public interface ListRoomEmptyInterface {
         void roomsAreSelected(List<RoomDetail> roomDetails);
+
         void removeRoomSuccess(String status);
     }
 
-    public ListRoomEmptyAdapter(Context context, ArrayList<RoomDetail> roomDetails, OrderRoomBooked orderRoomBooked, ListRoomEmptyInterface mListRoomEmptyInterface, int isSort, boolean isDataEntry) {
+    public ListRoomEmptyAdapter(Context context, ArrayList<RoomDetail> roomDetails, OrderRoomBooked orderRoomBooked, ListRoomEmptyInterface mListRoomEmptyInterface,List<PictureOfRoom> imageRooms, int isSort, boolean isDataEntry) {
         this.context = context;
         this.roomDetails = roomDetails;
         this.orderRoomBooked = orderRoomBooked;
         this.mListRoomEmptyInterface = mListRoomEmptyInterface;
+        this.imageRooms = imageRooms;
         this.isSort = isSort;
         this.isDataEntry = isDataEntry;
     }
@@ -64,7 +71,6 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room_detail, parent, false);
         apiRoomDetail = new ApiRoomDetail(this);
-        apiPictureRoom = new ApiPictureRoom(this);
         return new ViewHolder(view);
     }
 
@@ -133,69 +139,8 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
         if (roomDetails.isEmpty()) {
             return;
         }
-        apiPictureRoom.getPictureRoom(roomDetail.getRoomPrice());
 
-        if (orderRoomBooked != null) {
-            holder.layout_item_room.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if (holder.img_check.getVisibility() == View.INVISIBLE && isCheck == false) {
-                        holder.layout_item_room.setBackgroundResource(android.R.color.system_accent3_100);
-                        isCheck = true;
-                        holder.img_check.setVisibility(View.VISIBLE);
-                        roomDetailList.add(roomDetail);
-                        mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
-                    }
-                    return true;
-                }
-            });
-            holder.layout_item_room.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isCheck) {
-                        if (holder.img_check.getVisibility() == View.VISIBLE) {
-                            holder.img_check.setVisibility(View.INVISIBLE);
-                            holder.layout_item_room.setBackgroundResource(R.drawable.background_shadow_layout_item);
-                            roomDetailList.remove(roomDetail);
-                            mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
-                            if (roomDetailList.isEmpty()) {
-                                isCheck = false;
-                            }
-                        } else {
-                            holder.layout_item_room.setBackgroundResource(android.R.color.system_accent3_100);
-                            holder.img_check.setVisibility(View.VISIBLE);
-                            roomDetailList.add(roomDetail);
-                            mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
-                        }
-                    } else {
-                        if (orderRoomBooked != null) {
-                            Intent intent = new Intent(context, RoomDetailActivity.class);
-                            intent.putExtra("ROOMDETAIL", roomDetail);
-                            intent.putExtra("ORDERROOMBOOKED", orderRoomBooked);
-                            context.startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(context, RoomDetailActivity.class);
-                            intent.putExtra("ROOMDETAIL", roomDetail);
-                            context.startActivity(intent);
-                        }
-                    }
-                }
-            });
-
-        }
-
-        if (isDataEntry == false && orderRoomBooked == null) {
-            holder.layout_item_room.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, RoomDetailActivity.class);
-                    intent.putExtra("ROOMDETAIL", roomDetail);
-                    context.startActivity(intent);
-                }
-            });
-        }
-
-        if (isDataEntry) {
+        if (isDataEntry == true) {
             holder.layout_item_room.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -207,35 +152,88 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
                     return true;
                 }
             });
-            holder.layout_item_room.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        }else {
+            if (orderRoomBooked != null) {
+                holder.layout_item_room.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        if (holder.img_check.getVisibility() == View.GONE && isCheck == false) {
+                            holder.layout_item_room.setBackgroundResource(android.R.color.system_accent3_100);
+                            isCheck = true;
+                            holder.img_check.setVisibility(View.VISIBLE);
+                            roomDetailList.add(roomDetail);
+                            mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
+                        }
+
+                        return true;
+                    }
+                });
+            }
+        }
+
+        holder.layout_item_room.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isDataEntry == false && orderRoomBooked == null) {
+                    Intent intent = new Intent(context, RoomDetailActivity.class);
+                    intent.putExtra("ROOMDETAIL", roomDetail);
+                    context.startActivity(intent);
+                } else if (isDataEntry == true) {
                     if (isCheck) {
                         isCheck = false;
                         holder.layout_item_room.setBackgroundResource(R.drawable.background_shadow_layout_item);
                         holder.img_close.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         Intent intent = new Intent(context, RoomDetailActivity.class);
                         intent.putExtra("ROOMDETAIL", roomDetail);
                         intent.putExtra("DATAENTRY", true);
                         context.startActivity(intent);
                     }
-
+                } else {
+                    if (orderRoomBooked != null) {
+                        if (isCheck) {
+                            if (holder.img_check.getVisibility() == View.VISIBLE) {
+                                holder.img_check.setVisibility(View.GONE);
+                                holder.layout_item_room.setBackgroundResource(R.drawable.background_shadow_layout_item);
+                                roomDetailList.remove(roomDetail);
+                                mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
+                                if (roomDetailList.isEmpty()) {
+                                    isCheck = false;
+                                }
+                            } else {
+                                holder.layout_item_room.setBackgroundResource(android.R.color.system_accent3_100);
+                                holder.img_check.setVisibility(View.VISIBLE);
+                                roomDetailList.add(roomDetail);
+                                mListRoomEmptyInterface.roomsAreSelected(roomDetailList);
+                            }
+                        } else {
+                            if (orderRoomBooked != null) {
+                                Intent intent = new Intent(context, RoomDetailActivity.class);
+                                intent.putExtra("ROOMDETAIL", roomDetail);
+                                intent.putExtra("ORDERROOMBOOKED", orderRoomBooked);
+                                context.startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(context, RoomDetailActivity.class);
+                                intent.putExtra("ROOMDETAIL", roomDetail);
+                                context.startActivity(intent);
+                            }
+                        }
+                    }
                 }
-            });
-        }
+            }
+        });
+
 
         holder.tvNameRoom.setText(roomDetail.getRoomName());
         holder.tvKindOfRoom.setText(Formater.getKindOfRoom(roomDetail.getIdKindOfRoom()));
         holder.tvNumberOfPerson.setText(roomDetail.getMaximumNumberOfPeople() + " people");
-        holder.tvPrice.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Picasso.get().load(imageRooms.get(position)).placeholder(R.drawable.ic_image).error(R.drawable.sample_image).into(holder.imgRoom);
+        for (int i = 1; i< imageRooms.size(); i++){
+            if (imageRooms.get(i).getPrice() == roomDetail.getRoomPrice()){
+                setImageBitmap(imageRooms.get(i).getPicture()[0], holder.imgRoom);
             }
-        }, 4000);
+        }
+        holder.tvPrice.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
         holder.tvRoomStatus.setText(Formater.getRoomStatus(roomDetail.getRoomStatus()));
         holder.img_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,6 +255,22 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
         }
     }
 
+    private void setImageBitmap(String image, ImageView imageView) {
+        final Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //đẩy lên giao diện
+                imageView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Picasso.get().load(image).placeholder(R.drawable.ic_image).error(R.drawable.sample_image).into(imageView);
+                    }
+                });
+            }
+        });
+        t1.start();//bắt đầu thực hiện tiến trình
+    }
+
     @Override
     public int getItemCount() {
         return roomDetails.size();
@@ -265,11 +279,6 @@ public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdap
     @Override
     public void response(String status) {
         mListRoomEmptyInterface.removeRoomSuccess(status);
-    }
-
-    @Override
-    public void responsePicture(PictureOfRoom pictureOfRoom) {
-        this.imageRooms.add(pictureOfRoom.getPicture()[0]);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

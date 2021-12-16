@@ -227,7 +227,6 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
                     case R.id.menu_logout:
                         SharedPref_InfoUser.getInstance(CreateOrderActivity.this).clearSharedPreferences();
                         startActivity(new Intent(CreateOrderActivity.this, LoginActivity.class));
-                        finishAffinity();
                         break;
                     case R.id.menu_exit:
                         DialogMessage dialogMessage = new DialogMessage();

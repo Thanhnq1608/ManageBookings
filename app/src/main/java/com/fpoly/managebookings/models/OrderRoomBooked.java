@@ -14,6 +14,8 @@ public class OrderRoomBooked implements Serializable {
     private int advanceDeposit;
     private int bookingStatus;
     private int totalRoomRate;
+    private int serviceCharge;
+    private String note;
     private String createdAt;
     private String updatedAt;
     private long __v;
@@ -30,6 +32,14 @@ public class OrderRoomBooked implements Serializable {
         this.advanceDeposit = advanceDeposit;
         this.bookingStatus = bookingStatus;
         this.totalRoomRate = totalRoomRate;
+    }
+
+    public int getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public String getNote() {
+        return note;
     }
 
     public String getTimeBookingStart() {

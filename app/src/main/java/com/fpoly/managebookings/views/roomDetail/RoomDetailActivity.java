@@ -37,6 +37,7 @@ import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
+import java.util.List;
 
 public class RoomDetailActivity extends AppCompatActivity implements ResponGetPictureRoom {
     private Toolbar toolbar;
@@ -100,9 +101,9 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
             @Override
             public void onClick(View v) {
                 int total = 0;
+                total = roomDetail.getRoomPrice();
+                setTotalWhileAddRoom(total, orderRoomBooked );
                 mApiRoomDetail.removeRoomFromOrder(roomDetail.getId(), 1, orderRoomBooked.get_id());
-                total = total + roomDetail.getRoomPrice();
-                setTotalWhileAddRoom(total, orderRoomBooked.getTotalRoomRate() );
                 dialogMessage.message(RoomDetailActivity.this, "Alert", "Do you want to continue to choose the room?", orderRoomBooked);
             }
         });
@@ -110,28 +111,23 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    void setTotalWhileAddRoom(int total, int orderRoomRate) {
+    void setTotalWhileAddRoom(int total, OrderRoomBooked orderRoomRate) {
         try {
-            String[] dateTime = Formater.getUsedTDate(orderRoomBooked.getTimeBookingStart(), orderRoomBooked.getTimeBookingEnd()).split(",");
+            String[] dateTime = Formater.getUsedTDate(orderRoomRate.getTimeBookingStart(), orderRoomRate.getTimeBookingEnd()).split(",");
             if (Integer.parseInt(dateTime[0]) > 0) {
-                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12){
-                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1)) + (total / 2);
-                    total = total + orderRoomRate;
-                    mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
-                }else {
-                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1 + 1));
-                    total = total + orderRoomRate;
-                    mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
+                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
+                    total = total * (Integer.parseInt(dateTime[0])) + (total / 2);
+                } else {
+                    total = total * (Integer.parseInt(dateTime[0]));
                 }
-            }else {
-                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12){
+                total = total + orderRoomRate.getTotalRoomRate();
+                mApiOrderRoomBooked.updateTotalRoomRate(orderRoomRate.get_id(), total);
+            } else {
+                if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = (total / 2);
-                    total = total + orderRoomRate;
-                    mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
-                }else {
-                    total = total + orderRoomRate;
-                    mApiOrderRoomBooked.updateTotalRoomRate(orderRoomBooked.get_id(), total);
                 }
+                total = total + orderRoomRate.getTotalRoomRate();
+                mApiOrderRoomBooked.updateTotalRoomRate(orderRoomRate.get_id(), total);
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -208,5 +204,10 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
             layout.addView(imageView);
 
         }
+    }
+
+    @Override
+    public void responseListPicture(List<PictureOfRoom> imageRooms) {
+
     }
 }

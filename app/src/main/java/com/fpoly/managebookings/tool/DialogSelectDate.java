@@ -1,6 +1,7 @@
 package com.fpoly.managebookings.tool;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,13 +60,9 @@ public class DialogSelectDate extends BottomSheetDialogFragment {
 
         switch (isVisible) {
             case 0:
-                selectTimePicker.setBottom(20);
-                datePickerLayout.setBottom(50);
                 filterRadio.setVisibility(View.GONE);
                 break;
             case 1:
-                filterRadio.setTop(20);
-                datePickerLayout.setTop(50);
                 selectTimePicker.setVisibility(View.GONE);
                 break;
         }
@@ -116,7 +113,7 @@ public class DialogSelectDate extends BottomSheetDialogFragment {
         Calendar cal = Calendar.getInstance();
 
         dayPicker.setMinValue(1);
-        dayPicker.setValue(cal.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+        dayPicker.setValue(cal.get(Calendar.DAY_OF_MONTH));
         dayPicker.setMaxValue(30);
 
         monthPicker.setMinValue(1);
@@ -126,7 +123,7 @@ public class DialogSelectDate extends BottomSheetDialogFragment {
         monthPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
+                Log.e("MonthPicker", picker.getValue()+"");
                 if (picker.getValue() == 2) {
                     dayPicker.setMaxValue(28);
                 } else if (picker.getValue() == 4 || picker.getValue() == 6 || picker.getValue() == 9 || picker.getValue() == 11) {

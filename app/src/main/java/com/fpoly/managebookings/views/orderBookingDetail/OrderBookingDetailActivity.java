@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,8 @@ import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.User;
+import com.fpoly.managebookings.tool.DialogMessage;
+import com.fpoly.managebookings.tool.DialogPayment;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
@@ -71,6 +75,8 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private TextView tvTotal;
     private TextView tvVAT;
     private TextView tvAdvanceDeposit;
+    private TextView tvExtraService;
+    private LinearLayout layout_extra_service;
     private Toolbar toolbar;
     private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this);
     private OrderBookingDetailPresenter mOrderBookingDetailPresenter = new OrderBookingDetailPresenter(this);
@@ -84,6 +90,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private LoadingDialog loadingDialog;
     private ApiSendNotifyWithFirebase apiSendNotifyWithFirebase = new ApiSendNotifyWithFirebase();
     private ApiUser apiUser = new ApiUser(this);
+    private DialogPayment dialogPayment;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -92,13 +99,25 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         setContentView(R.layout.order_book_room_detail);
         Intent intent = getIntent();
         itemOrderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
+        dialogPayment = new DialogPayment(itemOrderRoomBooked, listRoomDetails);
 
         findViewsById();
         setToolbar();
         setPullRefresh();
 
-        if (itemOrderRoomBooked.getBookingStatus() == 3){
+        loadingDialog = new LoadingDialog(OrderBookingDetailActivity.this);
+
+        if (itemOrderRoomBooked.getBookingStatus() == 3) {
             btn_add.setVisibility(View.INVISIBLE);
+            layout_extra_service.setVisibility(View.VISIBLE);
+            tvExtraService.setText(Formater.getFormatMoney(itemOrderRoomBooked.getServiceCharge()));
+            layout_extra_service.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DialogMessage dialogMessage = new DialogMessage();
+                    dialogMessage.detail(OrderBookingDetailActivity.this, "Note", itemOrderRoomBooked.getNote());
+                }
+            });
         }
 
         //Create layout for RecycleView
@@ -143,7 +162,12 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
             @Override
             public void onClick(View v) {
                 apiUser.getUserByPhone(itemOrderRoomBooked.getPhone());
+                if (itemOrderRoomBooked.getBookingStatus() == 2){
+                    dialogPayment = new DialogPayment(itemOrderRoomBooked, listRoomDetails);
+                    dialogPayment.show(getSupportFragmentManager(), null);
+                }
                 mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked, listRoomDetails, OrderBookingDetailActivity.this);
+
             }
         });
 
@@ -170,8 +194,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
         }
 
-        loadingDialog = new LoadingDialog(OrderBookingDetailActivity.this);
-        loadingDialog.startLoadingDialog(2000);
+        loadingDialog.startLoadingDialog(3000);
     }
 
 
@@ -191,6 +214,8 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         toolbar = findViewById(R.id.toolbar);
         btn_add = findViewById(R.id.btn_add);
         btn_delete = findViewById(R.id.btn_delete);
+        tvExtraService = findViewById(R.id.tv_extra_service);
+        layout_extra_service = findViewById(R.id.layout_item_extra_service);
     }
 
     private void setToolbar() {
@@ -219,33 +244,28 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
             String[] dateTime = Formater.getUsedTDate(itemOrderRoomBooked.getTimeBookingStart(), itemOrderRoomBooked.getTimeBookingEnd()).split(",");
             if (Integer.parseInt(dateTime[0]) > 0) {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
-                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1)) + (total / 2);
-                    total = orderRoomRate - total;
-                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
+                    total = total * (Integer.parseInt(dateTime[0])) + (total / 2);
                 } else {
-                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1 + 1));
-                    total = orderRoomRate - total;
-                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
+                    total = total * (Integer.parseInt(dateTime[0]));
                 }
+                total = orderRoomRate - total;
+                mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
             } else {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = (total / 2);
-                    total = orderRoomRate - total;
-                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
-                } else {
-                    total = orderRoomRate - total;
-                    mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
                 }
+                total = orderRoomRate - total;
+                mApiOrderRoomBooked.updateTotalRoomRate(itemOrderRoomBooked.get_id(), total);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
-    private void sendNotification(String message, String tokenTo){
+    private void sendNotification(String message, String tokenTo) {
         JsonObject payload = new JsonObject();
 //        payload.addProperty("to", "dOkCu5PISgS62M0SCZfT3q:APA91bGhCT6NLXl-iFyFMFln63Pg23LdUx0O4MsYh1uJBGsWzrU6r-6tZKeRNPmx2b7Nl9AtD364lbmv5yLFzdeHNdPcm04wadUipbUKNPRymAYkAUdD9TirzXBKtCsuyPzH1NgZzmdu");
-        payload.addProperty("to",tokenTo);
+        payload.addProperty("to", tokenTo);
         // compose data payload here
         JsonObject data = new JsonObject();
         data.addProperty("title", "Hotel Booking");
@@ -277,7 +297,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     public void onCancelRoom(String cancelStatus) {
         fixSizeForToast.fixSizeToast(cancelStatus);
         apiUser.getUserByPhone(itemOrderRoomBooked.getPhone());
-        onBackPressed();
+        startActivity(new Intent(this, ListOrderWaitingActivity.class));
     }
 
 
@@ -290,7 +310,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     public void getRoomById(ArrayList<RoomDetail> roomDetails) {
         this.listRoomDetails.clear();
         this.listRoomDetails.addAll(roomDetails);
-        adapter = new ListOrderDetailAdapter(this, listRoomDetails, this,itemOrderRoomBooked);
+        adapter = new ListOrderDetailAdapter(this, listRoomDetails, this, itemOrderRoomBooked);
         recyclerView.setAdapter(adapter);
     }
 
@@ -298,7 +318,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     public void getAllRoomByIdBooking(ArrayList<RoomDetail> roomDetails) {
         this.listRoomDetails.clear();
         this.listRoomDetails.addAll(roomDetails);
-        adapter = new ListOrderDetailAdapter(this, roomDetails, this,itemOrderRoomBooked);
+        adapter = new ListOrderDetailAdapter(this, roomDetails, this, itemOrderRoomBooked);
         recyclerView.setAdapter(adapter);
     }
 
@@ -382,16 +402,16 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
     @Override
     public void getUserByPhone(User user) {
-        if (user != null){
-            switch (itemOrderRoomBooked.getBookingStatus()){
+        if (user != null) {
+            switch (itemOrderRoomBooked.getBookingStatus()) {
                 case 0:
-                    sendNotification("Your booking has been confirmed",user.getTokenId());
+                    sendNotification("Your booking has been confirmed", "");
                     break;
                 case 1:
-                    sendNotification("Your booking has been checked-in",user.getTokenId());
+                    sendNotification("Your booking has been checked-in", user.getTokenId());
                     break;
                 case 2:
-                    sendNotification("Your booking has been completed",user.getTokenId());
+                    sendNotification("Your booking has been completed", user.getTokenId());
                     break;
             }
         }

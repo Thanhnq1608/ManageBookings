@@ -43,30 +43,41 @@ public class CreateOrderPresenter implements ApiOrderBookedInterface {
         SimpleDateFormat outputSdf = new SimpleDateFormat("hh:mm dd/MM/yyyy");
 
         Date currentTime = Calendar.getInstance().getTime();
-        Log.e("currentTime",""+currentTime);
-        Date timeEnd,timeStart;
-        if (orderRoomBooked.getTimeBookingStart().isEmpty() || orderRoomBooked.getTimeBookingEnd().isEmpty()){
-             timeStart = currentTime;
-             timeEnd = currentTime;
-        }else {
-             timeStart = Formater.formatToDateTime(orderRoomBooked.getTimeBookingStart());
-             timeEnd = Formater.formatToDateTime(orderRoomBooked.getTimeBookingEnd());
-        }
+        Date nowDate;
 
-        if (orderRoomBooked.getPhone().trim().isEmpty() || orderRoomBooked.getEmail().trim().isEmpty() || orderRoomBooked.getFullName().trim().isEmpty()) {
-            mCreateOrderInterface.emptyData("User information cannot be empty!");
-            return false;
-        }else if ( orderRoomBooked.getTimeBookingStart().isEmpty() || orderRoomBooked.getTimeBookingEnd().isEmpty()){
-            mCreateOrderInterface.emptyData("You do not select time booking!");
-            return false;
+        try {
+            nowDate = sdf.parse(currentTime.toString());
+
+            Log.e("currentTime",""+outputSdf.format(nowDate));
+            Date timeEnd,timeStart;
+            if (orderRoomBooked.getTimeBookingStart().isEmpty() || orderRoomBooked.getTimeBookingEnd().isEmpty()){
+                timeStart = currentTime;
+                timeEnd = currentTime;
+            }else {
+                timeStart = Formater.formatToDateTime(orderRoomBooked.getTimeBookingStart());
+                timeEnd = Formater.formatToDateTime(orderRoomBooked.getTimeBookingEnd());
+            }
+
+            if (orderRoomBooked.getPhone().trim().isEmpty() || orderRoomBooked.getEmail().trim().isEmpty() || orderRoomBooked.getFullName().trim().isEmpty()) {
+                mCreateOrderInterface.emptyData("User information cannot be empty!");
+                return false;
+            }else if ( orderRoomBooked.getTimeBookingStart().isEmpty() || orderRoomBooked.getTimeBookingEnd().isEmpty()){
+                mCreateOrderInterface.emptyData("You do not select time booking!");
+                return false;
+            }
+            else if(timeStart.compareTo(timeEnd) >= 0){
+                mCreateOrderInterface.checkTimeBooking("Booking end time must be after start date!");
+                return false;
+            } else {
+                if(timeStart.compareTo(Formater.formatToDateTime(outputSdf.format(nowDate))) == -1){
+                    mCreateOrderInterface.checkTimeBooking("Booking start time must be after current date!");
+                    return false;
+                }else return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        else if(timeStart.compareTo(timeEnd) >= 0){
-            mCreateOrderInterface.checkTimeBooking("Booking end time must be after start date!");
-            return false;
-        } else if(timeStart.compareTo(sdf.parse(currentTime.toString())) == 1){
-            mCreateOrderInterface.checkTimeBooking("Booking start time must be after current date!");
-            return false;
-        }else return true;
+        return true;
     }
 
     @Override

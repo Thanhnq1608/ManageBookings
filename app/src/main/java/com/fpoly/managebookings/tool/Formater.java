@@ -161,6 +161,7 @@ public interface Formater {
         Date end = formatToDateTime(timeEnd);
 
         long distanceTime = end.getTime() - start.getTime();
+        Log.e("time",""+distanceTime);
 
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
@@ -168,9 +169,12 @@ public interface Formater {
         long daysInMilli = hoursInMilli * 24;
 
         long usedDate = distanceTime / daysInMilli;
+        Log.e("time",""+usedDate);
         distanceTime = distanceTime % daysInMilli;
+        Log.e("time",""+distanceTime);
 
         long usedHour = distanceTime / hoursInMilli;
+        Log.e("time",""+usedHour);
 
         return usedDate+","+usedHour;
     }

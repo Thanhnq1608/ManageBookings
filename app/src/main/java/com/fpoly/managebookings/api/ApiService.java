@@ -66,6 +66,9 @@ public interface ApiService {
     @POST("orderRoomBooked/update/{id}")
     Call<UpdateTotalRoomRate> updatePaymentWhileUpdateRoom(@Path("id") String id, @Field("totalRoomRate") int totalRoomRate);
 
+    @POST("orderRoomBooked/update/{id}")
+    Call<UpdateTotalRoomRate> update(@Path("id") String id, @Body JsonObject jsonObject);
+
     //OrderDetail
     @GET("oderRoomBookingDetail/{idBooking}")
     Call<List<OrderDetail>> getOrderDetail(@Path("idBooking") String idBooking);

@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv1231">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:text="0332751701"
+
                 android:id="@+id/edtPhoneNumber"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tilUsername">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:text="123456789"
+
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,6 +76,28 @@
                 android:textSize="30dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="150dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/cb_remember_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember Account"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                android:layout_marginLeft="20dp"/>
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

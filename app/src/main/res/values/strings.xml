@@ -125,4 +125,6 @@
     <string name="all_rooms">All Rooms</string>
     <string name="add_room">Add Room</string>
     <string name="update_room">Update Room</string>
+    <string name="manage_booking">Manage Booking</string>
+    <string name="done">Done</string>
 </resources>

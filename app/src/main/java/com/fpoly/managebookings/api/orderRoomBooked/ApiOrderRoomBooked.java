@@ -10,6 +10,7 @@ import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.updateOrder.UpdateBookingStatus;
 import com.fpoly.managebookings.models.updateOrder.UpdateTotalRoomRate;
+import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -151,6 +152,24 @@ public class ApiOrderRoomBooked {
 
     public void updateTotalRoomRate(String id, int totalRoomRate) {
         ApiService.apiService.updatePaymentWhileUpdateRoom(id, totalRoomRate).enqueue(new Callback<UpdateTotalRoomRate>() {
+            @Override
+            public void onResponse(Call<UpdateTotalRoomRate> call, Response<UpdateTotalRoomRate> response) {
+                if (response.isSuccessful()) {
+                    Log.e("UpdateTotalRoomRate", "" + response.body().getData());
+                } else {
+                    Log.e("Loi", "" + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTotalRoomRate> call, Throwable t) {
+                Log.e("Error:", "" + t.getMessage());
+            }
+        });
+    }
+
+    public void update(String id, JsonObject jsonObject) {
+        ApiService.apiService.update(id, jsonObject).enqueue(new Callback<UpdateTotalRoomRate>() {
             @Override
             public void onResponse(Call<UpdateTotalRoomRate> call, Response<UpdateTotalRoomRate> response) {
                 if (response.isSuccessful()) {

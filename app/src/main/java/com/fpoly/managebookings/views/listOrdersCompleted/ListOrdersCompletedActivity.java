@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -279,6 +280,7 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
             for (int i = 0; i < orderRoomBookeds.size(); i++) {
 
                 if (Formater.formatDateTimeToString(orderRoomBookeds.get(i).getTimeBookingEnd()).contains(dateFilter)) {
+                    Log.e(Formater.formatDateTimeToString(orderRoomBookeds.get(i).getTimeBookingEnd()), dateFilter);
                     orderRoomBookedFilters.add(orderRoomBookeds.get(i));
                 }
             }

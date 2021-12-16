@@ -43,7 +43,7 @@ public class ApiUser {
                     mApiLoginUserInterface.loginSuccess(data.getToken(), data.getUser(), responseLogin.getStatus());
                     Log.e("token", "" + data.getToken());
                 } else if (response.code() == 400) {
-                    mApiForgetPassInterface.changePassFail();
+                    mApiLoginUserInterface.loginFail("Incorrect account or password");
                     Log.e("Exception 400", "" + response.code() + " " + response.message());
                 } else {
                     Log.e("Login Exception", "" + response.code() + " " + response.message());

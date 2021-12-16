@@ -41,8 +41,7 @@ public class FirebaseNotification extends FirebaseMessagingService {
         String title = stringMap.get("title");
         String body = stringMap.get("message");
 //        Log.e(TAG, ""+SharedPref_InfoUser.getInstance(this).LoggedInEmail());
-        if (SharedPref_InfoUser.getInstance(this).LoggedInEmail() != null) {
-
+        if (SharedPref_InfoUser.getInstance(this).LoggedInUserToken() != null) {
             sendNotification(title, body);
         }
     }

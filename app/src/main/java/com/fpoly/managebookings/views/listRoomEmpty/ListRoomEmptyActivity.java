@@ -35,12 +35,15 @@ import android.widget.TextView;
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListRoomEmptyAdapter;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
+import com.fpoly.managebookings.api.pictureOfRoom.ApiPictureRoom;
+import com.fpoly.managebookings.api.pictureOfRoom.ResponGetPictureRoom;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
 import com.fpoly.managebookings.api.roomDetail.GetAllRoomInterface;
 import com.fpoly.managebookings.api.roomDetail.ResponseCreateRoomInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
+import com.fpoly.managebookings.models.picture.PictureOfRoom;
 import com.fpoly.managebookings.tool.DialogAddRoom;
 import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.FixSizeForToast;
@@ -53,6 +56,7 @@ import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.login.LoginActivity;
+import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonObject;
@@ -64,9 +68,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomDetailInterface, GetAllRoomInterface, ListRoomEmptyAdapter.ListRoomEmptyInterface {
+public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGetPictureRoom, ApiRoomDetailInterface, GetAllRoomInterface, ListRoomEmptyAdapter.ListRoomEmptyInterface {
     private ListRoomEmptyAdapter mListRoomEmptyAdapter;
-    private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail( this, this);
+    private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this, this);
     private LinearLayout layoutListRoomEmpty;
     private Button btnSortMoney;
     private Button btnSortType;
@@ -86,7 +90,9 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     private Intent intent;
     private boolean doubleBackToExitPressedOnce = false;
     private ArrayList<RoomDetail> detailArrayList = new ArrayList<>();
+    private ArrayList<PictureOfRoom> imageRooms = new ArrayList<>();
     private DialogAddRoom dialogAddRoom;
+    private ApiPictureRoom apiPictureRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +105,8 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
         intent = getIntent();
         updateOrderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
         isDataEntry = intent.getBooleanExtra("DATAENTRY", false);
+        apiPictureRoom = new ApiPictureRoom(this);
+
 
         if (updateOrderRoomBooked != null) {
             layout_button.setVisibility(View.VISIBLE);
@@ -126,7 +134,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                 btnSortType.setBackgroundResource(R.drawable.custom_button3);
                 btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
 
-                mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, 0,isDataEntry);
+                mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, imageRooms, 0, isDataEntry);
                 recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
                 loadingDialog.startLoadingDialog(2000);
 
@@ -140,7 +148,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                 btnSortType.setBackgroundResource(R.drawable.custom_button);
                 btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
 
-                mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, 1, isDataEntry);
+                mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, imageRooms, 1, isDataEntry);
                 recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
                 loadingDialog.startLoadingDialog(2000);
             }
@@ -153,7 +161,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                 btnSortType.setBackgroundResource(R.drawable.custom_button3);
                 btnSortFloor.setBackgroundResource(R.drawable.custom_button);
 
-                mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, 2, isDataEntry);
+                mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, imageRooms, 2, isDataEntry);
                 recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
                 loadingDialog.startLoadingDialog(2000);
             }
@@ -193,21 +201,25 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            finishAffinity();
-            finish();
-            return;
-        }
-        this.doubleBackToExitPressedOnce = true;
-        fixSizeForToast.fixSizeToast("Nhấn  " + '"' + "TRỞ VỀ" + '"' + "  lần nữa để thoát");
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
+        if (isDataEntry) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                finishAffinity();
+                finish();
+                return;
             }
-        }, 2000);
+            this.doubleBackToExitPressedOnce = true;
+            fixSizeForToast.fixSizeToast("Nhấn  " + '"' + "TRỞ VỀ" + '"' + "  lần nữa để thoát");
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -230,7 +242,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                     break;
                 case R.id.menu_add_room:
                     boolean temp = dialogAddRoom.dialogAddRoom(null);
-                    if (temp){
+                    if (temp) {
                         onStart();
                     }
                     break;
@@ -348,9 +360,18 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     public void getAllRoomEmpty(ArrayList<RoomDetail> roomDetails) {
         this.detailArrayList.clear();
         this.detailArrayList.addAll(roomDetails);
-        mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this, roomDetails, updateOrderRoomBooked, this, 5, isDataEntry);
-        recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
-
+        ArrayList<Integer> ints = new ArrayList<>();
+        ints.add(roomDetails.get(0).getRoomPrice());
+        for (int i = 1; i< roomDetails.size(); i++){
+            for (int j = 0; j< ints.size(); j++){
+                if (roomDetails.get(i).getRoomPrice() == ints.get(j)){
+                    continue;
+                }else {
+                    ints.add(roomDetails.get(i).getRoomPrice());
+                }
+            }
+        }
+        apiPictureRoom.getListPictureRooms(ints);
     }
 
     @Override
@@ -386,7 +407,9 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
                     if (context.equalsIgnoreCase("CreateOrderActivity")) {
                         startActivity(new Intent(ListRoomEmptyActivity.this, ListOrderWaitingActivity.class));
                     } else {
-                        onBackPressed();
+                        Intent intent = new Intent(ListRoomEmptyActivity.this, OrderBookingDetailActivity.class);
+                        intent.putExtra("ORDERROOMBOOKED", updateOrderRoomBooked);
+                        startActivity(intent);
                     }
 
                 }
@@ -407,23 +430,20 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
             String[] dateTime = Formater.getUsedTDate(updateOrderRoomBooked.getTimeBookingStart(), updateOrderRoomBooked.getTimeBookingEnd()).split(",");
             if (Integer.parseInt(dateTime[0]) > 0) {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
-                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1)) + (total / 2);
+                    total = total * (Integer.parseInt(dateTime[0])) + (total / 2);
                     total = total + orderRoomRate;
                     apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
                 } else {
-                    total = total + (total * (Integer.parseInt(dateTime[0]) - 1 + 1));
+                    total = total * (Integer.parseInt(dateTime[0]));
                     total = total + orderRoomRate;
                     apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
                 }
             } else {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = (total / 2);
-                    total = total + orderRoomRate;
-                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
-                } else {
-                    total = total + orderRoomRate;
-                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
                 }
+                total = total + orderRoomRate;
+                apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -434,7 +454,34 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ApiRoomD
     public void getAllRoom(ArrayList<RoomDetail> roomDetails) {
         this.detailArrayList.clear();
         this.detailArrayList.addAll(roomDetails);
-        mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this, roomDetails, updateOrderRoomBooked, this, 5, isDataEntry);
+
+        ArrayList<Integer> ints = new ArrayList<>();
+
+        ints.add(roomDetails.get(0).getRoomPrice());
+
+        for (int i = 1; i< roomDetails.size(); i++){
+            for (int j = 0; j< ints.size(); j++){
+                if (roomDetails.get(i).getRoomPrice() == ints.get(j)){
+                    continue;
+                }else {
+                    ints.add(roomDetails.get(i).getRoomPrice());
+                }
+            }
+        }
+
+        apiPictureRoom.getListPictureRooms(ints);
+    }
+
+
+    @Override
+    public void responsePicture(PictureOfRoom pictureOfRoom) {
+    }
+
+    @Override
+    public void responseListPicture(List<PictureOfRoom> imageRooms) {
+        this.imageRooms.clear();
+        this.imageRooms.addAll(imageRooms);
+        mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this, detailArrayList, updateOrderRoomBooked, this, imageRooms, 5, isDataEntry);
         recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
     }
 }
