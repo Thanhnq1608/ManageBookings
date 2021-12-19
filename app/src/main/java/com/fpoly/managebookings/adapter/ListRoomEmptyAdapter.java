@@ -1,44 +1,34 @@
 package com.fpoly.managebookings.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fpoly.managebookings.R;
-import com.fpoly.managebookings.api.pictureOfRoom.ApiPictureRoom;
-import com.fpoly.managebookings.api.pictureOfRoom.ResponGetPictureRoom;
 import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
 import com.fpoly.managebookings.api.roomDetail.ResponseRemoveRoomInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.picture.PictureOfRoom;
 import com.fpoly.managebookings.tool.Formater;
-import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface;
 import com.fpoly.managebookings.views.roomDetail.RoomDetailActivity;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdapter.ViewHolder> implements ListOrderWaitingInterface, ResponseRemoveRoomInterface {
+public class ListRoomEmptyAdapter extends RecyclerView.Adapter<ListRoomEmptyAdapter.ViewHolder> implements ResponseRemoveRoomInterface {
     private Context context;
     private ArrayList<RoomDetail> roomDetails;
     private OrderRoomBooked orderRoomBooked;

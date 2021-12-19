@@ -1,6 +1,5 @@
 package com.fpoly.managebookings.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -19,24 +18,27 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fpoly.managebookings.R;
+import com.fpoly.managebookings.api.user.ApiUser;
+import com.fpoly.managebookings.api.user.GetUserInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
+import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.tool.Formater;
-import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface;
-import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingPresenter;
 import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActivity;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
-public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.ViewHolder> implements ListOrderWaitingInterface, Filterable {
+@SuppressWarnings("unchecked")
+public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.ViewHolder> implements Filterable, GetUserInterface {
     private Context context;
     private ArrayList<OrderRoomBooked> orderRoomBookedFilter;
     private ArrayList<OrderRoomBooked> orderRoomBookeds;
-    private ListOrderWaitingPresenter mListOrderWaitingPresenter = new ListOrderWaitingPresenter(this);
     private ListOrderFilterInterface mListOrderFilterInterface;
+    private ApiUser apiUser = new ApiUser(this);
+
 
     public interface ListOrderFilterInterface {
         void listOrderFilter(ArrayList<OrderRoomBooked> orderRoomBookeds);
@@ -45,7 +47,7 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
     public ListOrdersAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds) {
         this.context = context;
         this.orderRoomBookeds = orderRoomBookeds;
-        orderRoomBookedFilter = new ArrayList<>(orderRoomBookeds);
+        orderRoomBookedFilter = new ArrayList<OrderRoomBooked>(orderRoomBookeds);
         notifyDataSetChanged();
     }
 
@@ -53,7 +55,7 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
     public ListOrdersAdapter(Context context, ArrayList<OrderRoomBooked> orderRoomBookeds, ListOrderFilterInterface mListOrderFilterInterface) {
         this.context = context;
         this.orderRoomBookeds = orderRoomBookeds;
-        orderRoomBookedFilter = new ArrayList<>(orderRoomBookeds);
+        orderRoomBookedFilter = new ArrayList<OrderRoomBooked>(orderRoomBookeds);
         this.mListOrderFilterInterface = mListOrderFilterInterface;
         notifyDataSetChanged();
     }
@@ -81,19 +83,18 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
         if (orderRoomBookeds.isEmpty()) {
             return;
         }
+
         try {
-            if (orderRoomBooked.getBookingStatus() != 3) {
-                holder.tvDate.setText(Formater.formatDateToStringForCreateAt(orderRoomBooked.getCreatedAt()));
-            } else {
-                holder.tvDate.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingEnd()));
-            }
+            holder.tvDateStart.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingStart()));
+            holder.tvDateEnd.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingEnd()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         holder.tvFullName.setText(orderRoomBooked.getFullName());
         holder.tvPhone.setText(String.valueOf(orderRoomBooked.getPhone()));
         Formater.setStatusForOrder(orderRoomBooked.getBookingStatus(), holder.tvStatusOrder);
-        holder.imgRoom.setImageResource(R.drawable.sample_image);
+        holder.imgRoom.setImageResource(R.drawable.logo);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +110,22 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
         return orderRoomBookeds.size();
     }
 
+//    private void setImageBitmap(String image, ImageView imageView) {
+//        final Thread t1 = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                //đẩy lên giao diện
+//                imageView.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Picasso.get().load(image).placeholder(R.drawable.default_avatar).error(R.drawable.default_avatar).into(imageView);
+//                    }
+//                });
+//            }
+//        });
+//        t1.start();//bắt đầu thực hiện tiến trình
+//    }
+
     @Override
     public Filter getFilter() {
         if (mFilter == null) {
@@ -120,7 +137,7 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
     private Filter mFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<OrderRoomBooked> filteredList = new ArrayList<>();
+            ArrayList<OrderRoomBooked> filteredList = new ArrayList<OrderRoomBooked>();
 
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(orderRoomBookedFilter);
@@ -149,8 +166,14 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
         }
     };
 
+
+    @Override
+    public void getUserByPhone(User user) {
+
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDate, tvTime, tvFullName, tvPhone, tvStatusOrder;
+        TextView tvDateStart, tvDateEnd, tvFullName, tvPhone, tvStatusOrder;
         ImageView imgRoom;
         ConstraintLayout layout;
 
@@ -158,7 +181,8 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
             super(itemView);
             layout = itemView.findViewById(R.id.itemOrderWaiting);
             imgRoom = itemView.findViewById(R.id.imgImageRoom);
-            tvDate = itemView.findViewById(R.id.tvDate);
+            tvDateStart = itemView.findViewById(R.id.tv_time_start);
+            tvDateEnd = itemView.findViewById(R.id.tv_time_end);
             tvFullName = itemView.findViewById(R.id.tvFullName);
             tvPhone = itemView.findViewById(R.id.tvPhone);
             tvStatusOrder = itemView.findViewById(R.id.tvStatus);

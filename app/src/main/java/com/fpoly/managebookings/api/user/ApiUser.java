@@ -1,14 +1,18 @@
 package com.fpoly.managebookings.api.user;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.fpoly.managebookings.api.ApiService;
+import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.models.login.Data;
-import com.fpoly.managebookings.models.login.ResponseForgetPass;
+import com.fpoly.managebookings.models.login.ResponseUpdateUser;
 import com.fpoly.managebookings.models.login.ResponseLogin;
+import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.google.gson.JsonObject;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,6 +23,11 @@ public class ApiUser {
     private GetUserInterface mGetUserInterface;
 
     public ApiUser() {
+    }
+
+    public ApiUser(ApiForgetPassInterface mApiForgetPassInterface, GetUserInterface mGetUserInterface) {
+        this.mApiForgetPassInterface = mApiForgetPassInterface;
+        this.mGetUserInterface = mGetUserInterface;
     }
 
     public ApiUser(GetUserInterface mGetUserInterface) {
@@ -59,14 +68,14 @@ public class ApiUser {
     }
 
     public void forgetPassword(String phone, String password) {
-        ApiService.apiService.forgetPassword(phone, password).enqueue(new Callback<ResponseForgetPass>() {
+        ApiService.apiService.forgetPassword(phone, password).enqueue(new Callback<ResponseUpdateUser>() {
             @Override
-            public void onResponse(Call<ResponseForgetPass> call, Response<ResponseForgetPass> response) {
+            public void onResponse(Call<ResponseUpdateUser> call, Response<ResponseUpdateUser> response) {
                 if (response.isSuccessful()) {
-                    ResponseForgetPass responseForgetPass = response.body();
-                    User data = responseForgetPass.getData();
+                    ResponseUpdateUser responseUpdateUser = response.body();
+                    User data = responseUpdateUser.getData();
                     mApiForgetPassInterface.changePassSuccess();
-                    Log.e("token", "" + responseForgetPass.getStatus());
+                    Log.e("token", "" + responseUpdateUser.getStatus());
                 } else if (response.code() == 400) {
                     mApiLoginUserInterface.loginFail(response.message());
                     Log.e("Exception 400", "" + response.code() + " " + response.message());
@@ -77,19 +86,19 @@ public class ApiUser {
             }
 
             @Override
-            public void onFailure(Call<ResponseForgetPass> call, Throwable t) {
+            public void onFailure(Call<ResponseUpdateUser> call, Throwable t) {
                 Log.e("Login Error", "" + t.getMessage());
             }
         });
     }
 
     public void updateTokenId(String token, JsonObject tokenId) {
-        ApiService.apiService.updateTokenId("Bearer "+token, tokenId).enqueue(new Callback<ResponseForgetPass>() {
+        ApiService.apiService.updateTokenId("Bearer " + token, tokenId).enqueue(new Callback<ResponseUpdateUser>() {
             @Override
-            public void onResponse(Call<ResponseForgetPass> call, Response<ResponseForgetPass> response) {
+            public void onResponse(Call<ResponseUpdateUser> call, Response<ResponseUpdateUser> response) {
                 if (response.isSuccessful()) {
-                    ResponseForgetPass responseForgetPass = response.body();
-                    Log.e("token", "" + responseForgetPass.getStatus());
+                    ResponseUpdateUser responseUpdateUser = response.body();
+                    Log.e("token", "" + responseUpdateUser.getStatus());
                 } else if (response.code() == 400) {
                     mApiLoginUserInterface.loginFail(response.message());
                     Log.e("Exception 400", "" + response.code() + " " + response.message());
@@ -100,7 +109,7 @@ public class ApiUser {
             }
 
             @Override
-            public void onFailure(Call<ResponseForgetPass> call, Throwable t) {
+            public void onFailure(Call<ResponseUpdateUser> call, Throwable t) {
                 Log.e("Login Error", "" + t.getMessage());
             }
         });
@@ -123,6 +132,29 @@ public class ApiUser {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                Log.e("User Error", "" + t.getMessage());
+            }
+        });
+    }
+
+    public void uploadAvatar(Context context, MultipartBody.Part body) {
+        final String token = "Bearer " + SharedPref_InfoUser.getInstance(context).LoggedInUserToken();
+        ApiService.apiService.uploadAvatar(token, body).enqueue(new Callback<ResponseUpdateUser>() {
+            @Override
+            public void onResponse(Call<ResponseUpdateUser> call, Response<ResponseUpdateUser> response) {
+                if (response.isSuccessful()) {
+                    User data = response.body().getData();
+                    SharedPref_InfoUser.getInstance(context).storeUserAvatar(data.getAvatar());
+                    Log.e("Status", "" + response.body().getStatus() + " " + data.getAvatar());
+                } else {
+//                    mGetUserInterface.getUserByPhone(null);
+                    Log.e("User Exception", "" + response.code() + " " + response.message());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUpdateUser> call, Throwable t) {
                 Log.e("User Error", "" + t.getMessage());
             }
         });

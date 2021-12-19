@@ -1,6 +1,7 @@
 package com.fpoly.managebookings.views.listOrdersCompleted;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -36,6 +37,7 @@ import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
+import com.fpoly.managebookings.tool.UploadImage;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
@@ -53,7 +55,7 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
     private ApiOrderRoomBooked mApiOrderRoomBooked = new ApiOrderRoomBooked(this);
     private ListOrdersAdapter adapter;
     private RecyclerView recyclerView;
-    private LinearLayout layout;
+    private LinearLayout layout, layout_statistic;
     private Toolbar toolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
@@ -115,6 +117,7 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         tvTotalPayment = findViewById(R.id.tv_total_payment);
         edt_search = findViewById(R.id.edt_search);
         btn_filter = findViewById(R.id.btn_filter);
+        layout_statistic = findViewById(R.id.layout_statistic);
     }
 
     private void getInfoUser() {
@@ -126,9 +129,24 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
         ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
 
+        ava_drawer_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadImage.getInstance(ListOrdersCompletedActivity.this).changeAvatar();
+            }
+        });
+
         tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
         tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
         Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null){
+            UploadImage.getInstance(this).uploadImage(data.getData());
+        }
     }
 
     void setPullRefresh() {
@@ -235,6 +253,7 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
             btn_filter.setVisibility(View.INVISIBLE);
             edt_search.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.GONE);
+            layout_statistic.setVisibility(View.GONE);
             layout.setBackgroundResource(R.drawable.background_empty);
         }
     }

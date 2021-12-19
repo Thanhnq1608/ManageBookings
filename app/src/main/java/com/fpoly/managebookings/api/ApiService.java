@@ -2,20 +2,23 @@ package com.fpoly.managebookings.api;
 
 import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
-import com.fpoly.managebookings.models.picture.PictureOfRoom;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
 import com.fpoly.managebookings.models.User;
-import com.fpoly.managebookings.models.login.ResponseForgetPass;
+import com.fpoly.managebookings.models.login.ResponseUpdateUser;
 import com.fpoly.managebookings.models.login.ResponseLogin;
 import com.fpoly.managebookings.models.picture.ResponGetPicture;
+import com.fpoly.managebookings.models.picture.ResponseCreatePicture;
 import com.fpoly.managebookings.models.updateOrder.UpdateBookingStatus;
 import com.fpoly.managebookings.models.updateOrder.UpdateTotalRoomRate;
 import com.google.gson.JsonObject;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,14 +28,19 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
     ApiService apiService = new Retrofit.Builder()
             .baseUrl("https://datphongkhachsan.herokuapp.com/")
+            .client(new OkHttpClient.Builder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60,TimeUnit.SECONDS).build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService.class);
@@ -113,16 +121,28 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/v1/auth/ResetPassWord")
-    Call<ResponseForgetPass> forgetPassword(@Field("phone")String phone, @Field("password") String password);
+    Call<ResponseUpdateUser> forgetPassword(@Field("phone")String phone, @Field("password") String password);
 
     @GET("api/v1/auth/getPhone/{phone}")
     Call<User> getUserByPhone(@Path("phone") String phone);
 
+    @Multipart
+    @PUT("api/v1/auth/uploadAvatar")
+    Call<ResponseUpdateUser> uploadAvatar(@Header("Authorization") String token,
+                                          @Part MultipartBody.Part file);
+
     @PUT("api/v1/auth/updateTokenId")
-    Call<ResponseForgetPass> updateTokenId(@Header("Authorization") String token, @Body JsonObject jsonObject);
+    Call<ResponseUpdateUser> updateTokenId(@Header("Authorization") String token, @Body JsonObject jsonObject);
 
     //Picture
     @GET("api/v1/pictureOfRoom/getPrice/{price}")
     Call<ResponGetPicture> getPictureRoom(@Path("price") int price);
+
+    @Multipart
+    @PUT("api/v1/pictureOfRoom/uploadPicture")
+    Call<ResponseCreatePicture> uploadRoomPictures(@Query("price") int price,
+                                                   @Part MultipartBody.Part[] file);
+
+    //Room Amenities
 
 }

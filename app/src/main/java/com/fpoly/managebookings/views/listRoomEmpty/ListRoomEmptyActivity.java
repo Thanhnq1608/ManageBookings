@@ -1,6 +1,7 @@
 package com.fpoly.managebookings.views.listRoomEmpty;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,6 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,6 +56,7 @@ import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
+import com.fpoly.managebookings.tool.UploadImage;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
@@ -68,7 +75,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGetPictureRoom, ApiRoomDetailInterface, GetAllRoomInterface, ListRoomEmptyAdapter.ListRoomEmptyInterface {
+public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGetPictureRoom, DialogAddRoom.GetPriceInterface, ApiRoomDetailInterface, GetAllRoomInterface, ListRoomEmptyAdapter.ListRoomEmptyInterface {
     private ListRoomEmptyAdapter mListRoomEmptyAdapter;
     private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this, this);
     private LinearLayout layoutListRoomEmpty;
@@ -93,6 +100,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
     private ArrayList<PictureOfRoom> imageRooms = new ArrayList<>();
     private DialogAddRoom dialogAddRoom;
     private ApiPictureRoom apiPictureRoom;
+    private int getPrice = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,9 +138,12 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         btnSortMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnSortMoney.setBackgroundResource(R.drawable.custom_button);
-                btnSortType.setBackgroundResource(R.drawable.custom_button3);
-                btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
+//                BitmapDrawable drawable = new BitmapDrawable();
+//                drawable.set
+//                Bitmap bitmap = Bitmap.createBitmap(R.drawable.custom_button);
+//                btnSortMoney.setBackgroundResource(R.drawable.custom_button);
+//                btnSortType.setBackgroundResource(R.drawable.custom_button3);
+//                btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
 
                 mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, imageRooms, 0, isDataEntry);
                 recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
@@ -144,9 +155,9 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         btnSortType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnSortMoney.setBackgroundResource(R.drawable.custom_button3);
-                btnSortType.setBackgroundResource(R.drawable.custom_button);
-                btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
+//                btnSortMoney.setBackgroundResource(R.drawable.custom_button3);
+//                btnSortType.setBackgroundResource(R.drawable.custom_button);
+//                btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
 
                 mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, imageRooms, 1, isDataEntry);
                 recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
@@ -157,9 +168,9 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         btnSortFloor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnSortMoney.setBackgroundResource(R.drawable.custom_button3);
-                btnSortType.setBackgroundResource(R.drawable.custom_button3);
-                btnSortFloor.setBackgroundResource(R.drawable.custom_button);
+//                btnSortMoney.setBackgroundResource(R.drawable.custom_button3);
+//                btnSortType.setBackgroundResource(R.drawable.custom_button3);
+//                btnSortFloor.setBackgroundResource(R.drawable.custom_button);
 
                 mListRoomEmptyAdapter = new ListRoomEmptyAdapter(ListRoomEmptyActivity.this, detailArrayList, updateOrderRoomBooked, ListRoomEmptyActivity.this, imageRooms, 2, isDataEntry);
                 recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
@@ -291,9 +302,30 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
         ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
 
+        ava_drawer_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadImage.getInstance(ListRoomEmptyActivity.this).changeAvatar();
+            }
+        });
+
         tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
         tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
         Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK && data != null) {
+//                if (isDataEntry) {
+//                    UploadImage.getInstance(this).uploadRoomPictures(data.getStringArrayExtra(Intent.ACTION_PICK), getPrice);
+//                } else {
+                    UploadImage.getInstance(this).uploadImage(data.getData());
+//                }
+            }
+        }
     }
 
     private void initializeDataEntry() {
@@ -362,11 +394,11 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         this.detailArrayList.addAll(roomDetails);
         ArrayList<Integer> ints = new ArrayList<>();
         ints.add(roomDetails.get(0).getRoomPrice());
-        for (int i = 1; i< roomDetails.size(); i++){
-            for (int j = 0; j< ints.size(); j++){
-                if (roomDetails.get(i).getRoomPrice() == ints.get(j)){
+        for (int i = 1; i < roomDetails.size(); i++) {
+            for (int j = 0; j < ints.size(); j++) {
+                if (roomDetails.get(i).getRoomPrice() == ints.get(j)) {
                     continue;
-                }else {
+                } else {
                     ints.add(roomDetails.get(i).getRoomPrice());
                 }
             }
@@ -401,7 +433,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
                         mApiRoomDetail.removeRoomFromOrder(roomDetails.get(i).getId(), 1, updateOrderRoomBooked.get_id());
                         total = total + roomDetails.get(i).getRoomPrice();
                     }
-                    setTotalWhileAddRoom(total, updateOrderRoomBooked.getTotalRoomRate());
+                    setTotalWhileAddRoom(total, updateOrderRoomBooked);
                     intent = getIntent();
                     String context = intent.getStringExtra("CONTEXT");
                     if (context.equalsIgnoreCase("CreateOrderActivity")) {
@@ -425,24 +457,24 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    void setTotalWhileAddRoom(int total, int orderRoomRate) {
+    void setTotalWhileAddRoom(int total, OrderRoomBooked orderRoomRate) {
         try {
             String[] dateTime = Formater.getUsedTDate(updateOrderRoomBooked.getTimeBookingStart(), updateOrderRoomBooked.getTimeBookingEnd()).split(",");
             if (Integer.parseInt(dateTime[0]) > 0) {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = total * (Integer.parseInt(dateTime[0])) + (total / 2);
-                    total = total + orderRoomRate;
+                    total = total + orderRoomRate.getTotalRoomRate();
                     apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
                 } else {
                     total = total * (Integer.parseInt(dateTime[0]));
-                    total = total + orderRoomRate;
+                    total = total + orderRoomRate.getTotalRoomRate();
                     apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
                 }
             } else {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = (total / 2);
                 }
-                total = total + orderRoomRate;
+                total = total + orderRoomRate.getTotalRoomRate();
                 apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
             }
         } catch (ParseException e) {
@@ -459,11 +491,11 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
 
         ints.add(roomDetails.get(0).getRoomPrice());
 
-        for (int i = 1; i< roomDetails.size(); i++){
-            for (int j = 0; j< ints.size(); j++){
-                if (roomDetails.get(i).getRoomPrice() == ints.get(j)){
+        for (int i = 1; i < roomDetails.size(); i++) {
+            for (int j = 0; j < ints.size(); j++) {
+                if (roomDetails.get(i).getRoomPrice() == ints.get(j)) {
                     continue;
-                }else {
+                } else {
                     ints.add(roomDetails.get(i).getRoomPrice());
                 }
             }
@@ -483,5 +515,10 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         this.imageRooms.addAll(imageRooms);
         mListRoomEmptyAdapter = new ListRoomEmptyAdapter(this, detailArrayList, updateOrderRoomBooked, this, imageRooms, 5, isDataEntry);
         recListRoomEmpty.setAdapter(mListRoomEmptyAdapter);
+    }
+
+    @Override
+    public void getPrice(int price) {
+        this.getPrice = price;
     }
 }

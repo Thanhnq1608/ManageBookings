@@ -28,9 +28,9 @@ public interface Formater {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     static String formatDateTimeToString(String date) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
-        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
-        format.setTimeZone(TimeZone.getTimeZone(zoneId));
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
+//        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+//        format.setTimeZone(TimeZone.getTimeZone(zoneId));
         String temp = format.format(format.parse(date));
         return temp;
     }
@@ -38,7 +38,7 @@ public interface Formater {
     @RequiresApi(api = Build.VERSION_CODES.O)
     static String formatDateToStringForCreateAt(String date) throws ParseException {
         SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.forLanguageTag("vi"));
-        SimpleDateFormat output = new SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
+        SimpleDateFormat output = new SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
         input.setTimeZone(TimeZone.getTimeZone("UTC"));
         ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
         output.setTimeZone(TimeZone.getTimeZone(zoneId));
@@ -50,7 +50,7 @@ public interface Formater {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     static Date formatToDateTime(String date) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
         ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
         format.setTimeZone(TimeZone.getTimeZone(zoneId));
         Date temp = format.parse(date);
@@ -60,7 +60,7 @@ public interface Formater {
     @RequiresApi(api = Build.VERSION_CODES.O)
     static Date formatDateTimeToStringGMT(String date) throws ParseException {
         SimpleDateFormat input = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy");
-        SimpleDateFormat output = new SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
+        SimpleDateFormat output = new SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
 //        input.setTimeZone(TimeZone.getTimeZone("UTC"));
         ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
         output.setTimeZone(TimeZone.getTimeZone(zoneId));

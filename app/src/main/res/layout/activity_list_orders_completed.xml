@@ -70,6 +70,7 @@
                     android:paddingHorizontal="10dp" />
 
                 <LinearLayout
+                    android:id="@+id/layout_statistic"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:background="#FFFFFF"

@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.api.user.ApiForgetPassInterface;
 import com.fpoly.managebookings.api.user.ApiUser;
+import com.fpoly.managebookings.api.user.GetUserInterface;
+import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.fcm.VerifyPhoneNumber;
@@ -37,7 +39,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-public class ForgetPasswordActivity extends AppCompatActivity implements VerifyPhoneNumber.VerifySuccessInterface, ApiForgetPassInterface {
+public class ForgetPasswordActivity extends AppCompatActivity implements VerifyPhoneNumber.VerifySuccessInterface, ApiForgetPassInterface, GetUserInterface {
     private static final String TAG = ForgetPasswordActivity.class.getName();
     private EditText edtPhone;
     private Button btnSendOtp;
@@ -49,8 +51,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements VerifyP
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
     private FirebaseAuth mAuth;
     private VerifyPhoneNumber mVerifyPhoneNumber;
-    private ApiUser apiUser = new ApiUser(this);
-
+    private ApiUser apiUser = new ApiUser(this,this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,24 +152,24 @@ public class ForgetPasswordActivity extends AppCompatActivity implements VerifyP
         if (edtOtp.getText().length() == 0) {
             fixSizeForToast.fixSizeToast("OTP cannot be left blank");
         } else {
-            mVerifyPhoneNumber.gotoEnterOTP(edtOtp.getText().toString().trim(),mAuth);
+            apiUser.getUserByPhone(edtPhone.getText().toString().trim());
         }
     }
 
 
-    private void updateUIWhileVerifySuccess() {
+    private void updateUIWhileVerifySuccess(String phoneNumber) {
         if (tvErrorRepPass.getText() != null && tvErrorPhone.getText() != null){
             if(edtPass.getText() == null || edtRepPass.getText() == null){
                 fixSizeForToast.fixSizeToast("You cannot leave data blank ");
             }else {
-                apiUser.forgetPassword(edtPhone.getText().toString(),edtPass.getText().toString());
+                apiUser.forgetPassword(phoneNumber,edtPass.getText().toString());
             }
         }
     }
 
     @Override
     public void VerifyPhoneSuccess(String phoneNumber) {
-        updateUIWhileVerifySuccess();
+        updateUIWhileVerifySuccess(phoneNumber);
     }
 
     @Override
@@ -180,5 +181,18 @@ public class ForgetPasswordActivity extends AppCompatActivity implements VerifyP
     @Override
     public void changePassFail() {
         fixSizeForToast.fixSizeToast("Your account does not exist`");
+    }
+
+    @Override
+    public void getUserByPhone(User user) {
+       if (user != null){
+           if (user.getRole().equals("employee")){
+               mVerifyPhoneNumber.gotoEnterOTP(edtOtp.getText().toString().trim(),mAuth);
+           }else {
+               fixSizeForToast.fixSizeToast("Account does not exist!");
+           }
+       }else {
+           fixSizeForToast.fixSizeToast("Account does not exist!");
+       }
     }
 }

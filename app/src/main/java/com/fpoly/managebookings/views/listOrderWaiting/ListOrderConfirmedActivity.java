@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
+import com.fpoly.managebookings.tool.UploadImage;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
@@ -117,9 +119,24 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
         tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
         ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
 
+        ava_drawer_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadImage.getInstance(ListOrderConfirmedActivity.this).changeAvatar();
+            }
+        });
+
         tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
         tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
         Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null){
+            UploadImage.getInstance(this).uploadImage(data.getData());
+        }
     }
 
     private void initializeNavigationView() {

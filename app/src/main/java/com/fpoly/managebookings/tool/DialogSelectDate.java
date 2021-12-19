@@ -113,8 +113,9 @@ public class DialogSelectDate extends BottomSheetDialogFragment {
         Calendar cal = Calendar.getInstance();
 
         dayPicker.setMinValue(1);
-        dayPicker.setValue(cal.get(Calendar.DAY_OF_MONTH));
         dayPicker.setMaxValue(30);
+        dayPicker.setValue(Integer.parseInt(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))));
+        Log.e("Day", ""+cal.get(Calendar.DAY_OF_MONTH));
 
         monthPicker.setMinValue(1);
         monthPicker.setMaxValue(12);

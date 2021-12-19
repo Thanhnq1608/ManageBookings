@@ -106,7 +106,6 @@ public class LoginActivity extends AppCompatActivity implements ApiLoginUserInte
             }else {
                 SharedPref_RememberUserAndPass.getInstance(this).clearSharedPreferences();
             }
-            Log.e("Test",""+edtPhone.getText().toString().trim()+edtPassword.getText().toString().trim());
         }
     }
 

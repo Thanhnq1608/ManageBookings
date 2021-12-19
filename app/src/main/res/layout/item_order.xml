@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
@@ -15,63 +16,78 @@
         android:layout_marginStart="14dp"
         android:layout_marginTop="40dp"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/tvDate"
+        app:layout_constraintEnd_toStartOf="@+id/tv_time_start"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sample_image" />
 
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tv_time_start"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:height="35dp"
         android:drawableLeft="@drawable/ic_clock"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/unicode_optima"
         android:gravity="center"
         android:text="22/11/1999"
-        android:textSize="30dp"
-        android:fontFamily="@font/unicode_optima"
         android:textColor="@color/black"
+        android:textSize="30dp"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
         app:layout_constraintTop_toTopOf="@+id/imgImageRoom" />
+
+    <TextView
+        android:id="@+id/tv_time_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_time_end"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/unicode_optima"
+        android:gravity="center"
+        android:text="22/11/1999"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvFullName"
+        app:layout_constraintEnd_toEndOf="@+id/tv_time_start"
+        app:layout_constraintStart_toStartOf="@+id/tv_time_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time_start" />
 
     <TextView
         android:id="@+id/tvFullName"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="72dp"
         android:height="35dp"
         android:drawableLeft="@drawable/ic_user"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/unicode_optima"
         android:gravity="center|start"
         android:text="Trần Văn A"
-        android:textSize="30dp"
-        android:fontFamily="@font/unicode_optima"
         android:textColor="@color/black"
+        android:textSize="30dp"
         app:layout_constraintStart_toEndOf="@+id/imgImageRoom"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_time_start" />
 
     <TextView
         android:id="@+id/tvPhone"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="36dp"
         android:height="35dp"
         android:drawableLeft="@drawable/ic_phone1"
         android:drawablePadding="20dp"
+        android:fontFamily="@font/unicode_optima"
         android:gravity="center|start"
         android:text="0123456789"
-        android:textSize="30dp"
-        android:fontFamily="@font/unicode_optima"
         android:textColor="@color/black"
+        android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/tvStatus"
         app:layout_constraintStart_toStartOf="@+id/tvFullName"
         app:layout_constraintTop_toBottomOf="@+id/tvFullName"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.375" />
 
     <TextView
         android:id="@+id/tvStatus"
@@ -89,4 +105,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

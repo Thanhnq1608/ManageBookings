@@ -1,9 +1,7 @@
 package com.fpoly.managebookings.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fpoly.managebookings.R;
-import com.fpoly.managebookings.api.roomDetail.ApiRoomDetail;
-import com.fpoly.managebookings.api.roomDetail.ApiRoomDetailInterface;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.tool.Formater;
-import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingInterface;
-import com.fpoly.managebookings.views.orderBookingDetail.OrderBookingDetailActivity;
 import com.fpoly.managebookings.views.roomDetail.RoomDetailActivity;
 
 import java.util.ArrayList;
@@ -33,7 +26,7 @@ import java.util.List;
 
 public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetailAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<RoomDetail> roomDetails = new ArrayList<>();
+    private ArrayList<RoomDetail> roomDetails;
     private List<RoomDetail> listIdRoom = new ArrayList<>();
     private RoomSelectedInterface mRoomSelectedInterface;
     private boolean isCheck = false;

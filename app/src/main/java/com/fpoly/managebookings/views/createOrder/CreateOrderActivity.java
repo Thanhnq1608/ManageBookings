@@ -1,6 +1,7 @@
 package com.fpoly.managebookings.views.createOrder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,6 +29,7 @@ import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.DialogSelectDate;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
+import com.fpoly.managebookings.tool.UploadImage;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
@@ -168,9 +170,24 @@ public class CreateOrderActivity extends AppCompatActivity implements CreateOrde
         tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
         ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
 
+        ava_drawer_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadImage.getInstance(CreateOrderActivity.this).changeAvatar();
+            }
+        });
+
         tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
         tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
         Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null){
+            UploadImage.getInstance(this).uploadImage(data.getData());
+        }
     }
 
     void anhXa() {

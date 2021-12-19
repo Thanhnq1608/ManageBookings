@@ -1,21 +1,30 @@
 package com.fpoly.managebookings.views.listOrderWaiting;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,14 +34,18 @@ import android.widget.TextView;
 
 import com.fpoly.managebookings.R;
 import com.fpoly.managebookings.adapter.ListOrdersAdapter;
+import com.fpoly.managebookings.api.ApiService;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderRoomBooked;
 import com.fpoly.managebookings.api.orderRoomBooked.ApiOrderBookedInterface;
+import com.fpoly.managebookings.api.user.ApiLoginUserInterface;
 import com.fpoly.managebookings.api.user.ApiUser;
 import com.fpoly.managebookings.models.OrderRoomBooked;
+import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.tool.DialogMessage;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.LoadingDialog;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
+import com.fpoly.managebookings.tool.UploadImage;
 import com.fpoly.managebookings.views.createOrder.CreateOrderActivity;
 import com.fpoly.managebookings.views.listOrdersCompleted.ListOrdersCompletedActivity;
 import com.fpoly.managebookings.views.listRoomEmpty.ListRoomEmptyActivity;
@@ -45,22 +58,32 @@ import com.google.gson.JsonObject;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
 
-public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOrderBookedInterface {
+public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOrderBookedInterface, ApiLoginUserInterface {
     private RecyclerView recView;
     private ListOrdersAdapter adapter;
     private ApiOrderRoomBooked getOrderWaiting = new ApiOrderRoomBooked(this);
-    private ArrayList<OrderRoomBooked> orderRoomBookeds = new ArrayList<>();
-    private ApiUser apiUser = new ApiUser();
+    private ApiUser apiUser = new ApiUser(this);
     private Toolbar toolbar;
     private TextView toolbar_text;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private RoundedImageView ava_drawer_header;
     private LinearLayout layout;
     private DrawerLayout drawerLayout;
-    private Observable<ArrayList<OrderRoomBooked>> observable;
     private FixSizeForToast fixSizeForToast = new FixSizeForToast(this);
     private LoadingDialog loadingDialog;
     private NavigationView navigationView;
@@ -109,7 +132,6 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
                 if (!token.equals(SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).loggedInUserTokenIdApp())) {
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("tokenId",token);
-                    Log.e("token",""+SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).LoggedInUserToken());
                     apiUser.updateTokenId(SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).LoggedInUserToken(),jsonObject);
 //                    SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).storeUserToKenIdApp(token);
                 }
@@ -119,14 +141,32 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
         });
     }
 
+        @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK && data != null){
+                UploadImage.getInstance(this).uploadImage(data.getData());
+            }
+        }
+    }
+
     private void getInfoUser() {
         TextView tv_email_drawer_header, tv_fullname_drawer_header;
         RoundedImageView ava_drawer_header;
+
 
         View mView = navigationView.getHeaderView(0);
         tv_email_drawer_header = mView.findViewById(R.id.tv_email_drawer_header);
         tv_fullname_drawer_header = mView.findViewById(R.id.tv_fullname_drawer_header);
         ava_drawer_header = mView.findViewById(R.id.ava_drawer_header);
+
+        ava_drawer_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadImage.getInstance(ListOrderWaitingActivity.this).changeAvatar();
+            }
+        });
 
         tv_email_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInEmail());
         tv_fullname_drawer_header.setText(SharedPref_InfoUser.getInstance(this).LoggedInFullName());
@@ -150,12 +190,6 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
-    }
-
-    private void finishApp() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     @Override
@@ -267,6 +301,16 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
 
     @Override
     public void responseCreateOrder(OrderRoomBooked orderRoomBooked) {
+
+    }
+
+    @Override
+    public void loginSuccess(String token, User user, String status) {
+        Log.e("User token", token);
+    }
+
+    @Override
+    public void loginFail(String status) {
 
     }
 }

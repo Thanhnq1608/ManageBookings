@@ -1,5 +1,6 @@
 package com.fpoly.managebookings.tool;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,16 +19,27 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.JsonObject;
 
 public class DialogAddRoom implements ResponseCreateRoomInterface {
-    private Context context;
+    private Activity context;
     private int idRoomType = 4;
     private int roomPrice;
     private BottomSheetDialog bottomSheetDialog;
     private FixSizeForToast fixSizeForToast;
     private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this);
     private boolean isDialog;
+    private GetPriceInterface mGetPriceInterface;
 
-    public DialogAddRoom(Context context) {
+    public interface GetPriceInterface{
+        void getPrice(int price);
+    }
+
+    public DialogAddRoom(Activity context) {
         this.context = context;
+        fixSizeForToast = new FixSizeForToast(context);
+    }
+
+    public DialogAddRoom(Activity context, GetPriceInterface mGetPriceInterface) {
+        this.context = context;
+        this.mGetPriceInterface = mGetPriceInterface;
         fixSizeForToast = new FixSizeForToast(context);
     }
 
@@ -119,17 +131,19 @@ public class DialogAddRoom implements ResponseCreateRoomInterface {
                 } else {
 //                        roomPrice = (int) decimalFormat.parse(edtPriceRoom.getText().toString());
                     roomPrice = Integer.parseInt(edtPriceRoom.getText().toString());
+                    mGetPriceInterface.getPrice(roomPrice);
+                    UploadImage.getInstance(context).changeAvatar();
 
-                    JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("idRoom", edtIdRoom.getText().toString());
-                    jsonObject.addProperty("roomName", edtNameRoom.getText().toString());
-                    jsonObject.addProperty("maximumNumberOfPeople", Integer.parseInt(edtMaxPersonRoom.getText().toString()));
-                    jsonObject.addProperty("roomStatus", 0);
-                    jsonObject.addProperty("idKindOfRoom", idRoomType);
-                    jsonObject.addProperty("roomPrice", roomPrice);
-                    jsonObject.addProperty("idBooking", 0);
-
-                    mApiRoomDetail.createNewRoom(jsonObject);
+//                    JsonObject jsonObject = new JsonObject();
+//                    jsonObject.addProperty("idRoom", edtIdRoom.getText().toString());
+//                    jsonObject.addProperty("roomName", edtNameRoom.getText().toString());
+//                    jsonObject.addProperty("maximumNumberOfPeople", Integer.parseInt(edtMaxPersonRoom.getText().toString()));
+//                    jsonObject.addProperty("roomStatus", 0);
+//                    jsonObject.addProperty("idKindOfRoom", idRoomType);
+//                    jsonObject.addProperty("roomPrice", roomPrice);
+//                    jsonObject.addProperty("idBooking", 0);
+//
+//                    mApiRoomDetail.createNewRoom(jsonObject);
                 }
             }
         });
