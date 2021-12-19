@@ -108,7 +108,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         setContentView(R.layout.activity_list_room_empty);
 
         findViewsById();
-        dialogAddRoom = new DialogAddRoom(ListRoomEmptyActivity.this);
+        dialogAddRoom = new DialogAddRoom(ListRoomEmptyActivity.this,this);
 
         intent = getIntent();
         updateOrderRoomBooked = (OrderRoomBooked) intent.getSerializableExtra("ORDERROOMBOOKED");
@@ -204,7 +204,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
 //        mApiRoomDetail.getAllRoom();
         mApiRoomDetail.getRooMByStatus(0);
         //Loading Data
-        loadingDialog.startLoadingDialog(2000);
+        loadingDialog.startLoadingDialog(4000);
         btnSortMoney.setBackgroundResource(R.drawable.custom_button3);
         btnSortType.setBackgroundResource(R.drawable.custom_button3);
         btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
@@ -319,11 +319,11 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK && data != null) {
-//                if (isDataEntry) {
-//                    UploadImage.getInstance(this).uploadRoomPictures(data.getStringArrayExtra(Intent.ACTION_PICK), getPrice);
-//                } else {
+                if (isDataEntry) {
+                    UploadImage.getInstance(this).uploadRoomPictures(data.getStringArrayExtra(Intent.ACTION_PICK), getPrice);
+                } else {
                     UploadImage.getInstance(this).uploadImage(data.getData());
-//                }
+                }
             }
         }
     }
