@@ -392,22 +392,26 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     @Override
     public void getOrderById(OrderRoomBooked orderRoomBooked) {
         //Fill data from API to TextView
-        this.itemOrderRoomBooked = orderRoomBooked;
-        tvFullnameUser.setText(orderRoomBooked.getFullName());
-        tvPhoneUser.setText(orderRoomBooked.getPhone());
-        if (orderRoomBooked.getEmail() != null) {
-            tvEmailUser.setText(orderRoomBooked.getEmail());
+        if (orderRoomBooked != null) {
+            this.itemOrderRoomBooked = orderRoomBooked;
+            tvFullnameUser.setText(orderRoomBooked.getFullName());
+            tvPhoneUser.setText(orderRoomBooked.getPhone());
+            if (orderRoomBooked.getEmail() != null) {
+                tvEmailUser.setText(orderRoomBooked.getEmail());
+            }
+            try {
+                tvDateStart.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingStart()));
+                tvDateEnd.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingEnd()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            tvRoomCharge.setText(Formater.getFormatMoney(orderRoomBooked.getTotalRoomRate()));
+            tvAdvanceDeposit.setText(Formater.getFormatMoney(orderRoomBooked.getAdvanceDeposit()));
+            tvVAT.setText(Formater.getFormatMoney((int) (orderRoomBooked.getTotalRoomRate() * 0.05)));
+            mOrderBookingDetailPresenter.getTotal(orderRoomBooked.getTotalRoomRate(), orderRoomBooked.getAdvanceDeposit());
+        }else {
+            startActivity(new Intent(this,ListOrderWaitingActivity.class));
         }
-        try {
-            tvDateStart.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingStart()));
-            tvDateEnd.setText(Formater.formatDateTimeToString(orderRoomBooked.getTimeBookingEnd()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        tvRoomCharge.setText(Formater.getFormatMoney(orderRoomBooked.getTotalRoomRate()));
-        tvAdvanceDeposit.setText(Formater.getFormatMoney(orderRoomBooked.getAdvanceDeposit()));
-        tvVAT.setText(Formater.getFormatMoney((int) (orderRoomBooked.getTotalRoomRate() * 0.05)));
-        mOrderBookingDetailPresenter.getTotal(orderRoomBooked.getTotalRoomRate(), orderRoomBooked.getAdvanceDeposit());
     }
 
     @Override

@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sample_image" />
+        app:srcCompat="@drawable/logo_app" />
 
     <TextView
         android:id="@+id/tv_time_start"

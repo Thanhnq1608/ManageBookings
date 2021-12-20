@@ -104,6 +104,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
     private DialogAddRoom dialogAddRoom;
     private ApiPictureRoom apiPictureRoom;
     private int getPrice = 0;
+    private int total = 0 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -447,7 +448,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
                     intent = getIntent();
                     String context = intent.getStringExtra("CONTEXT");
                     if (context.equalsIgnoreCase("CreateOrderActivity")) {
-                        startActivity(new Intent(ListRoomEmptyActivity.this, ListOrderWaitingActivity.class));
+                        dialogDeposit();
                     } else {
                         Intent intent = new Intent(ListRoomEmptyActivity.this, OrderBookingDetailActivity.class);
                         intent.putExtra("ORDERROOMBOOKED", updateOrderRoomBooked);
@@ -458,6 +459,71 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
             }
         });
 
+    }
+
+    void dialogDeposit(){
+
+        BottomSheetDialog dialog = new BottomSheetDialog(ListRoomEmptyActivity.this);
+        dialog.setContentView(R.layout.dialog_advance_deposit);
+        dialog.setCancelable(false);
+
+        TextView tvYes, tvNo, tvError;
+        EditText edtDeposit;
+
+        tvNo = dialog.findViewById(R.id.tv_no_dialog);
+        tvYes = dialog.findViewById(R.id.tv_yes_dialog);
+        edtDeposit = dialog.findViewById(R.id.edt_advan_deposit);
+        tvError = dialog.findViewById(R.id.tv_error_deposit);
+
+        edtDeposit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s != null){
+                    if (Integer.parseInt(s.toString()) < (int) total*0.3 ){
+                        tvError.setText("*Deposit should not be less than 30% of total bill");
+                    }else if (Integer.parseInt(s.toString()) > total) {
+                        tvError.setText("*Deposit cannot be more than total bill");
+                    }else {
+                        tvError.setText("");
+                    }
+                }else {
+                    tvError.setText("You cannot leave data blank");
+                }
+            }
+        });
+
+        tvNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                startActivity(new Intent(ListRoomEmptyActivity.this, ListOrderWaitingActivity.class));
+            }
+        });
+
+        tvYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvError.getText().toString().equals("")){
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("advanceDeposit", Integer.parseInt(edtDeposit.getText().toString().trim())+updateOrderRoomBooked.getAdvanceDeposit());
+                    apiOrderRoomBooked.update(updateOrderRoomBooked.get_id(), jsonObject);
+                    dialog.dismiss();
+                    startActivity(new Intent(ListRoomEmptyActivity.this, ListOrderWaitingActivity.class));
+                }
+            }
+        });
+
+        dialog.show();
     }
 
     @Override
@@ -478,15 +544,14 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
                 }else {
                     total = total * (Integer.parseInt(dateTime[0]));
                 }
-                total = total + orderRoomRate.getTotalRoomRate();
-                apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
             } else {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = (total / 2);
                 }
-                total = total + orderRoomRate.getTotalRoomRate();
-                apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
             }
+            this.total = total;
+            total = total + orderRoomRate.getTotalRoomRate();
+            apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
         } catch (ParseException e) {
             e.printStackTrace();
         }

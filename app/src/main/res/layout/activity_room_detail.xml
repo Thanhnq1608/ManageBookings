@@ -202,7 +202,7 @@
                     android:background="@drawable/custom_button_choose_room"
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="300dp"
                     android:backgroundTint="#F6C455"
                     android:text="@string/btnChooseRoom"
                     android:textSize="25dp" />
