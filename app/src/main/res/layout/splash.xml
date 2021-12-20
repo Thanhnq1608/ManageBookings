@@ -4,24 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:background="@drawable/bg">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="721dp"
-        android:layout_height="502dp"
-        android:layout_marginLeft="40dp"
-        app:srcCompat="@drawable/logo" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="700dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:fontFamily="@font/optima_b"
-        android:text="@string/manage_booking"
-        android:textColor="@color/black"
-        android:layout_marginLeft="50dp"
-        android:textSize="60dp" />
+        app:srcCompat="@drawable/logo" />
 </RelativeLayout>

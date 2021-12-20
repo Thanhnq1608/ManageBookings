@@ -48,7 +48,7 @@ public class ApiPictureRoom {
         ArrayList<PictureOfRoom> list = new ArrayList<>();
         for (int i = 0; i < roomDetails.size(); i++) {
             int temp = i;
-            ApiService.apiService.getPictureRoom(roomDetails.get(i)).enqueue(new Callback<ResponGetPicture>() {
+            ApiService.apiService.getPictureRoom(roomDetails.get(i).intValue()).enqueue(new Callback<ResponGetPicture>() {
                 @Override
                 public void onResponse(Call<ResponGetPicture> call, Response<ResponGetPicture> response) {
                     if(response.isSuccessful()){

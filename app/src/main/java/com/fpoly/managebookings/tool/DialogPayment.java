@@ -53,7 +53,7 @@ public class DialogPayment extends BottomSheetDialogFragment implements ApiOrder
     private TextView tvAdvanceDeposit;
     private TextView tvExtraService;
     private TextView tvVAT;
-    private TextView tvTotal;
+    private TextView tvTotal, tvPaymentAmount;
     private EditText edtPayingCustomers;
     private TextView tvErrorPaying;
     private LinearLayout layoutPaymentSuccess;
@@ -190,13 +190,19 @@ public class DialogPayment extends BottomSheetDialogFragment implements ApiOrder
         tvErrorPaying = (TextView) view.findViewById(R.id.tv_error_paying);
         layoutPaymentSuccess = (LinearLayout) view.findViewById(R.id.layout_payment_success);
         tvExcessCash = (TextView) view.findViewById(R.id.tv_excess_cash);
+        tvPaymentAmount = view.findViewById(R.id.tv_payment_amount);
     }
 
     private void onClickDone(){
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("serviceChange", extra);
-        String note = "Nước ngọt x " + quantily1.getText().toString() + "\n" + "Nước lọc x " + quantily2.getText().toString() + "\n" + "Dọn phòng x " + quantily13.getText().toString() + "\n" + "Bữa ăn thêm x " + quantily4.getText().toString();
+        String note = "Nước ngọt ( 20k ) x " + quantily1.getText().toString() + "\n" +
+                "Nước lọc ( 10k ) x " + quantily2.getText().toString() + "\n" +
+                "Dọn phòng ( 50k ) x " + quantily13.getText().toString() + "\n" +
+                "Bữa ăn thêm ( 100k ) x " + quantily4.getText().toString() + "\n" +
+                "Tổng tiền dịch vụ:" + extra;
         jsonObject.addProperty("note", note);
+        int total = orderRoomBooked.getTotalRoomRate() + extra;
+        jsonObject.addProperty("totalRoomRate", total);
         mApiOrderRoomBooked.update(orderRoomBooked.get_id(), jsonObject);
         mApiOrderRoomBooked.changeBookingStatus(orderRoomBooked.get_id(), 3);
         mApiOrderDetail.createOrderDetail(roomDetails, orderRoomBooked.get_id());
@@ -235,8 +241,10 @@ public class DialogPayment extends BottomSheetDialogFragment implements ApiOrder
         tvRoomCharge.setText(Formater.getFormatMoney(price));
         tvAdvanceDeposit.setText(Formater.getFormatMoney(advanceDeposit));
         tvVAT.setText(Formater.getFormatMoney((int) (price * 0.05)));
-        totalPayment = price + price * 0.05 - advanceDeposit - extra;
-        tvTotal.setText(Formater.getFormatMoney((int) totalPayment));
+        totalPayment = price + price * 0.05 + extra - advanceDeposit;
+        double paymentAmount = price + price * 0.05 + extra ;
+        tvTotal.setText(Formater.getFormatMoney((int) paymentAmount));
+        tvPaymentAmount.setText(Formater.getFormatMoney((int) totalPayment));
     }
 
     @Override

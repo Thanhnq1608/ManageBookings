@@ -47,6 +47,7 @@ import com.fpoly.managebookings.tool.DialogPayment;
 import com.fpoly.managebookings.tool.FixSizeForToast;
 import com.fpoly.managebookings.tool.Formater;
 import com.fpoly.managebookings.tool.LoadingDialog;
+import com.fpoly.managebookings.tool.SharedPref_InfoUser;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderConfirmedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderOccupiedActivity;
 import com.fpoly.managebookings.views.listOrderWaiting.ListOrderWaitingActivity;
@@ -75,7 +76,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private TextView tvTotal;
     private TextView tvVAT;
     private TextView tvAdvanceDeposit;
-    private TextView tvExtraService;
+    private TextView tvExtraService, tvPaymentAmount;
     private LinearLayout layout_extra_service;
     private Toolbar toolbar;
     private ApiRoomDetail mApiRoomDetail = new ApiRoomDetail(this);
@@ -91,6 +92,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     private ApiSendNotifyWithFirebase apiSendNotifyWithFirebase = new ApiSendNotifyWithFirebase();
     private ApiUser apiUser = new ApiUser(this);
     private DialogPayment dialogPayment;
+    private boolean isTypeNotify = false;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -110,7 +112,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         if (itemOrderRoomBooked.getBookingStatus() == 3) {
             btn_add.setVisibility(View.INVISIBLE);
             layout_extra_service.setVisibility(View.VISIBLE);
-            tvExtraService.setText(Formater.getFormatMoney(itemOrderRoomBooked.getServiceCharge()));
+            tvExtraService.setText(Formater.getFormatMoney(Formater.getTotalService(itemOrderRoomBooked.getNote())));
             layout_extra_service.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -161,13 +163,14 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                apiUser.getUserByPhone(itemOrderRoomBooked.getPhone());
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("infoEmployees", SharedPref_InfoUser.getInstance(OrderBookingDetailActivity.this).LoggedInFullName());
+                mApiOrderRoomBooked.update(itemOrderRoomBooked.get_id(), jsonObject);
                 if (itemOrderRoomBooked.getBookingStatus() == 2){
                     dialogPayment = new DialogPayment(itemOrderRoomBooked, listRoomDetails);
                     dialogPayment.show(getSupportFragmentManager(), null);
                 }
                 mOrderBookingDetailPresenter.onClickCofirm(itemOrderRoomBooked, listRoomDetails, OrderBookingDetailActivity.this);
-
             }
         });
 
@@ -216,6 +219,7 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
         btn_delete = findViewById(R.id.btn_delete);
         tvExtraService = findViewById(R.id.tv_extra_service);
         layout_extra_service = findViewById(R.id.layout_item_extra_service);
+        tvPaymentAmount = findViewById(R.id.tv_payment_amount);
     }
 
     private void setToolbar() {
@@ -245,7 +249,9 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
             if (Integer.parseInt(dateTime[0]) > 0) {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = total * (Integer.parseInt(dateTime[0])) + (total / 2);
-                } else {
+                } else if (Integer.parseInt(dateTime[1]) > 12 && Integer.parseInt(dateTime[1]) < 24){
+                    total = total * (Integer.parseInt(dateTime[0])) + total;
+                }else {
                     total = total * (Integer.parseInt(dateTime[0]));
                 }
                 total = orderRoomRate - total;
@@ -264,14 +270,14 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
 
     private void sendNotification(String message, String tokenTo) {
         JsonObject payload = new JsonObject();
-//        payload.addProperty("to", "dOkCu5PISgS62M0SCZfT3q:APA91bGhCT6NLXl-iFyFMFln63Pg23LdUx0O4MsYh1uJBGsWzrU6r-6tZKeRNPmx2b7Nl9AtD364lbmv5yLFzdeHNdPcm04wadUipbUKNPRymAYkAUdD9TirzXBKtCsuyPzH1NgZzmdu");
         payload.addProperty("to", tokenTo);
         // compose data payload here
         JsonObject data = new JsonObject();
         data.addProperty("title", "Hotel Booking");
-        data.addProperty("message", message);
+        data.addProperty("body", message);
         // add data payload
-        payload.add("data", data);
+        payload.add("notification", data);
+        payload.addProperty("priority", "high");
         apiSendNotifyWithFirebase.sendNotify(payload);
     }
 
@@ -284,20 +290,24 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     }
 
     @Override
-    public void getTotal(int total) {
+    public void getTotal(int total, int paymentAmount) {
         tvTotal.setText(Formater.getFormatMoney(total));
+        tvPaymentAmount.setText(Formater.getFormatMoney(paymentAmount));
     }
 
     @Override
     public void onConfirmSuccess(String updateStatus) {
         fixSizeForToast.fixSizeToast(updateStatus);
+        apiUser.getUserByPhone(itemOrderRoomBooked.getPhone());
     }
 
     @Override
     public void onCancelRoom(String cancelStatus) {
         fixSizeForToast.fixSizeToast(cancelStatus);
+        this.isTypeNotify = true;
         apiUser.getUserByPhone(itemOrderRoomBooked.getPhone());
         startActivity(new Intent(this, ListOrderWaitingActivity.class));
+        finishAffinity();
     }
 
 
@@ -403,16 +413,20 @@ public class OrderBookingDetailActivity extends AppCompatActivity implements Ord
     @Override
     public void getUserByPhone(User user) {
         if (user != null) {
-            switch (itemOrderRoomBooked.getBookingStatus()) {
-                case 0:
-                    sendNotification("Your booking has been confirmed", "");
-                    break;
-                case 1:
-                    sendNotification("Your booking has been checked-in", user.getTokenId());
-                    break;
-                case 2:
-                    sendNotification("Your booking has been completed", user.getTokenId());
-                    break;
+            if (isTypeNotify){
+                sendNotification("Đơn đặt phòng của bạn đã bị xóa!", user.getTokenId());
+            }else {
+                switch (itemOrderRoomBooked.getBookingStatus()) {
+                    case 0:
+                        sendNotification("Đơn đặt phòng của bạn đã được xác nhận!", user.getTokenId());
+                        break;
+                    case 1:
+                        sendNotification("Bạn đã check-in thành công!", user.getTokenId());
+                        break;
+                    case 2:
+                        sendNotification("Bạn đã thanh toán thành công!", user.getTokenId());
+                        break;
+                }
             }
         }
     }

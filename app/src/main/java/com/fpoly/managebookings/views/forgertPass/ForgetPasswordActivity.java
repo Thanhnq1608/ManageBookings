@@ -152,7 +152,9 @@ public class ForgetPasswordActivity extends AppCompatActivity implements VerifyP
         if (edtOtp.getText().length() == 0) {
             fixSizeForToast.fixSizeToast("OTP cannot be left blank");
         } else {
+            Log.e("Phone", ""+edtPhone.getText().toString().trim());
             apiUser.getUserByPhone(edtPhone.getText().toString().trim());
+
         }
     }
 
@@ -169,7 +171,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements VerifyP
 
     @Override
     public void VerifyPhoneSuccess(String phoneNumber) {
-        updateUIWhileVerifySuccess(phoneNumber);
+        updateUIWhileVerifySuccess(edtPhone.getText().toString().trim());
     }
 
     @Override
@@ -186,7 +188,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements VerifyP
     @Override
     public void getUserByPhone(User user) {
        if (user != null){
-           if (user.getRole().equals("employee")){
+           if (user.getRole().equals("employee") || user.getRole().equals("dataEntry")){
                mVerifyPhoneNumber.gotoEnterOTP(edtOtp.getText().toString().trim(),mAuth);
            }else {
                fixSizeForToast.fixSizeToast("Account does not exist!");

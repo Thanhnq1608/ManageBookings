@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_payment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layout_payment"
-    android:visibility="gone"
     android:layout_marginVertical="50dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <EditText
+        android:id="@+id/edt_paying_customers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_border_not_radius"
+        android:drawableStart="@drawable/ic_money"
+        android:drawablePadding="20dp"
+        android:hint="Paying customers"
+        android:inputType="number"
+        android:padding="10dp"
+        android:textSize="35dp" />
+
+    <TextView
+        android:id="@+id/tv_error_paying"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:fontFamily="@font/unicode_optima"
+        android:textColor="#E5110A"
+        android:textSize="30dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/unicode_optima"
         android:text="@string/tvPayment"
         android:textColor="@color/black"
@@ -162,30 +186,37 @@
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/unicode_optima"
             android:text="2.200.000 VND"
-            android:textStyle="bold"
             android:textColor="#904E0A"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/unicode_optima"
+            android:text="Payment amount"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/tv_payment_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/unicode_optima"
+            android:text="2.200.000 VND"
+            android:textStyle="bold"
+            android:textColor="#F16767"
             android:textSize="30dp" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/edt_paying_customers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_money"
-        android:drawablePadding="20dp"
-        android:textSize="35dp"
-        android:hint="Paying customers"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:background="@drawable/custom_border_not_radius"/>
-    <TextView
-        android:id="@+id/tv_error_paying"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/unicode_optima"
-        android:layout_marginHorizontal="50dp"
-        android:textColor="#E5110A"
-        android:textSize="30dp" />
 
 </LinearLayout>

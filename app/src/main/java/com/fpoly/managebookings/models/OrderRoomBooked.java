@@ -14,7 +14,7 @@ public class OrderRoomBooked implements Serializable {
     private int advanceDeposit;
     private int bookingStatus;
     private int totalRoomRate;
-    private int serviceCharge;
+    private String infoEmployees;
     private String note;
     private String createdAt;
     private String updatedAt;
@@ -34,8 +34,8 @@ public class OrderRoomBooked implements Serializable {
         this.totalRoomRate = totalRoomRate;
     }
 
-    public int getServiceCharge() {
-        return serviceCharge;
+    public String getInfoEmployees() {
+        return infoEmployees;
     }
 
     public String getNote() {

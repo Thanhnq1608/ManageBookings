@@ -13,17 +13,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -205,9 +208,6 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         mApiRoomDetail.getRooMByStatus(0);
         //Loading Data
         loadingDialog.startLoadingDialog(4000);
-        btnSortMoney.setBackgroundResource(R.drawable.custom_button3);
-        btnSortType.setBackgroundResource(R.drawable.custom_button3);
-        btnSortFloor.setBackgroundResource(R.drawable.custom_button3);
     }
 
     @Override
@@ -314,18 +314,25 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
         Picasso.get().load(SharedPref_InfoUser.getInstance(this).LoggedInUserAvatar()).placeholder(R.drawable.ic_user).error(R.drawable.ic_user).into(ava_drawer_header);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+//        if (requestCode == 1) {
             if (resultCode == RESULT_OK && data != null) {
                 if (isDataEntry) {
-                    UploadImage.getInstance(this).uploadRoomPictures(data.getStringArrayExtra(Intent.ACTION_PICK), getPrice);
+                    ClipData array = data.getClipData();
+                    Uri[] arrayImage = new Uri[array.getItemCount()];
+                    for (int i = 0; i<array.getItemCount(); i++){
+                        arrayImage[i] = array.getItemAt(i).getUri();
+                        Log.e("ima", " "+array.getItemAt(i).getUri());
+                    }
+                    dialogAddRoom.getArrayImages(arrayImage, getPrice);
                 } else {
                     UploadImage.getInstance(this).uploadImage(data.getData());
                 }
             }
-        }
+//        }
     }
 
     private void initializeDataEntry() {
@@ -400,9 +407,12 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
                     continue;
                 } else {
                     ints.add(roomDetails.get(i).getRoomPrice());
+                    Log.e("image", ""+ints.get(i));
+                    break;
                 }
             }
         }
+
         apiPictureRoom.getListPictureRooms(ints);
     }
 
@@ -463,13 +473,13 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
             if (Integer.parseInt(dateTime[0]) > 0) {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = total * (Integer.parseInt(dateTime[0])) + (total / 2);
-                    total = total + orderRoomRate.getTotalRoomRate();
-                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
-                } else {
+                } else if (Integer.parseInt(dateTime[1]) > 12 && Integer.parseInt(dateTime[1]) < 24){
+                    total = total * (Integer.parseInt(dateTime[0])) + total;
+                }else {
                     total = total * (Integer.parseInt(dateTime[0]));
-                    total = total + orderRoomRate.getTotalRoomRate();
-                    apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
                 }
+                total = total + orderRoomRate.getTotalRoomRate();
+                apiOrderRoomBooked.updateTotalRoomRate(updateOrderRoomBooked.get_id(), total);
             } else {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = (total / 2);
@@ -497,6 +507,7 @@ public class ListRoomEmptyActivity extends AppCompatActivity implements ResponGe
                     continue;
                 } else {
                     ints.add(roomDetails.get(i).getRoomPrice());
+                    break;
                 }
             }
         }

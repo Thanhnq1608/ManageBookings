@@ -33,7 +33,7 @@ import retrofit2.http.Multipart;
 
 public class UploadImage {
     private static final int REQUEST_CODE_PICK_IMAGE = 101;
-    private ImageResizer imageResizer;
+    private Bitmap bitmapFullSize ;
 
     @SuppressLint("StaticFieldLeak")
     private static UploadImage mInstance;
@@ -46,7 +46,6 @@ public class UploadImage {
 
     private UploadImage(Activity context) {
         this.context = context;
-        imageResizer = new ImageResizer();
     }
 
     public static synchronized UploadImage getInstance(Activity context) {
@@ -54,6 +53,15 @@ public class UploadImage {
             mInstance = new UploadImage(context);
         }
         return mInstance;
+    }
+
+    public void changePictureRoom(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        context.startActivityForResult(Intent.createChooser(intent,"Select Picture"), REQUEST_CODE_PICK_IMAGE);
+
     }
 
     public void changeAvatar(){
@@ -74,20 +82,20 @@ public class UploadImage {
         return result;
     }
 
-    public void uploadRoomPictures(String[] images, int price){
+    public void uploadRoomPictures(Uri[] images, int price){
         MultipartBody.Part[] arrayImages = new MultipartBody.Part[images.length];
+        Log.e("Images", ""+images);
 
         for (int i = 0; i < images.length; i++){
-            Bitmap bitmapFullSize = BitmapFactory.decodeFile(images[i]);
+            File file = new File(getRealPathFromURI(images[i]));
+            Bitmap bitmapFullSize = BitmapFactory.decodeFile(getRealPathFromURI(images[i]));
 
-            imageResizer.reduceBitmapSize(bitmapFullSize, 240000);
-
-            File reduceFile = getBitmapToFile(bitmapFullSize);
+            File reduceFile = getBitmapToFile(reduceBitmapSize(bitmapFullSize, 240000));
 
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), reduceFile);
 
             arrayImages[i] = MultipartBody.Part.createFormData("picture",
-                    reduceFile.getName(),
+                    file.getName(),
                     requestFile);
         }
 
@@ -95,16 +103,16 @@ public class UploadImage {
     }
 
     public void uploadImage(Uri uri) {
-//        File file = new File(getRealPathFromURI(uri));
-        Bitmap bitmapFullSize = BitmapFactory.decodeFile(getRealPathFromURI(uri));
+        File file = new File(getRealPathFromURI(uri));
+        Log.e("avatar", "" + file);
+        bitmapFullSize = BitmapFactory.decodeFile(getRealPathFromURI(uri));
 
-        imageResizer.reduceBitmapSize(bitmapFullSize, 240000);
-
-        File reduceFile = getBitmapToFile(bitmapFullSize);
+        File reduceFile = getBitmapToFile(reduceBitmapSize(bitmapFullSize, 240000));
+        Log.e("avatar", "" + reduceFile);
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), reduceFile);
 
-        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("avatar",reduceFile.getName(), requestFile);
+        MultipartBody.Part multipartBody = MultipartBody.Part.createFormData("avatar",file.getName(), requestFile);
 
         apiUser.uploadAvatar(context, multipartBody);
     }
@@ -129,6 +137,21 @@ public class UploadImage {
             e.printStackTrace();
         }
         return file;
+    }
+
+    public Bitmap reduceBitmapSize(Bitmap bitmap, int MAX_SIZE) {
+        double ratioSquare=0;
+        int bitmapHeight =0, bitmapWidth=0;
+        bitmapHeight = bitmap.getHeight();
+        bitmapWidth = bitmap.getWidth();
+        ratioSquare = (bitmapHeight * bitmapWidth) / MAX_SIZE;
+        if (ratioSquare <= 1)
+            return bitmap;
+        double ratio = Math.sqrt(ratioSquare);
+        Log.d("mylog", "Ratio: " + ratio);
+        int requiredHeight = (int) Math.round(bitmapHeight / ratio);
+        int requiredWidth = (int) Math.round(bitmapWidth / ratio);
+        return Bitmap.createScaledBitmap(bitmap, requiredWidth, requiredHeight, true);
     }
 
 

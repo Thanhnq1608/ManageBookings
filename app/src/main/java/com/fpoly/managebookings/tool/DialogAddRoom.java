@@ -2,6 +2,7 @@ package com.fpoly.managebookings.tool;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -126,13 +127,16 @@ public class DialogAddRoom implements ResponseCreateRoomInterface {
         btnConfirmCreateRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                UploadImage.getInstance(context).changePictureRoom();
                 if (edtIdRoom.getText() == null || edtNameRoom.getText() == null || edtPriceRoom.getText() == null || edtMaxPersonRoom.getText() == null || idRoomType == 4) {
                     fixSizeForToast.fixSizeToast("Data cannot be empty");
                 } else {
 //                        roomPrice = (int) decimalFormat.parse(edtPriceRoom.getText().toString());
                     roomPrice = Integer.parseInt(edtPriceRoom.getText().toString());
                     mGetPriceInterface.getPrice(roomPrice);
-                    UploadImage.getInstance(context).changeAvatar();
+                    UploadImage.getInstance(context).changePictureRoom();
+
 
 //                    JsonObject jsonObject = new JsonObject();
 //                    jsonObject.addProperty("idRoom", edtIdRoom.getText().toString());
@@ -158,6 +162,10 @@ public class DialogAddRoom implements ResponseCreateRoomInterface {
 
         bottomSheetDialog.show();
         return isDialog;
+    }
+
+    public void getArrayImages(Uri[] arrayImage, int getPrice){
+        UploadImage.getInstance(context).uploadRoomPictures(arrayImage, getPrice);
     }
 
     private void dialogDismis(BottomSheetDialog bottomSheetDialog) {

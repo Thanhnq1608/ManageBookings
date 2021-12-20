@@ -94,7 +94,7 @@ public class ListOrdersAdapter extends RecyclerView.Adapter<ListOrdersAdapter.Vi
         holder.tvFullName.setText(orderRoomBooked.getFullName());
         holder.tvPhone.setText(String.valueOf(orderRoomBooked.getPhone()));
         Formater.setStatusForOrder(orderRoomBooked.getBookingStatus(), holder.tvStatusOrder);
-        holder.imgRoom.setImageResource(R.drawable.logo);
+        holder.imgRoom.setImageResource(R.drawable.logo_app);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

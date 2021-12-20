@@ -3,9 +3,11 @@ package com.fpoly.managebookings.api;
 import com.fpoly.managebookings.models.OrderDetail;
 import com.fpoly.managebookings.models.OrderRoomBooked;
 import com.fpoly.managebookings.models.ResponseMessage;
+import com.fpoly.managebookings.models.RoomAmenities;
 import com.fpoly.managebookings.models.RoomDetail;
 import com.fpoly.managebookings.models.UpdateAnyRoomDetail;
 import com.fpoly.managebookings.models.User;
+import com.fpoly.managebookings.models.login.ResponseGetUser;
 import com.fpoly.managebookings.models.login.ResponseUpdateUser;
 import com.fpoly.managebookings.models.login.ResponseLogin;
 import com.fpoly.managebookings.models.picture.ResponGetPicture;
@@ -124,7 +126,7 @@ public interface ApiService {
     Call<ResponseUpdateUser> forgetPassword(@Field("phone")String phone, @Field("password") String password);
 
     @GET("api/v1/auth/getPhone/{phone}")
-    Call<User> getUserByPhone(@Path("phone") String phone);
+    Call<ResponseGetUser> getUserByPhone(@Path("phone") String phone);
 
     @Multipart
     @PUT("api/v1/auth/uploadAvatar")
@@ -144,5 +146,6 @@ public interface ApiService {
                                                    @Part MultipartBody.Part[] file);
 
     //Room Amenities
-
+    @GET("/roomAmenities/{idKindOfRoom}")
+    Call<List<RoomAmenities>> getRoomAmenities(@Path("idKindOfRoom") int idKindOfRoom);
 }

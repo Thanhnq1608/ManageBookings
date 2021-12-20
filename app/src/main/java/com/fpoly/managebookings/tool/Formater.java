@@ -40,8 +40,8 @@ public interface Formater {
         SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.forLanguageTag("vi"));
         SimpleDateFormat output = new SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
         input.setTimeZone(TimeZone.getTimeZone("UTC"));
-        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
-        output.setTimeZone(TimeZone.getTimeZone(zoneId));
+//        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+//        output.setTimeZone(TimeZone.getTimeZone(zoneId));
         Date temp = input.parse(date);
         String dateTime = output.format(temp);
         Log.e("date", "" + dateTime);
@@ -51,8 +51,8 @@ public interface Formater {
     @RequiresApi(api = Build.VERSION_CODES.O)
     static Date formatToDateTime(String date) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.forLanguageTag("vi"));
-        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
-        format.setTimeZone(TimeZone.getTimeZone(zoneId));
+//        ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+//        format.setTimeZone(TimeZone.getTimeZone(zoneId));
         Date temp = format.parse(date);
         return temp;
     }
@@ -177,5 +177,11 @@ public interface Formater {
         Log.e("time",""+usedHour);
 
         return usedDate+","+usedHour;
+    }
+
+    static int getTotalService(String money){
+        String[] temp = money.split(":", 2);
+        int total = Integer.parseInt(temp[1]);
+        return total;
     }
 }

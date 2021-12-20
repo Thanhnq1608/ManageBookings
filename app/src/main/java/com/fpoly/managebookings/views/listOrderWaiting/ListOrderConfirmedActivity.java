@@ -1,6 +1,7 @@
 package com.fpoly.managebookings.views.listOrderWaiting;
 
 import android.content.Intent;
+import android.database.Observable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,8 +42,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import io.reactivex.Observable;
-
 public class ListOrderConfirmedActivity extends AppCompatActivity implements ApiOrderBookedInterface {
     private RecyclerView recView;
     private ListOrdersAdapter adapter;
@@ -52,7 +51,6 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private LinearLayout layout;
     private DrawerLayout drawerLayout;
-    private Observable<ArrayList<OrderRoomBooked>> observable;
     private LoadingDialog loadingDialog;
     private NavigationView navigationView;
     private EditText edt_search;
@@ -202,7 +200,7 @@ public class ListOrderConfirmedActivity extends AppCompatActivity implements Api
 
     @Override
     public void getOrderWaiting(ArrayList<OrderRoomBooked> list) {
-        if (!list.isEmpty()) {
+        if (list.size() != 0) {
             edt_search.setVisibility(View.VISIBLE);
             recView.setVisibility(View.VISIBLE);
             adapter = new ListOrdersAdapter(ListOrderConfirmedActivity.this, list);

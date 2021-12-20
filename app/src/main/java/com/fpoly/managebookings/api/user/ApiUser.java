@@ -7,6 +7,7 @@ import com.fpoly.managebookings.api.ApiService;
 import com.fpoly.managebookings.models.ResponseMessage;
 import com.fpoly.managebookings.models.User;
 import com.fpoly.managebookings.models.login.Data;
+import com.fpoly.managebookings.models.login.ResponseGetUser;
 import com.fpoly.managebookings.models.login.ResponseUpdateUser;
 import com.fpoly.managebookings.models.login.ResponseLogin;
 import com.fpoly.managebookings.tool.SharedPref_InfoUser;
@@ -116,11 +117,11 @@ public class ApiUser {
     }
 
     public void getUserByPhone(String phone) {
-        ApiService.apiService.getUserByPhone(phone).enqueue(new Callback<User>() {
+        ApiService.apiService.getUserByPhone(phone).enqueue(new Callback<ResponseGetUser>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<ResponseGetUser> call, Response<ResponseGetUser> response) {
                 if (response.isSuccessful()) {
-                    User data = response.body();
+                    User data = response.body().getData();
                     mGetUserInterface.getUserByPhone(data);
                     Log.e("user", "" + data);
                 } else {
@@ -131,7 +132,7 @@ public class ApiUser {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<ResponseGetUser> call, Throwable t) {
                 Log.e("User Error", "" + t.getMessage());
             }
         });

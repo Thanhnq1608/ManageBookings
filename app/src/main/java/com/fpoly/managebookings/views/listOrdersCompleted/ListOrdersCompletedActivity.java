@@ -234,7 +234,7 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
 
     @Override
     public void getOrderWaiting(ArrayList<OrderRoomBooked> list) {
-        if (!list.isEmpty()) {
+        if (list.size() != 0) {
             this.orderRoomBookeds.clear();
             this.orderRoomBookeds.addAll(list);
             btn_filter.setVisibility(View.VISIBLE);
@@ -298,7 +298,7 @@ public class ListOrdersCompletedActivity extends AppCompatActivity implements Ap
         try {
             for (int i = 0; i < orderRoomBookeds.size(); i++) {
 
-                if (Formater.formatDateTimeToString(orderRoomBookeds.get(i).getTimeBookingEnd()).contains(dateFilter)) {
+                if (Formater.formatDateToStringForCreateAt(orderRoomBookeds.get(i).getUpdatedAt()).contains(dateFilter)) {
                     Log.e(Formater.formatDateTimeToString(orderRoomBookeds.get(i).getTimeBookingEnd()), dateFilter);
                     orderRoomBookedFilters.add(orderRoomBookeds.get(i));
                 }

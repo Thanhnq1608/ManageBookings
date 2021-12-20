@@ -85,13 +85,10 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
         }
 
         if (roomDetail != null) {
+            setToolbar(roomDetail.getRoomName());
             tvRoomNameDetail.setText(roomDetail.getRoomName());
             tvRoomPositionDetail.setText(roomDetail.getIdRoom());
             tvRoomPriceDetail.setText(Formater.getFormatMoney(roomDetail.getRoomPrice()));
-        }
-
-        if (roomDetail != null) {
-            setToolbar(roomDetail.getRoomName());
         } else {
             setToolbar(getString(R.string.room_detail_lower));
         }
@@ -117,7 +114,9 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
             if (Integer.parseInt(dateTime[0]) > 0) {
                 if (Integer.parseInt(dateTime[1]) > 0 && Integer.parseInt(dateTime[1]) <= 12) {
                     total = total * (Integer.parseInt(dateTime[0])) + (total / 2);
-                } else {
+                } else if (Integer.parseInt(dateTime[1]) > 12 && Integer.parseInt(dateTime[1]) < 24){
+                    total = total * (Integer.parseInt(dateTime[0])) + total;
+                }else {
                     total = total * (Integer.parseInt(dateTime[0]));
                 }
                 total = total + orderRoomRate.getTotalRoomRate();
@@ -162,9 +161,8 @@ public class RoomDetailActivity extends AppCompatActivity implements ResponGetPi
         imgGym = (ImageView) findViewById(R.id.img_gym);
         imgRestaurant = (ImageView) findViewById(R.id.img_restaurant);
         imgPaking = (ImageView) findViewById(R.id.img_paking);
-        textView14 = (TextView) findViewById(R.id.textView14);
-        textView15 = (TextView) findViewById(R.id.textView15);
-        tvContentRoom = (TextView) findViewById(R.id.tv_content_room);
+        textView14 = (TextView) findViewById(R.id.tv_bed_type);
+        textView15 = (TextView) findViewById(R.id.tv_person_in_room);
         btnSelectRoom = (Button) findViewById(R.id.btnSelectRoom);
         layout = (LinearLayout) findViewById(R.id.image_container);
     }

@@ -66,7 +66,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -131,7 +130,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
 
                 if (!token.equals(SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).loggedInUserTokenIdApp())) {
                     JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("tokenId",token);
+                    jsonObject.addProperty("tokenId", token);
                     apiUser.updateTokenId(SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).LoggedInUserToken(),jsonObject);
 //                    SharedPref_InfoUser.getInstance(ListOrderWaitingActivity.this).storeUserToKenIdApp(token);
                 }
@@ -144,11 +143,9 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
         @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
             if (resultCode == RESULT_OK && data != null){
                 UploadImage.getInstance(this).uploadImage(data.getData());
             }
-        }
     }
 
     private void getInfoUser() {
@@ -286,7 +283,7 @@ public class ListOrderWaitingActivity extends AppCompatActivity implements ApiOr
 
     @Override
     public void getOrderWaiting(ArrayList<OrderRoomBooked> list) {
-        if (!list.isEmpty()) {
+        if (list.size() != 0) {
             edt_search.setVisibility(View.VISIBLE);
             recView.setVisibility(View.VISIBLE);
             adapter = new ListOrdersAdapter(ListOrderWaitingActivity.this, list);

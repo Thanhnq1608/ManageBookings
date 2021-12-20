@@ -36,8 +36,9 @@ public class OrderBookingDetailPresenter implements ApiOrderBookingDetailInterfa
     }
 
     void getTotal(int payment, int advanceDeposit) {
-        double total = payment + payment * 0.05 - advanceDeposit;
-        mOrderBookingDetailInterface.getTotal((int) (total));
+        double paymentAmount = payment + payment * 0.05 - advanceDeposit;
+        double total = payment + payment * 0.05;
+        mOrderBookingDetailInterface.getTotal((int) (total), (int) paymentAmount);
     }
 
     void onClickCancel(OrderRoomBooked orderRoomBooked) {
